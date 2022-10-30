@@ -3,7 +3,7 @@
     - [What is fortunecookies ?](#what-is-fortunecookies-)
     - [What can we serve?](#what-can-we-serve)
     - [Developer](#developer)
-    - [UML](https://drive.google.com/file/d/1TfaMeYCrzypzk0oiJrRifKtkjONMi60a/view)
+    - [UML](https://app.diagrams.net/#G1TfaMeYCrzypzk0oiJrRifKtkjONMi60a)
     - [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2606781)
 ### What is fortunecookies ?
 fortunecookies is a place that gives fortune to the world. In a sense, the fortunecookies website is a public website that provides opportunities for anyone who wants to gain some budget or to inform/realize people to profit the world or help human friends. They can enroll on this website to get/give some help to any problems of society and the world. Since the users started to enter fortunecookies they have the ability to create blogs or campaigns they could gain cookies that can be changed to be money for the creations by donations from other users that can be the owner of any blogs or general users and the expert. Our website has a team of experts who  could look after the website for the best efficient consequences whether environmental experts, professional academicians, lawyers, human right activist, etc.
