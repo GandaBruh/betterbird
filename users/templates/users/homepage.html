@@ -1,0 +1,136 @@
+{% extends 'users/layout.html' %}
+{% load static %}
+
+
+
+{% block body %}
+
+<!-- <div class="container1">
+        <div class="topPage">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+
+                    <center><img style=" width: 450px; margin-top: 40px;" src="{% static 'images/Black.PNG' %}" />
+                    </center>
+                    <center>
+                        <b>
+                            <p
+                                style=' font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif; font-size: 20px;'>
+                                gives fortune to the world</p>
+                        </b>
+                    </center>
+                </div>
+                <div class="col-3 profile">
+                    <div>
+                        <a href="#profile">
+                            <img class="profileImgBar" src="{% static 'images/profile.jpg' %}" />
+                        </a>
+                    </div>
+                    <p style="font-size: 24px;">
+                        name surname
+                    </p>
+                </div>
+            </div>
+            <div class="navbarCookie">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">About us</a></li>
+                <li><a href="#contact" style="border-right: 1px solid whitesmoke;;">Member</a></li>
+                <li style="float: right;"><a class="active" href="#about">logout</a></li>
+                <li style="float: right;"> <img style="height: 40px; margin-bottom: 10px;"
+                        src="{% static 'images/Cookies.PNG' %}" /><a style="border-left: none; padding-left: 0;"
+                        class="aparagarph">5000</a></li>
+            </div>
+        </div> -->
+
+
+
+
+
+<div class="w3-top">
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal" title="Search"><i
+            class="fa fa-search"></i></a>
+
+</div>
+<div class="w3-container w3-right">
+
+    <button class="button button2">+ New Blog</button>
+
+
+</div>
+
+<div class="row" style="margin-top: 100px;"></div>
+    {% for i in blogs %}
+    {% if forloop.counter|divisibleby:2 %}
+        <div class="col-4 blog-format" style="box-sizing:border-box;">
+            <div style="display:flex; justify-content: space-between; align-items: center;">
+                <h3 class="title-text">title</h3>
+                <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
+                <i class="fa-solid fa-star fa-lg"></i>
+            </div>
+
+            <p class="general-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
+                perspiciatis unde maxime
+                fuga quis sunt molestias laudantium libero magni error eum nisi ex nam incidunt suscipit, distinctio nulla?
+            </p>
+            <p># Tag1, #Tag2</p>
+            <span class="span-blog">
+                <a href="#detailblog">Details</a>
+                <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
+                <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
+                <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+                </i>1.342k</span>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-4 blog-format" style="box-sizing:border-box;">
+            <div style="display:flex; justify-content: space-between; align-items: center;">
+                <h3 class="title-text">title</h3>
+                <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
+                <i class="fa-solid fa-star fa-lg"></i>
+            </div>
+
+            <p class="general-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
+                perspiciatis unde maxime
+                fuga quis sunt molestias laudantium libero magni error eum nisi ex nam incidunt suscipit, distinctio nulla?
+            </p>
+            <p># Tag1, #Tag2</p>
+            <span class="span-blog">
+                <a href="#detailblog">Details</a>
+                <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
+                <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
+                <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+                </i>1.342k</span>
+        </div>
+        {% if forloop.counter == maxlen %}
+            <p>{{maxlen}}</p>
+            <p>{{forloop.counter}}</p>
+            <div class="col-4"></div>
+            <div class="col-2"></div>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+        <div style="margin-top: 100px;" class="row">
+            <div class="col-2">
+            </div>
+            <div class="col-8">
+                <a href="#"><img src="/pic/launch.jpg" style="width: 600px; "></a>
+
+
+            </div>
+            <div class="col-2">
+
+            </div>
+
+        </div>
+
+
+</div>
+{% endblock %}
