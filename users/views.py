@@ -76,6 +76,8 @@ def homepage(request):
         'maxlen':maxlen
     })
 
+def members(request):
+    return render(request,'users/members.html' )
 #---------------------------------------------------------------
 #-------------------------safe---------------------------------
 def loginPage(request):
@@ -85,7 +87,7 @@ def loginPage(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('index'))
+            return HttpResponseRedirect(reverse('homepage'))
         else:
             return render(request, 'users/loginUser.html', {
                 'message': 'Invalid credentials.'
