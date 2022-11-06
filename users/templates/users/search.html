@@ -1,0 +1,33 @@
+{% extends 'users/layout.html' %}
+{% load static %}
+
+<style>
+
+
+</style>
+
+{% block body %}
+<br><br>
+<div class="input-group" style="padding-left: 70%;">
+    <div class="form-outline">
+    <form class="d-flex" method=POST action="{% url 'blogpage' %}">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" placeholder="Search title/tag" aria-label="Search" name="searched" />
+    </div>
+    <button type="submit" class="btn btn-danger">
+    <i class="fas fa-search"></i></button>
+    </form>
+</div>
+
+    <br>
+    <center>
+    {% if searched %}
+        <h2>You searched for {{ searched }}</h2>
+        <br>
+    {% else %}
+        <h2>You forget to search for a title/tag</h2>
+    {% endif %}
+    </center>
+    <br>
+
+{% endblock %}

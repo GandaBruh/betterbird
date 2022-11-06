@@ -1,0 +1,39 @@
+{% extends 'users/layout.html' %}
+{% load static %}
+
+<style>
+
+
+</style>
+
+{% block body %}
+<div class="main">
+    <br>
+    <div class="title">
+        <h1>Title</h1>
+    </div>
+    <div class="description">
+        <h3>for donation</h3>
+    </div>
+    <br>
+    <div class="images">
+        <center><img src="{% static 'images/donate.jpeg' %}" alt="Flowers in Chania" width="500" height="300"/></center>
+    </div>
+    <div class="article">
+        <br>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+    <div class="icon">
+        <i class="fa-regular fa-eye"> 100 k </i>
+        <i class="fa-regular fa-heart"></i> 1.342 k</i>
+    </div>
+    <br>
+</div>
+
+
+{% endblock %}

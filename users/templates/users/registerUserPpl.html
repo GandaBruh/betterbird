@@ -1,0 +1,52 @@
+{% block content %}
+{% load crispy_forms_tags %}
+
+<head></head>
+
+<style>
+    .register-title {
+        color: rgba(12, 12, 12, 0.793);
+        ;
+        font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+        font-size: 34px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 26.4px;
+    }
+
+    .btn-success {
+        width: 32%;
+        border-radius: 15px;
+        border-color: rgba(255, 165, 153, 1);
+        background-color: rgba(255, 165, 153, 1);
+        text-align: center;
+        font-weight: bold;
+
+    }
+
+    .register-forms {
+        color: rgba(12, 12, 12, 0.793);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 20px;
+
+    }
+</style>
+
+<body style="background-color: rgba(255, 205, 205, 0.926); padding:5% 0%;">
+    <p class="register-title">what is fortunecookies ?</p1>
+</body>
+<div class="register-forms">
+    <form method="POST" class="form-qroup">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <br><br>
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+    <a href="{% url 'login' %}"><button type="submit" style="background-color: red;" class="btn btn-success">cancel</button></a>
+</div>
+{% endblock %}

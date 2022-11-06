@@ -12,5 +12,8 @@ urlpatterns = [
     path('profile/likeBlog', views.likeBlog, name="viewProfile1"),
     path('cookieCoin/', views.cookieCoin, name='cookieCoin'),
     path('cookieCoin/<int:cookie_id>', views.confirmCookie, name='confirmCookie'),
-    path('homepage/', views.homepage, name='homepage')
+    path('homepage/', views.homepage, name='homepage'),
+    path('members/', views.members, name='members'),
+        path('blogpage/', views.search, name='blogpage'),
+    path('detail/', views.detail, name='detail'),
 ]

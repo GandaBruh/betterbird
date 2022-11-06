@@ -4,6 +4,7 @@ from users.models import OwnedBlog, Blog, LikeBlog, AccountUser
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
 from django.http import HttpResponseRedirect 
+from .forms import RegisterForm
 # Create your views here.
 def index(request):
     return render(request, 'users/loginUser.html')
@@ -98,15 +99,26 @@ def loginPage(request):
 # Create your views here.
 
 
-def register(response):
-    pass
-    # if response.method == "POST":
-    #     form = UserCreationForm(response.POST)
-    #     if form.is_valid():
-    #         form.save()
+def register(response):  # register
+    if response.method == "POST":
+        form = RegisterForm(response.POST)
+        if form.is_valid():
+            form.save()
 
-    #     return redirect("/login")
-    # else:
-    #     form = UserCreationForm()
+        return redirect("/login")
+    else:
+        form = RegisterForm()
 
-    # return render(response, "users/registerUserPpl.html", {"form": form})
+    return render(response, "users/registerUserPpl.html", {"form": form})
+
+#---------------------------fe-------------------------------
+def detail(request):
+    return render(request, 'users/detail.html')
+
+def search(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        # title_tag = Blog.objects.filter(title_tag_icontains = searched)
+        return render(request, 'users/blogpageUser.html', {'searched':searched})
+    else:
+        return render(request, 'users/blogpageUser.html')

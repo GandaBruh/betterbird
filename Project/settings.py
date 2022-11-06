@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'login' ,
+    'crispy_forms',
     'users',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,3 +129,5 @@ CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8000/']
 
 import django_heroku
 django_heroku.settings(locals())
+
+CRISPY_TEMPLATE_PACK="bootstrap4"

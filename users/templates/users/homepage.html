@@ -100,7 +100,7 @@
             </p>
             <p># Tag1, #Tag2</p>
             <span class="span-blog">
-                <a href="#detailblog">Details</a>
+                <a href="{% url 'detail' %}">Details</a>
                 <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
                 <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
                 <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
@@ -117,13 +117,11 @@
         {% endif %}
         {% endfor %}
 
-        <div style="margin-top: 100px;" class="row">
+        <div class="row">
             <div class="col-2">
             </div>
             <div class="col-8">
-                <a href="#"><img src="/pic/launch.jpg" style="width: 600px; "></a>
-
-
+                <a href="#"><img src="{% static 'images/launch.jpg' %}" style="width: 1000px; "></a>
             </div>
             <div class="col-2">
 
