@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 
 Project/settings.py
+
+fortuneCookie/db.sqlite3
