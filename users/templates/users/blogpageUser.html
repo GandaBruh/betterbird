@@ -1,0 +1,48 @@
+{% extends 'users/layout.html' %}
+{% load static %}
+
+<style>
+
+
+</style>
+
+{% block body %}
+
+<!-- search -->
+
+<div class="search-for">
+    <form action="{% url 'search' %}" method=POST class="d-flex" role="search" style="padding-left: 70%; margin-top: 2rem;">
+        {% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <div>
+            <button class="btn btn-outline-danger" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+
+<!-- all blog -->
+
+<div class="row" style="margin-top: 30px;"></div>
+
+{% for blog in object_list %}
+<div class="col-4 blog-format" style="box-sizing:border-box;">
+    <div style="display:flex; justify-content: space-between; align-items: center;">
+        <h3 class="title-text">{{ blog.title }}</h3>
+        <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
+        <i class="fa-solid fa-star fa-lg"></i>
+    </div>
+    <h5>{{ blog.introduction }}</h5>
+
+    <!-- <p class="general-text">{{ blog.detail }}</p> -->
+    <p>{{ blog.tag }}</p>
+    <span class="span-blog">
+        <a href="{% url 'detail' blog.pk %}">Details</a>
+        <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
+        <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
+        <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
+            style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+        </i>1.342k</span>
+</div>
+<br><br>
+{% endfor %}
+{% endblock %}

@@ -5,6 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
 from django.http import HttpResponseRedirect 
 from .forms import RegisterForm
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic import ListView, DetailView
 # Create your views here.
 def index(request):
     return render(request, 'users/loginUser.html')
@@ -110,15 +112,27 @@ def register(response):  # register
         form = RegisterForm()
 
     return render(response, "users/registerUserPpl.html", {"form": form})
-
+#------------------------------------------------------------
 #---------------------------fe-------------------------------
+
+class BlogView(ListView):
+    model = Blog
+    template_name = 'users/blogpageUser.html'
+
+class DetailView(DetailView):
+    model = Blog
+    template_name = 'users/detail.html'
+
+def searchBar(request):
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        if query:
+            blogs = Blog.objects.filter(title__icontains=query)
+            return render(request, 'users/searchfor.html', {'blogs':blogs})
+        else:
+            print("No information to show")
+            return render(request, 'users/searchfor.html', {})
+
+    
 def detail(request):
     return render(request, 'users/detail.html')
-
-def search(request):
-    if request.method == "POST":
-        searched = request.POST['searched']
-        # title_tag = Blog.objects.filter(title_tag_icontains = searched)
-        return render(request, 'users/blogpageUser.html', {'searched':searched})
-    else:
-        return render(request, 'users/blogpageUser.html')
