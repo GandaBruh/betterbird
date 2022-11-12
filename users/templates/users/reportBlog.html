@@ -1,0 +1,42 @@
+{% extends 'users/layout.html' %}
+{% load static %}
+
+{% block body %}
+<div class="report-page" style="padding: 5% 5%;">
+    <div class="report-title">
+        <p3>report blog</p3>
+    </div>
+
+</div>
+
+<center>
+    <div class='border'
+        style="background-color:rgb(255, 240, 241) ; width: fit-content; padding: 2rem; border-radius: 20px; ; border: 5px;">
+        <form action="{% url 'report' blogID %}" method="POST">
+            {% csrf_token %}
+            <p class="report-check">
+                <input type="checkbox" id="reason1" name="reason1" value="True">
+                <label for="reason1"> reason&nbsp; &nbsp;&nbsp; &nbsp;</label>
+                <input type="checkbox" id="reason2" name="reason2" value="True">
+                <label for="reason2"> reason&nbsp; &nbsp;&nbsp; &nbsp;</label>
+                <input type="checkbox" id="reason3" name="reason3" value="True">
+                <label for="reason3">reason&nbsp; &nbsp;</label>
+                <input type="checkbox" id="reason4" name="reason4" value="True">
+                <label for="reason4"> reason&nbsp; &nbsp;</label>
+                <input type="checkbox" id="reason5" name="reason5" value="True">
+                <label for="reason5"> reason&nbsp; &nbsp;</label>
+                <input type="checkbox" id="reason6" name="reason6" value="True">
+                <label for="reason6"> reason&nbsp; &nbsp;</label>
+
+
+            </p>
+            <div class="other-report">
+                <span class="report-check-1"><label for="other">Other&nbsp; &nbsp; &nbsp;</label></span>
+                <input type="text" placeholder="other reason" id="otherReason" name="otherReason"><br />
+
+</center>
+
+</div><br>
+<center><button class="button-report" type="submit">submit</button></center><br>
+</form>
+{% endblock %}

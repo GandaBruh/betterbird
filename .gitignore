@@ -160,3 +160,13 @@ cython_debug/
 #.idea/
 
 Project/settings.py
+
+./db.sqlite3
+
+users/migrations/*
+
+users/templates/users/layout.html
+
+
+
+
