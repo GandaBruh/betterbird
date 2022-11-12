@@ -7,7 +7,9 @@ from django.http import HttpResponseRedirect
 from .forms import RegisterForm
 # Create your views here.
 def index(request):
-    return render(request, 'users/loginUser.html')
+    if not request.user.is_authenticated:
+        return loginPage(request)
+    return render(request, 'users/homepage.html')
 
 def aboutUs(request):
     return render(request, 'users/aboutUs.html')
@@ -20,20 +22,39 @@ def logoutFunc(request):
     })
 
 def profile(request):
+    if not request.user.is_authenticated:
+        return loginPage(request)
     userId=1
-    blog = OwnedBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    user = AccountUser.objects.filter(user_id=request.user.id).first()
+    blogs = Blog.objects.filter(user_id=request.user.id).all()
     blog1 = [1,2,3]
+    print(blogs)
     return render(request, 'users/myProfile.html',{
-        'blogs': blog1,
+        'blogs': blogs,
+        'user': user
     })
 
 def viewProfile(request):
     userId=1
-    blog = OwnedBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    print(request.user.id)
+    
+    blogs = Blog.objects.filter(user_id=request.user.id).values_list('pk', flat=True)
     blog1 = [1,2,3]
+    
+ 
     return render(request, 'users/userProfile.html',{
         'blogs': blog1,
+        
     })
+
+def createBlogPage(request):
+    return render(request, 'users/createBlogPage.html',{
+        
+    })
+
+
+def createBlog(request):
+    return homepage(request)
 
 def likeBlog(request):
     id = request.POST['id']

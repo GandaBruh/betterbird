@@ -16,6 +16,7 @@ class History(models.Model):
     currency = models.BooleanField(default=False)
 
 class Blog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=9999)
     introduction = models.CharField(max_length=9999)
     detail = models.CharField(max_length=9999)
@@ -26,7 +27,7 @@ class Blog(models.Model):
     blogType = models.BooleanField(default=False)
     recommended = models.BooleanField(default=False)
     like = models.IntegerField(default=0)
-    expecctCookies = models.IntegerField(default=0)
+    expectCookies = models.IntegerField(default=0)
 
 
 class ReportBlog(models.Model):

@@ -8,67 +8,105 @@
 </style>
 
 {% block body %}
-<div class="row">
-    <div class="col-4"></div>
-    <div class="col-8">
-        <p> username :<br>
-            password :<br>
-            fullname :<br>
-            phone : <br>
-            email <br>
+<div class="row" style="padding-top: 25px;">
+    <div class="col-1"></div>
+    <div style="height:250px;" class="col-4">
+        <img style="max-width: 100%; max-height: 100%; border-radius: 5px;" src="{% static 'images/profile.jpg' %}" />
+    </div>
+    <div class="col-1"></div>
+    <div class="col-4" style="font-size: 18px;">
+        <p> username : {{user.user.username}}<br>
+            fullname : {{user.user.first_name}} {{user.user.last_name}}<br>
+            phone : {{user.phone}}<br>
+            email : {{user.user.email}}<br>
         </p>
     </div>
+
 </div>
-<div style="display: flex">
-    <p>My blog</p>
-    <button style="float: right;" class="btn btn-info"> + new blog </button>
+
+<div style="margin-top: 50px; padding-left: 30px; margin-bottom: 25px;">
+    <p style="display: inline; margin-right: 30px; font-size: 35px;">My blog</p>
+    <a href="{% url 'createBlogPage' %}"><button style="display: inline;" class="btn btn-info"> + new blog </button></a>
 </div>
 {% for i in blogs %}
 {% if forloop.counter|divisibleby:2 %}
-<div class="col-4 blog-format" style="box-sizing:border-box;">
-    <div style="display:flex; justify-content: space-between; align-items: center;">
-        <h3 class="title-text">title</h3>
-        <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
-        <i class="fa-solid fa-star fa-lg"></i>
+<div class="col-4 blog-format">
+    <div class="'blog-body">
+        <div class="blog-img">
+            <img src="https://images.unsplash.com/photo-1594897030264-ab7d87efc473?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80">
+        </div>
+        
+        <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
+            <h3 class="title-text">{{ i.title }}</h3>
+            <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
+            <i class="fa-solid fa-star fa-lg"></i>
+        </div>
+        <span class="blog-text">
+            <p class="general-text">{{i.introduction}}
+            </p>
+        </span>
+        
+        
     </div>
-
-    <p class="general-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
-        perspiciatis unde maxime
-        fuga quis sunt molestias laudantium libero magni error eum nisi ex nam incidunt suscipit, distinctio nulla?
-    </p>
-    <p># Tag1, #Tag2</p>
-    <span class="span-blog">
-        <a href="#detailblog">Details</a>
-        <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
+    <span>
+        <p class="tag-design-1">#tag 1</p>
+        <p class="tag-design-1">#tag 2</p>
+    </span>
+    <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
+        
+        <span  class="span-blog" style="float: left">
+        <a href="{% url 'detail' %}" >Readmore</a>
+        <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
+        {% if i.expectCookies > 1000 %}
+        {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
+        {% else %}
+        {{i.expectCookies}}
+        {% endif %}
         <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
         <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
             style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
-        </i>1.342k</span>
+        </i>{% if i.like > 1000 %}
+        {% widthratio i.like|add:"-500" 1000 1 %}k
+        {% else %}
+        {{i.like}}
+        {% endif %}</span>
+    </div>
+    
 </div>
+
 <div class="col-2"></div>
 </div>
 {% else %}
 <div class="row">
     <div class="col-2"></div>
-    <div class="col-4 blog-format" style="box-sizing:border-box;">
+    <div class="col-4 blog-format" style="">
         <div style="display:flex; justify-content: space-between; align-items: center;">
-            <h3 class="title-text">title</h3>
+            <h3 class="title-text">{{ i.title }}</h3>
             <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
             <i class="fa-solid fa-star fa-lg"></i>
         </div>
 
-        <p class="general-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
-            perspiciatis unde maxime
-            fuga quis sunt molestias laudantium libero magni error eum nisi ex nam incidunt suscipit, distinctio nulla?
+        <p class="general-text">{{i.introduction}}
         </p>
-        <p># Tag1, #Tag2</p>
-        <span class="span-blog">
+        <div style="position:absolute; bottom: 0;">
+            <p ># Tag1, #Tag2</p>
+            <span  class="span-blog">
             <a href="{% url 'detail' %}">Details</a>
-            <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
+            <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
+            {% if i.expectCookies > 1000 %}
+            {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
+            {% else %}
+            {{i.expectCookies}}
+            {% endif %}
             <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
             <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
                 style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
-            </i>1.342k</span>
+            </i>{% if i.like > 1000 %}
+            {% widthratio i.like|add:"-500" 1000 1 %}k
+            {% else %}
+            {{i.like}}
+            {% endif %}</span>
+        </div>
     </div>
 
     {% endif %}
