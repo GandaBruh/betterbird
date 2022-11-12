@@ -3,7 +3,10 @@ from django.contrib.auth import authenticate, login, logout
 from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, AccountOrganization, ReportBlog
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect 
+from .forms import RegisterForm
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
 # Create your views here.
@@ -159,7 +162,6 @@ def register(request):  # register
                     user=user, birthday=bday, phone=phone, address=address, country=country)
 
         return HttpResponseRedirect(reverse("login"))
-
     return render(request, "users/registerUserPpl.html")
 
 
@@ -183,18 +185,27 @@ def reportBlog(request, id):
     return render(request, 'users/reportBlog.html', {
         'blogID' : blogID
     })
+#------------------------------------------------------------
+#---------------------------fe-------------------------------
 
-# ---------------------------fe-------------------------------
+class BlogView(ListView):
+    model = Blog
+    template_name = 'users/blogpageUser.html'
 
+class DetailView(DetailView):
+    model = Blog
+    template_name = 'users/detail.html'
+
+def searchBar(request):
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        if query:
+            blogs = Blog.objects.filter(title__icontains=query)
+            return render(request, 'users/searchfor.html', {'blogs':blogs})
+        else:
+            print("No information to show")
+            return render(request, 'users/searchfor.html', {})
 
 def detail(request):
     return render(request, 'users/detail.html')
 
-
-def search(request):
-    if request.method == "POST":
-        searched = request.POST['searched']
-        # title_tag = Blog.objects.filter(title_tag_icontains = searched)
-        return render(request, 'users/blogpageUser.html', {'searched': searched})
-    else:
-        return render(request, 'users/blogpageUser.html')

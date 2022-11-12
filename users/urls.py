@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import BlogView, DetailView
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -14,7 +15,8 @@ urlpatterns = [
     path('cookieCoin/<int:cookie_id>', views.confirmCookie, name='confirmCookie'),
     path('homepage/', views.homepage, name='homepage'),
     path('members/', views.members, name='members'),
-    path('blogpage/', views.search, name='blogpage'),
-    path('detail/', views.detail, name='detail'),
+    path('blogpage/', BlogView.as_view(), name='blogpage'),
+    path('detail/<int:pk>', DetailView.as_view(), name='detail'),
+    path('search/', views.searchBar, name='search'),
     path('report/<int:id>', views.reportBlog, name='report'),
 ]
