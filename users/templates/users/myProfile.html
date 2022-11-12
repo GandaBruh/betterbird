@@ -55,7 +55,7 @@
     <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
         
         <span  class="span-blog" style="float: left">
-        <a href="{% url 'detail' %}" >Readmore</a>
+        <a href="{% url 'detail' 1 %}" >Readmore</a>
         <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
         {% if i.expectCookies > 1000 %}
         {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
@@ -80,18 +80,31 @@
 <div class="row">
     <div class="col-2"></div>
     <div class="col-4 blog-format" style="">
-        <div style="display:flex; justify-content: space-between; align-items: center;">
-            <h3 class="title-text">{{ i.title }}</h3>
-            <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
-            <i class="fa-solid fa-star fa-lg"></i>
+        <div class="'blog-body">
+            <div class="blog-img">
+                <img src="https://images.unsplash.com/photo-1594897030264-ab7d87efc473?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80">
+            </div>
+            
+            <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
+                <h3 class="title-text">{{ i.title }}</h3>
+                <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
+                <i class="fa-solid fa-star fa-lg"></i>
+            </div>
+            <span class="blog-text">
+                <p class="general-text">{{i.introduction}}
+                </p>
+            </span>
+            
+            
         </div>
-
-        <p class="general-text">{{i.introduction}}
-        </p>
-        <div style="position:absolute; bottom: 0;">
-            <p ># Tag1, #Tag2</p>
-            <span  class="span-blog">
-            <a href="{% url 'detail' %}">Details</a>
+        <span>
+            <p class="tag-design-1">#tag 1</p>
+            <p class="tag-design-1">#tag 2</p>
+        </span>
+        <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
+            
+            <span  class="span-blog" style="float: left">
+            <a href="{% url 'detail' 1 %}" >Readmore</a>
             <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
             {% if i.expectCookies > 1000 %}
             {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
@@ -106,6 +119,7 @@
             {% else %}
             {{i.like}}
             {% endif %}</span>
+        </div>
         </div>
     </div>
 
