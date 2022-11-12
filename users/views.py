@@ -4,7 +4,6 @@ from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, AccountOrganiza
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
 from django.http import HttpResponseRedirect 
-from .forms import RegisterForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.models import User
