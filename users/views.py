@@ -10,7 +10,9 @@ from django.shortcuts import redirect
 
 
 def index(request):
-    return render(request, 'users/loginUser.html')
+    if not request.user.is_authenticated:
+        return loginPage(request)
+    return render(request, 'users/homepage.html')
 
 
 def aboutUs(request):
@@ -26,24 +28,33 @@ def logoutFunc(request):
 
 
 def profile(request):
-    userId = 1
-    blog = OwnedBlog.objects.filter(
-        user_id=request.user.id).values_list('blog_id', flat=True)
-    blog1 = [1, 2, 3]
-    return render(request, 'users/myProfile.html', {
-        'blogs': blog1,
+
+    if not request.user.is_authenticated:
+        return loginPage(request)
+    userId=1
+    user = AccountUser.objects.filter(user_id=request.user.id).first()
+    blogs = Blog.objects.filter(user_id=request.user.id).all()
+    blog1 = [1,2,3]
+    print(blogs)
+    return render(request, 'users/myProfile.html',{
+        'blogs': blogs,
+        'user': user
     })
 
 
 def viewProfile(request):
-    userId = 1
-    blog = OwnedBlog.objects.filter(
-        user_id=request.user.id).values_list('blog_id', flat=True)
-    blog1 = [1, 2, 3]
-    return render(request, 'users/userProfile.html', {
-        'blogs': blog1,
-    })
+    userId=1
+    print(request.user.id)
+    
+    blogs = Blog.objects.filter(user_id=request.user.id).values_list('pk', flat=True)
+    blog1 = [1,2,3]
+    
+ 
+    return render(request, 'users/userProfile.html',{
 
+        'blogs': blog1,
+        
+    })
 
 def likeBlog(request):
     id = request.POST['id']
