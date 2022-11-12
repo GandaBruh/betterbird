@@ -9,26 +9,27 @@
     <div>
         <p1 style="margin-left: 100px;">My cookies: </p1>
         <p1 id="cookietab"> 5000<img style="height: 40px; margin-bottom: 10px;"
-            src="{% static 'images/Cookies1.PNG' %}" /><a href=" " style="border-left: none; padding-left: 0;"></a>
+                src="{% static 'images/Cookies1.PNG' %}" /><a href=" " style="border-left: none; padding-left: 0;"></a>
         </p1>
     </div>
 
-    
-        {% for ck in cookies %}
-        <div class="row">
+
+    {% for ck in cookies %}
+    <div class="row">
         <div class="col-3"></div>
         <div class="col-6 buycookieblog">
-        <!--<h3 class="buycookieblog">-->
-            <b><img style="height: 30px; margin-bottom: 5px; margin-top: 5px;" src="{% static 'images/Cookies1.PNG' %}" />
+            <!--<h3 class="buycookieblog">-->
+            <b><img style="height: 30px; margin-bottom: 5px; margin-top: 5px;"
+                    src="{% static 'images/Cookies1.PNG' %}" />
                 {{ ck.cookies }} </b><a class="changeA" href="{% url 'confirmCookie' ck.id %}" style='float: right; text-decoration: none; color: #000; 
                 background-color: rgba(15, 106, 23, 0.01); padding-left: 150px; margin-top: 10px;'> {{ ck.price }} </a>
         </div>
-        <div class="col-3" ></div>
-        </div>
-    
-        {% endfor %}
-    
-        <!--<article class="buycookie">
+        <div class="col-3"></div>
+    </div>
+
+    {% endfor %}
+
+    <!--<article class="buycookie">
             <p2 style="margin-right: 420px;">
                 <b><img style="height: 30px; margin-bottom: 5px; margin-left: 5px; margin-top: 5px;" src="{% static 'images/Cookies.PNG' %}" />  20</b>
             </p2>
@@ -49,13 +50,13 @@
                 <b><img style="height: 30px; margin-bottom: 5px; margin-left: 10px; margin-top: 5px;" src="{% static 'images/cookiesbox.PNG' %}" />  200</b></p2>
             <a href="confirmCookie/"> 20 $ </a>
         </article>-->
-    
+
 </div><br>
 
 <p3 style="padding: 10px;">History</p3>
 <form class="history">
 
-        <p> None </p>
+    <p> None </p>
 
 </form>
 
