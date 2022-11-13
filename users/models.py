@@ -47,7 +47,7 @@ class Blog(models.Model):
     detail = models.CharField(max_length=9999)
     tag = models.CharField(max_length=9999)
     date1 = models.DateField()
-    image = models.ImageField(blank=True, null=True)
+    image = models.CharField(max_length=9999, default='')
     donate = models.IntegerField(default=0)
     blogType = models.BooleanField(default=False)
     recommended = models.BooleanField(default=False)
