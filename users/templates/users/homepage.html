@@ -47,11 +47,11 @@
 
 
 
-<div class="w3-top">
+<!-- <div class="w3-top">
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal" title="Search"><i
             class="fa fa-search"></i></a>
 
-</div>
+</div> -->
 <div class="w3-container w3-right">
 
     <button class="button button2">+ New Blog</button>
@@ -59,7 +59,7 @@
 
 </div>
 
-<div class="row" style="margin-top: 100px;"></div>
+<div class="row" style="padding-top: 100px;"></div>
 {% for i in blogs %}
 {% if forloop.counter|divisibleby:2 %}
 <div class="col-4 blog-format" style="box-sizing:border-box;">
@@ -69,7 +69,7 @@
         <i class="fa-solid fa-star fa-lg"></i>
     </div>
 
-    <p class="general-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
+    <p class="blog-text" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
         perspiciatis unde maxime
         fuga quis sunt molestias laudantium libero magni error eum nisi ex nam incidunt suscipit, distinctio nulla?
     </p>
@@ -100,7 +100,7 @@
         </p>
         <p># Tag1, #Tag2</p>
         <span class="span-blog">
-            <a href="{% url 'detail' %}">Details</a>
+            <a href="{% url 'detail' 1 %}">Details</a>
             <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
             <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
             <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
@@ -120,8 +120,9 @@
 <div class="row">
     <div class="col-2">
     </div>
-    <div class="col-8">
-        <a href="#"><img src="{% static 'images/launch.jpg' %}" style="width: 1000px; "></a>
+    <div class="col-8" >
+        <a href="#"><img src="{% static 'images/launch.jpg' %}" style="max-width: 100%;
+            max-height: 100vh;" ></a>
     </div>
     <div class="col-2">
 

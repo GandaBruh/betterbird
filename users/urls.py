@@ -1,11 +1,12 @@
 from django.urls import path
 from . import views
+from .views import BlogView, DetailView
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('aboutUs/', views.aboutUs , name='aboutUs'),
+    path('aboutUs/', views.aboutUs, name='aboutUs'),
     path('login/', views.loginPage, name='login'),  # login
-    path("register/", views.register, name="register"), 
+    path("register/", views.register, name="register"),
     path('logout', views.logoutFunc, name='logout'),
     path('profile/', views.viewProfile, name="viewProfile"),
     path('myProfile/', views.profile, name="profile"),
@@ -17,4 +18,8 @@ urlpatterns = [
     path('blogpage/', views.search, name='blogpage'),
     path('detail/', views.detail, name='detail'),
     path('confirmPayment/', views.confirmPayment, name='confirmPayment'),
+    path('blogpage/', BlogView.as_view(), name='blogpage'),
+    path('detail/<int:pk>', DetailView.as_view(), name='detail'),
+    path('search/', views.searchBar, name='search'),
+    path('report/<int:id>', views.reportBlog, name='report'),
 ]

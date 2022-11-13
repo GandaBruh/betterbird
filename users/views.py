@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, CookieCoin, History, Wallet
 from django.contrib.auth.forms import UserCreationForm
@@ -7,14 +7,22 @@ from django.http import HttpResponseRedirect
 from .forms import RegisterForm
 from django.contrib.auth.models import User
 from random import randint
+from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, AccountOrganization, ReportBlog
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.views.generic import ListView, DetailView
 
 # Create your views here.
+
 def index(request):
-    return render(request, 'users/loginUser.html')
+    if not request.user.is_authenticated:
+        return loginPage(request)
+    return render(request, 'users/homepage.html')
+
 
 def aboutUs(request):
     return render(request, 'users/aboutUs.html')
-#----------------------------------------------------------------------#
+# ----------------------------------------------------------------------#
+
 
 def logoutFunc(request):
     logout(request)
@@ -22,25 +30,39 @@ def logoutFunc(request):
         'message': 'You are logged out.'
     })
 
+
 def profile(request):
+
+    if not request.user.is_authenticated:
+        return loginPage(request)
     userId=1
-    blog = OwnedBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    user = AccountUser.objects.filter(user_id=request.user.id).first()
+    blogs = Blog.objects.filter(user_id=request.user.id).all()
     blog1 = [1,2,3]
+    print(blogs)
     return render(request, 'users/myProfile.html',{
-        'blogs': blog1,
+        'blogs': blogs,
+        'user': user
     })
+
 
 def viewProfile(request):
     userId=1
-    blog = OwnedBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    print(request.user.id)
+    
+    blogs = Blog.objects.filter(user_id=request.user.id).values_list('pk', flat=True)
     blog1 = [1,2,3]
+    
+ 
     return render(request, 'users/userProfile.html',{
+
         'blogs': blog1,
+        
     })
 
 def likeBlog(request):
     id = request.POST['id']
-    
+
     blog = Blog.objects.filter(pk=id).first()
     like = True
     if like:
@@ -49,8 +71,8 @@ def likeBlog(request):
         likeBlog = LikeBlog(user=request.user, blog=blog)
     return
 
-#Cookie coin - faiinarak
 
+#Cookie coin - faiinarak
 def cookieCoin(request):
     global user_id
     try:
@@ -66,7 +88,6 @@ def cookieCoin(request):
         'wallet' : wallet,
         'history' : history, 
     })
-
 
 def confirmCookie(request, cookie_id):
     global userID
@@ -131,21 +152,25 @@ def confirmPayment(request):
     #         'history': check is not None
     #     }, status=400) 
 
-#------------------------------------------------------------
-#----------------------chom---------------------------------
+# ------------------------------------------------------------
+# ----------------------chom---------------------------------
+
 
 def homepage(request):
-    blog1 = [1,2,3,4]
+    blog1 = [1, 2, 3, 4]
     maxlen = len(blog1)
-    return render(request, 'users/homepage.html',{
+    return render(request, 'users/homepage.html', {
         'blogs': blog1,
-        'maxlen':maxlen
+        'maxlen': maxlen
     })
 
+
 def members(request):
-    return render(request,'users/members.html' )
-#---------------------------------------------------------------
-#-------------------------safe---------------------------------
+    return render(request, 'users/members.html')
+# ---------------------------------------------------------------
+# -------------------------safe---------------------------------
+
+
 def loginPage(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -164,26 +189,82 @@ def loginPage(request):
 # Create your views here.
 
 
-def register(response):  # register
-    if response.method == "POST":
-        form = RegisterForm(response.POST)
-        if form.is_valid():
-            form.save()
+def register(request):  # register
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        confirmPassword = request.POST["cpassword"]
+        userType = request.POST["userType"]
+        firstname = request.POST["fname"]
+        lastname = request.POST["lname"]
+        email = request.POST["email"]
+
+        if (password == confirmPassword):
+            user = User.objects.create_user(
+                username=username, password=password, email=email, first_name=firstname, last_name=lastname)
+
+            if (userType == "1"):
+                orgName = request.POST["orgName"]
+                fday = request.POST["fday"]
+                country = request.POST["country"]
+                address = request.POST["address"]
+                phone = request.POST["phone"]
+                accountO = AccountOrganization.objects.create(
+                    user=user, foundingDay=fday, phone=phone, address=address, orgName=orgName, country=country)
+
+            elif (userType == "2"):
+                bday = request.POST["bday"]
+                country = request.POST["country"]
+                address = request.POST["address"]
+                phone = request.POST["phone"]
+                accountU = AccountUser.objects.create(
+                    user=user, birthday=bday, phone=phone, address=address, country=country)
 
         return HttpResponseRedirect(reverse("login"))
-    else:
-        form = RegisterForm()
+    return render(request, "users/registerUserPpl.html")
 
-    return render(response, "users/registerUserPpl.html", {"form": form})
 
+def reportBlog(request, id):
+    blogID = id
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        blog = Blog.objects.get(pk=id)
+        reason1 = request.POST.get("reason1", False)
+        reason2 = request.POST.get("reason2", False)
+        reason3 = request.POST.get("reason3", False)
+        reason4 = request.POST.get("reason4", False)
+        reason5 = request.POST.get("reason5", False)
+        reason6 = request.POST.get("reason6", False)
+        otherReason = request.POST.get("otherReason")
+        reportBlog = ReportBlog.objects.create(reason1=reason1, reason2=reason2, reason3=reason3,
+                                               reason4=reason4, reason5=reason5, reason6=reason6, 
+                                               otherReason=otherReason, user=user,
+                                               blog=blog)
+        return  HttpResponseRedirect(reverse("detail"))                                       
+    return render(request, 'users/reportBlog.html', {
+        'blogID' : blogID
+    })
+#------------------------------------------------------------
 #---------------------------fe-------------------------------
+
+class BlogView(ListView):
+    model = Blog
+    template_name = 'users/blogpageUser.html'
+
+class DetailView(DetailView):
+    model = Blog
+    template_name = 'users/detail.html'
+
+def searchBar(request):
+    if request.method == 'GET':
+        query = request.GET.get('query')
+        if query:
+            blogs = Blog.objects.filter(title__icontains=query)
+            return render(request, 'users/searchfor.html', {'blogs':blogs})
+        else:
+            print("No information to show")
+            return render(request, 'users/searchfor.html', {})
+
 def detail(request):
     return render(request, 'users/detail.html')
 
-def search(request):
-    if request.method == "POST":
-        searched = request.POST['searched']
-        # title_tag = Blog.objects.filter(title_tag_icontains = searched)
-        return render(request, 'users/blogpageUser.html', {'searched':searched})
-    else:
-        return render(request, 'users/blogpageUser.html')

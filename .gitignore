@@ -161,4 +161,12 @@ cython_debug/
 
 Project/settings.py
 
-fortuneCookie/db.sqlite3
+./db.sqlite3
+
+users/migrations/*
+
+users/templates/users/layout.html
+
+
+
+

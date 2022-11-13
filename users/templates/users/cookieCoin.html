@@ -8,13 +8,13 @@
     <br>
     <div>
         <p1 style="margin-left: 100px;">My cookies: </p1>
-        
+  
         <p1 id="cookietab" name="wallet"> {{ wallet.balanceCookie }}<img style="height: 40px; margin-bottom: 10px;"
             src="{% static 'images/Cookies1.PNG' %}" /><a href=" " style="border-left: none; padding-left: 0;"></a>
         </p1>
         
     </div>
-    
+
         {% for ck in cookieCoin %} 
         <div class="row">
         <div class="col-3"></div>
@@ -24,12 +24,11 @@
                 {{ ck.cookie }} </b><a class="changeA" href="{% url 'confirmCookie' ck.id %}" style='float: right; text-decoration: none; color: #000; 
                 background-color: rgba(15, 106, 23, 0.01); padding-left: 100px; margin-top: 10px;'>{{ ck.price }} $</a>
         </div>
-        <div class="col-3" ></div>
-        </div>
-    
-        {% endfor %}
-    
-        <!--<article class="buycookie">
+        <div class="col-3"></div>
+    </div>
+    {% endfor %}
+
+    <!--<article class="buycookie">
             <p2 style="margin-right: 420px;">
                 <b><img style="height: 30px; margin-bottom: 5px; margin-left: 5px; margin-top: 5px;" src="{% static 'images/Cookies.PNG' %}" />  20</b>
             </p2>
@@ -50,7 +49,7 @@
                 <b><img style="height: 30px; margin-bottom: 5px; margin-left: 10px; margin-top: 5px;" src="{% static 'images/cookiesbox.PNG' %}" />  200</b></p2>
             <a href="confirmCookie/"> 20 $ </a>
         </article>-->
-    
+
 </div><br>
 
 <p3 style="padding: 10px;">History </p3>
@@ -60,5 +59,4 @@
         <p>Date: {{ hist.date }} - {{ hist.time }} price: {{ hist.price }}$ - <span style="color:rgb(66, 154, 69)">+{{ hist.cookie }}</span><img style="height: 30px; " src="{% static 'images/Cookies1.PNG' %}"/></p>
     {% endfor %}
 </div>
-
 {% endblock %}
