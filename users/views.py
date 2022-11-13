@@ -4,7 +4,6 @@ from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, CookieCoin, His
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
 from django.http import HttpResponseRedirect 
-from .forms import RegisterForm
 from django.contrib.auth.models import User
 from random import randint
 from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, AccountOrganization, ReportBlog
