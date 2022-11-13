@@ -1,5 +1,8 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+from django.conf .urls.static import static
+from django.conf  import settings
+
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -14,6 +17,7 @@ urlpatterns = [
     path('cookieCoin/<int:cookie_id>', views.confirmCookie, name='confirmCookie'),
     path('homepage/', views.homepage, name='homepage'),
     path('members/', views.members, name='members'),
-        path('blogpage/', views.search, name='blogpage'),
+    path('blogpage/', views.search, name='blogpage'),
     path('detail/', views.detail, name='detail'),
-]
+    path('createblog/', views.createblog, name='createBlog')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIAROOT)

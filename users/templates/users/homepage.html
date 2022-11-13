@@ -50,13 +50,12 @@
 <div class="w3-top">
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal" title="Search"><i
             class="fa fa-search"></i></a>
-
 </div>
+
+<br>
+
 <div class="w3-container w3-right">
-
-    <button class="button button2">+ New Blog</button>
-
-
+    <a class="button button2" href="{% url 'createBlog' %}" style="text-decoration: none;">+ New Blog</a>
 </div>
 
 <div class="row" style="margin-top: 100px;"></div>
@@ -68,11 +67,7 @@
         <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
         <i class="fa-solid fa-star fa-lg"></i>
     </div>
-
-    <p class="general-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
-        perspiciatis unde maxime
-        fuga quis sunt molestias laudantium libero magni error eum nisi ex nam incidunt suscipit, distinctio nulla?
-    </p>
+    <p class="general-text"> title </p>
     <p># Tag1, #Tag2</p>
     <span class="span-blog">
         <a href="#detailblog">Details</a>
@@ -81,6 +76,7 @@
         <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
             style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
         </i>1.342k</span>
+    
 </div>
 <div class="col-2"></div>
 </div>
@@ -121,7 +117,7 @@
     <div class="col-2">
     </div>
     <div class="col-8">
-        <a href="#"><img src="{% static 'images/launch.jpg' %}" style="width: 1000px; "></a>
+        <a href="#"><img src="{% static 'images/launch.jpg' %}" style="width: 500px; "></a>
     </div>
     <div class="col-2">
 

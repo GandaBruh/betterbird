@@ -5,6 +5,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
 from django.http import HttpResponseRedirect 
 from .forms import RegisterForm
+from django.contrib.auth.models import User
+from datetime import date as date_function
 # Create your views here.
 def index(request):
     return render(request, 'users/loginUser.html')
@@ -79,6 +81,30 @@ def homepage(request):
 
 def members(request):
     return render(request,'users/members.html' )
+
+def createblog(request):
+    global userID
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        title = request.POST['title']
+        introduction = request.POST['introduction']
+        detail = request.POST['detail']
+        tag = request.POST['tag']
+        date1 = request.POST['date1']
+        image = request.POST['image']
+        expectCookies = request.POST['expectCookies']
+
+        blog = Blog.objects.create(user=user,title=title,
+        introduction=introduction,detail=detail,
+        tag=tag,date1=date1,image=image,donate=0,blogType=False,recommended=False,
+        like=0,expectCookies=expectCookies)
+
+        return profile(request)
+    return render(request, 'users/createBlog.html')
+
+
+
+
 #---------------------------------------------------------------
 #-------------------------safe---------------------------------
 def loginPage(request):
@@ -122,3 +148,4 @@ def search(request):
         return render(request, 'users/blogpageUser.html', {'searched':searched})
     else:
         return render(request, 'users/blogpageUser.html')
+

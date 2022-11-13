@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Create your models here.
 class Wallet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -16,17 +17,18 @@ class History(models.Model):
     currency = models.BooleanField(default=False)
 
 class Blog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=9999)
     introduction = models.CharField(max_length=9999)
     detail = models.CharField(max_length=9999)
     tag = models.CharField(max_length=9999)
-    date = models.DateField()
-    image = models.CharField(max_length=256)
+    date1 = models.DateField()
+    image = models.ImageField(blank=True, null=True)
     donate = models.IntegerField(default=0)
     blogType = models.BooleanField(default=False)
     recommended = models.BooleanField(default=False)
     like = models.IntegerField(default=0)
-    expecctCookies = models.IntegerField(default=0)
+    expectCookies = models.IntegerField()
 
 
 class ReportBlog(models.Model):
@@ -75,3 +77,6 @@ class AccountAdmin(models.Model):
     role = models.CharField(max_length=9999)
     phone = models.CharField(max_length=9999)
     tag = models.CharField(max_length=9999)
+
+
+    
