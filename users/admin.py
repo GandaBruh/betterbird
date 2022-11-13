@@ -1,7 +1,7 @@
 from django.contrib import admin
-from users.models import AccountUser, AccountOrganization,Blog,ReportBlog
+from users.models import AccountUser, AccountOrganization,Blog,ReportBlog, CookieCoin, Wallet, History
 # Register your models here.
-admin.site.register([Blog, AccountUser, AccountOrganization, ReportBlog])
+admin.site.register([Blog, AccountUser, AccountOrganization, ReportBlog, CookieCoin, Wallet, History])
 
 # class ProductAdmin(admin.ModelAdmin):
 #     list_display = ('id', 'name', 'price', 'is_published', 'created_at')
