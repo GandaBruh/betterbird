@@ -10,9 +10,6 @@
         <p1 style="margin-left: 100px;">My cookies: </p1>
         <p1 id="cookietab">{{ wallet.balanceCookie }}<img style="height: 40px; margin-bottom: 10px;"
             src="{% static 'images/Cookies1.PNG' %}" /><a href=" " style="border-left: none; padding-left: 0;"></a>
-        <p1 id="cookietab"> 5000<img style="height: 40px; margin-bottom: 10px;"
-                src="{% static 'images/Cookies1.PNG' %}" /><a href=" " style="border-left: none; padding-left: 0;"></a>
-
         </p1>
     </div>
 </div>
@@ -35,22 +32,7 @@
                 <a class="cancel" href="{% url 'cookieCoin' %}"><span>cancel </span></a>
                 <button type="submit" class='confirm'><span>confirm</span></button> 
             </center>
-            
-    
-    
         </form>
-        <label for="fname">Full name: </label>
-        <input type="text" placeholder="Firstname Surname" id="fname" name="fname" required><br />
-        <label for="time">Date: </label>
-        <input type="date" id="time" name="time" placeholder="MM/DD/YY"><br>
-        <label for="appt">Time: </label>
-        <input type="time" id="appt" name="appt" min="00:00" max="11:00" required><br>
-        <label for="cookie">Cookies: {{ cookies.cookies }}<img
-                style="height: 30px; margin-bottom: 5px; margin-top: 5px;"
-                src="{% static 'images/Cookies1.PNG' %}" /></label><br>
-        <label for="price">Price: {{ cookies.price }}</label><br>
-        <label for="transfer-slip">Transfer slip: </label>
-        <input type="file" style="width: 250px;"><br>
     </div>
     <div class="col-3"></div>
 </div>
