@@ -275,18 +275,11 @@
 
     }
 
-    .confirmBox>label,
-    input {
+    .confirmBox>label, input {
         margin-bottom: 20px;
-    }
-
-    .confirmBox>input {
-        margin-left: 15px;
-        background-color: rgba(255, 255, 255, 0.4);
         border: none;
-        padding: 7px;
         border-radius: 10px;
-        text-align: center;
+        padding:5px;
     }
 
     .cancel {
@@ -412,9 +405,10 @@
         right: 0;
     }
 
+   
     .history {
         background-color: rgba(255, 255, 235, 0.4);
-        padding: 80px;
+        padding: 50px;
         margin-left: 60px;
         border-radius: 20px;
         margin-top: 20px;
@@ -422,22 +416,73 @@
     }
 
     .history>p {
-        color: rgba(80, 80, 74, 0.3);
-        font-size: 200%;
-        text-align: center;
+        color: rgb(22, 27, 21);
     }
 
     .buycookieblog {
         background-color: rgba(255, 255, 255, 0.3);
         border-radius: 20px;
         width: max-content;
-
         margin-top: 10px;
     }
 
     .changeA:hover {
         background-color: aliceblue;
     }
+
+    .paysuc {
+        background-color: rgba(255, 241, 213, 0.5);
+        border-radius: 10px;
+    }
+    .paysuc > h1, h2{
+        font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+        color: rgb(51, 94, 40);
+        border: 100%;
+    }
+    
+    .paysuc>a {
+        background-color: rgb(233, 136, 123);
+        color: aliceblue;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: aliceblue;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+    
+    .paysuc>a span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .paysuc span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .paysuc:hover span {
+        padding-right: 25px;
+        color: aliceblue;
+    }
+
+    .paysuc:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
 
     /*------------------------------------------------------------------------------------------*/
 

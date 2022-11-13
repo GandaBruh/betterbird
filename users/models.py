@@ -1,19 +1,43 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
+from django.utils.timezone import now
+
 
 # Create your models here.
+class CookieCoin(models.Model):
+    cookie = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)
+    def __str__(self):
+        return f"{self.cookie}"
+
 class Wallet(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    balance = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    balanceCookie = models.IntegerField(default=0)
+    def __str__(self):
+        return f"{self.user}"
+
+    # def userWallet():
+    #     hist_cookie = History.objects.all()
+    #     total = hist_cookie.cookie + Wallet.balanceCookie
+    #     return total
 
 
 
 class History(models.Model):
-    amount = models.IntegerField(default=0)
-    slip = models.CharField(max_length=9999)
+    userID = models.IntegerField(default=0)
+    #amount = models.IntegerField(default=0) # จำนวนที่ใช้ไป relate w/ currency
+    slip = models.CharField(max_length=9999, null=True, blank=True)
     transactionCode = models.CharField(max_length=9999)
     historyType =  models.BooleanField(default=False)
-    currency = models.BooleanField(default=False)
+    currency = models.BooleanField(default=False) # 0 = cash, 1 = cookie
+    date = models.DateTimeField(null=True)#auto_now_add=True
+    time = models.TimeField(default=datetime.time(16, 00))
+    cookie = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.userID}"
 
 class Blog(models.Model):
     title = models.CharField(max_length=9999)
