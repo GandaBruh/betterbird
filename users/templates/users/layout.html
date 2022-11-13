@@ -144,6 +144,7 @@
         line-height: 30px;
     }
 
+
     p1 {
         color: rgba(12, 12, 12, 0.927);
         font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
@@ -174,6 +175,8 @@
         line-height: 30px;
     }
 
+
+
     .container1 {
         padding: 0 10%;
     }
@@ -182,12 +185,85 @@
 
     /*---------------------------------------------------------------------*/
     /*Profile*/
-    .blog-format {
-        background-color: antiquewhite;
-        border-radius: 5px;
-        margin: 1%;
-        border: 1px solid black;
+    .tag-design-1{
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
     }
+
+    .blog-img{
+        width: 100%;
+        height: auto;
+    }
+
+    .blog-img img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+    @media (max-width: 2000px) {
+        .blog-text {
+            display:block;
+            color: rgba(0, 0, 0, 0.927);
+            font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            font-variant: normal;
+            height: 124px;
+            font-weight: 600;
+            line-height: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+     
+        .blog-format {
+            background-color: antiquewhite;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 1%;
+            height: 90vh;
+            height: 580px;
+            box-shadow: 0 15px 15px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    @media (max-width: 1300px){
+        .blog-format {
+            background-color: antiquewhite;
+            border-radius: 20px;
+            margin: 1%;
+            height: 90vh;
+            height: 600px;
+            box-shadow: 0 15px 15px rgba(0, 0, 0, 0.15);
+        }
+     
+    }
+    @media (max-width: 1000px) {
+        .blog-text {
+            color: rgba(0, 0, 0, 0.927);
+            font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+            font-size: 5px;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: 500;
+            line-height: 20px;
+        }
+    }
+ 
+    .blog-body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+
+
 
     .fa-heart {
         color: rgb(247, 61, 61)
@@ -199,7 +275,7 @@
     }
 
     .span-blog> {
-        margin-left: 10px;
+       
     }
 
     .container-star {
@@ -275,18 +351,11 @@
 
     }
 
-    .confirmBox>label,
-    input {
+    .confirmBox>label, input {
         margin-bottom: 20px;
-    }
-
-    .confirmBox>input {
-        margin-left: 15px;
-        background-color: rgba(255, 255, 255, 0.4);
         border: none;
-        padding: 7px;
         border-radius: 10px;
-        text-align: center;
+        padding:5px;
     }
 
     .cancel {
@@ -412,9 +481,10 @@
         right: 0;
     }
 
+   
     .history {
         background-color: rgba(255, 255, 235, 0.4);
-        padding: 80px;
+        padding: 50px;
         margin-left: 60px;
         border-radius: 20px;
         margin-top: 20px;
@@ -422,22 +492,73 @@
     }
 
     .history>p {
-        color: rgba(80, 80, 74, 0.3);
-        font-size: 200%;
-        text-align: center;
+        color: rgb(22, 27, 21);
     }
 
     .buycookieblog {
         background-color: rgba(255, 255, 255, 0.3);
         border-radius: 20px;
         width: max-content;
-
         margin-top: 10px;
     }
 
     .changeA:hover {
         background-color: aliceblue;
     }
+
+    .paysuc {
+        background-color: rgba(255, 241, 213, 0.5);
+        border-radius: 10px;
+    }
+    .paysuc > h1, h2{
+        font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+        color: rgb(51, 94, 40);
+        border: 100%;
+    }
+    
+    .paysuc>a {
+        background-color: rgb(233, 136, 123);
+        color: aliceblue;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: aliceblue;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+    
+    .paysuc>a span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .paysuc span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .paysuc:hover span {
+        padding-right: 25px;
+        color: aliceblue;
+    }
+
+    .paysuc:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
 
     /*------------------------------------------------------------------------------------------*/
 
@@ -472,6 +593,107 @@
     .button2 {
         background-color: rgba(255, 165, 153, 1);
     }
+
+    .button4 {
+        width: 10%;
+    }
+
+/*--------------thank you pop starts here-------------*/
+    .thank-you-pop{
+        width:100%;
+        padding:20px;
+        text-align:center;
+    }
+    .thank-you-pop img{
+        width:76px;
+        height:auto;
+        margin:0 auto;
+        display:block;
+        margin-bottom:25px;
+    }
+
+    .thank-you-pop h1{
+        font-size: 42px;
+        margin-bottom: 25px;
+        color:#5C5C5C;
+    }
+    .thank-you-pop p{
+        font-size: 20px;
+        margin-bottom: 27px;
+        color:#5C5C5C;
+    }
+    .thank-you-pop h3.cupon-pop{
+        font-size: 25px;
+        margin-bottom: 40px;
+        color:#222;
+        display:inline-block;
+        text-align:center;
+        padding:10px 20px;
+        border:2px dashed #222;
+        clear:both;
+        font-weight:normal;
+    }
+    .thank-you-pop h3.cupon-pop span{
+        color:#03A9F4;
+    }
+    .thank-you-pop a{
+        display: inline-block;
+        margin: 0 auto;
+        padding: 9px 20px;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+        background-color: #8BC34A;
+        border-radius: 17px;
+    }
+    .thank-you-pop a i{
+        margin-right:5px;
+        color:#fff;
+    }
+    #ignismyModal .modal-header{
+        border: 0px;
+    }
+    /*--thank you pop ends here--*/
+    /* ----------------------------------add to dev-------------------------------- */
+    .report-check {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 22px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 20px;
+    }
+
+    .report-check-1 {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 20px;
+    }
+
+    .button-report {
+        width: 12%;
+        height: 10%;
+        border-radius: 15px;
+        border-color: rgba(255, 165, 153, 1);
+        background-color: rgba(255, 165, 153, 1);
+        text-align: center;
+        font-weight: bold;
+
+    }
+
+    .other-report>input {
+        margin-left: 5px;
+        background-color: rgb(255, 255, 255);
+        border: none;
+        padding: 7px;
+        border-radius: 10px;
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -481,7 +703,8 @@
                 <div class="col-3"></div>
                 <div class="col-6">
 
-                    <center><img style=" width: 450px; margin-top: 40px;" src="{% static 'images/Black.PNG' %}" />
+                    <center><img style=" max-width: 100%; max-height: 100vh; width: 450px; margin-top: 40px;"
+                            src="{% static 'images/Black.PNG' %}" />
                     </center>
                     <center>
                         <b>
@@ -494,7 +717,8 @@
                 <div class="col-3 profile">
                     <div>
                         <a href="{% url 'profile' %}">
-                            <img class="profileImgBar" src="{% static 'images/profile.jpg' %}" />
+                            <img style="max-width: 100%;
+                            max-height: 100vh;" class="profileImgBar" src="{% static 'images/profile.jpg' %}" />
                         </a>
                     </div>
                     <p style="font-size: 24px;">
@@ -508,15 +732,17 @@
                 <li><a href="{% url 'members' %}" style="border-right: 1px solid whitesmoke;;">Member</a></li>
                 <li style="float: right;"><a class="active" href="{% url 'logout' %}">logout</a></li>
                 <li style="float: right;"> <img style="height: 40px; margin-bottom: 10px;"
-                        src="{% static 'images/Cookies.PNG' %}" /><a href="{% url 'cookieCoin'%}"style="border-left: none; padding-left: 0;"
-                        class="aparagarph">5000</a></li>
+                        src="{% static 'images/Cookies.PNG' %}" /><a href="{% url 'cookieCoin'%}"
+                        style="border-left: none; padding-left: 0;" class="aparagarph">5000</a></li>
             </div>
         </div>
 
 
+        <div style="background-color:rgb(255, 240, 241)">
+            {% block body %}
+            {% endblock %}
+        </div>
 
-        {% block body %}
-        {% endblock %}
     </div>
 </body>
 

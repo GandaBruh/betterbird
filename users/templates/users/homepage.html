@@ -1,8 +1,5 @@
 {% extends 'users/layout.html' %}
 {% load static %}
-
-
-
 {% block body %}
 
 <!-- <div class="container1">
@@ -46,7 +43,6 @@
 
 
 
-
 <div class="w3-top">
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal" title="Search"><i
             class="fa fa-search"></i></a>
@@ -58,7 +54,7 @@
     <a class="button button2" href="{% url 'createBlog' %}" style="text-decoration: none;">+ New Blog</a>
 </div>
 
-<div class="row" style="margin-top: 100px;"></div>
+<div class="row" style="padding-top: 100px;"></div>
 {% for i in blogs %}
 {% if forloop.counter|divisibleby:2 %}
 <div class="col-4 blog-format" style="box-sizing:border-box;">
@@ -67,7 +63,15 @@
         <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
         <i class="fa-solid fa-star fa-lg"></i>
     </div>
+
     <p class="general-text"> title </p>
+
+
+    <p class="blog-text" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique eligendi repellat
+        perspiciatis unde maxime
+        fuga quis sunt molestias laudantium libero magni error eum nisi ex nam incidunt suscipit, distinctio nulla?
+    </p>
+
     <p># Tag1, #Tag2</p>
     <span class="span-blog">
         <a href="#detailblog">Details</a>
@@ -96,7 +100,7 @@
         </p>
         <p># Tag1, #Tag2</p>
         <span class="span-blog">
-            <a href="{% url 'detail' %}">Details</a>
+            <a href="{% url 'detail' 1 %}">Details</a>
             <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 1k
             <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
             <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
@@ -120,13 +124,9 @@
         <a href="#"><img src="{% static 'images/launch.jpg' %}" style="width: 500px; "></a>
     </div>
     <div class="col-2">
-
     </div>
-
 </div>
 
-
-</div>
 
 <script>
     function changeHeart(num) {
