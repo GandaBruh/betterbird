@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, CookieCoin, History, Wallet
+from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, CookieCoin, History, Wallet, AccountOrganization, ReportBlog
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
 from django.http import HttpResponseRedirect 
 from django.contrib.auth.models import User
+from datetime import date as date_function
 from random import randint
-from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, AccountOrganization, ReportBlog
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import ListView, DetailView
 
@@ -165,9 +165,39 @@ def homepage(request):
 
 
 def members(request):
+
+    return render(request,'users/members.html' )
+
+def createblog(request):
+    global userID
+    if request.method == "POST":
+        user = User.objects.get(pk=request.user.id)
+        title = request.POST['title']
+        introduction = request.POST['introduction']
+        detail = request.POST['detail']
+        tag = request.POST['tag']
+        date1 = request.POST['date1']
+        image = request.POST['image']
+        expectCookies = request.POST['expectCookies']
+
+        blog = Blog.objects.create(user=user,title=title,
+        introduction=introduction,detail=detail,
+        tag=tag,date1=date1,image=image,donate=0,blogType=False,recommended=False,
+        like=0,expectCookies=expectCookies)
+
+        return profile(request)
+    return render(request, 'users/createBlog.html')
+
+
+
+
+#---------------------------------------------------------------
+#-------------------------safe---------------------------------
+
     return render(request, 'users/members.html')
 # ---------------------------------------------------------------
 # -------------------------safe---------------------------------
+
 
 
 def loginPage(request):
@@ -266,4 +296,14 @@ def searchBar(request):
 
 def detail(request):
     return render(request, 'users/detail.html')
+
+def search(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        # title_tag = Blog.objects.filter(title_tag_icontains = searched)
+        return render(request, 'users/blogpageUser.html', {'searched':searched})
+    else:
+        return render(request, 'users/blogpageUser.html')
+
+
 

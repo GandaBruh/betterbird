@@ -4,6 +4,7 @@ import datetime
 from django.utils.timezone import now
 
 
+
 # Create your models here.
 
 class CookieCoin(models.Model):
@@ -45,13 +46,13 @@ class Blog(models.Model):
     introduction = models.CharField(max_length=9999)
     detail = models.CharField(max_length=9999)
     tag = models.CharField(max_length=9999)
-    date = models.DateField()
-    image = models.CharField(max_length=256)
+    date1 = models.DateField()
+    image = models.ImageField(blank=True, null=True)
     donate = models.IntegerField(default=0)
     blogType = models.BooleanField(default=False)
     recommended = models.BooleanField(default=False)
     like = models.IntegerField(default=0)
-    expectCookies = models.IntegerField(default=0)
+    expectCookies = models.IntegerField()
 
 
 class ReportBlog(models.Model):
@@ -113,3 +114,4 @@ class AccountAdmin(models.Model):
     role = models.CharField(max_length=9999)
     phone = models.CharField(max_length=9999)
     tag = models.CharField(max_length=9999)
+
