@@ -249,6 +249,8 @@ def register(request):  # register
                 accountU = AccountUser.objects.create(
                     user=user, birthday=bday, phone=phone, address=address, country=country)
 
+
+            wallet = Wallet.objects.create(user=user, balanceCookie=0)
         return HttpResponseRedirect(reverse("login"))
     return render(request, "users/registerUserPpl.html")
 
