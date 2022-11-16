@@ -23,9 +23,9 @@
 
 
 <!-- article -->
-<div style="padding: 5% 0%;">
+<div style="padding: 5% 0%; background-color:rgba(255, 249, 249, 0.7); border-radius: 20px; margin: 10px;">
 <p3>{{ blog.title }}</p3>
-    <div class="main">
+    <div class="main" >
         <br>
         <div class="description">
             <p1>{{ blog.introduction }}</p1>
@@ -42,12 +42,12 @@
                 <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
                     style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
                 </i>1.342k
-                <button class="button4" type="submit"><a href="#">Report</a></button>
+                <button class="button4" type="submit"><a href="{% url 'report' blog.id %}" style="text-decoration: none;">Report</a></button>
                 
             </span>
         </div>
         <hr>
-        <div class="comment">
+        <div class="comment" style="background-color:rgb(255, 255, 255); border-radius: 20px; margin: 10px; padding-bottom: 60px;">
             <p2>comment</p2>
             <br><br>
             <p><b>Jhon Son - July 16, 2020, 3:36 p.m.</b></p>
@@ -57,6 +57,9 @@
             {{ forms.as_p }}
         </div>
         <br>
+        <center>
+        <a class="paysucbtn" href="{% url 'blogpage' %}"><span>BACK </span></a>
+    </center>
     </div>
 </div>
 

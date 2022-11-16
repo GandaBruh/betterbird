@@ -24,5 +24,6 @@ urlpatterns = [
     path('detail/<int:pk>', DetailView.as_view(), name='detail'),
     path('search/', views.searchBar, name='search'),
     path('report/<int:id>', views.reportBlog, name='report'),
+    path('pagedonate/', views.donate, name='pagedonate'),
 ] #+ static(settings.MEDIA_URL, document_root=settings.MEDIAROOT)
 

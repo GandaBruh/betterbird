@@ -13,13 +13,29 @@ from django.views.generic import ListView, DetailView
 # Create your views here.
 
 def index(request):
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
     if not request.user.is_authenticated:
         return loginPage(request)
-    return render(request, 'users/homepage.html')
+    return render(request, 'users/homepage.html', {
+        'wallet' : wallet,
+    })
 
 
 def aboutUs(request):
-    return render(request, 'users/aboutUs.html')
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
+    return render(request, 'users/aboutUs.html', {
+        'wallet' : wallet,
+    })
 # ----------------------------------------------------------------------#
 
 
@@ -31,6 +47,11 @@ def logoutFunc(request):
 
 
 def profile(request):
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
 
     if not request.user.is_authenticated:
         return loginPage(request)
@@ -41,11 +62,18 @@ def profile(request):
     print(blogs)
     return render(request, 'users/myProfile.html',{
         'blogs': blogs,
-        'user': user
+        'user': user,
+        'wallet' : wallet
     })
 
 
 def viewProfile(request):
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
     userId=1
     print(request.user.id)
     
@@ -54,9 +82,8 @@ def viewProfile(request):
     
  
     return render(request, 'users/userProfile.html',{
-
         'blogs': blog1,
-        
+        'wallet': wallet,
     })
 
 def likeBlog(request):
@@ -121,7 +148,15 @@ def confirmCookie(request, cookie_id):
     })
 
 def confirmPayment(request):
-    return render(request, 'users/confirmPayment.html')
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
+    return render(request, 'users/confirmPayment.html',{
+        'wallet': wallet
+    })
     # cookieCoins = CookieCoin.objects.get(pk=cookie_id)
     # return render(request, 'users/confirmCookie.html',{
     #     'cookieCoin': cookieCoins
@@ -156,20 +191,40 @@ def confirmPayment(request):
 
 
 def homepage(request):
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
     blog1 = [1, 2, 3, 4]
     maxlen = len(blog1)
     return render(request, 'users/homepage.html', {
         'blogs': blog1,
-        'maxlen': maxlen
+        'maxlen': maxlen,
+        'wallet' : wallet,
     })
 
 
 def members(request):
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
 
-    return render(request,'users/members.html' )
+    return render(request,'users/members.html' , {
+        'wallet':wallet
+    })
 
 def createblog(request):
     global userID
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
     if request.method == "POST":
         user = User.objects.get(pk=request.user.id)
         title = request.POST['title']
@@ -186,15 +241,10 @@ def createblog(request):
         like=0,expectCookies=expectCookies)
 
         return profile(request)
-    return render(request, 'users/createBlog.html')
+    return render(request, 'users/createBlog.html', {
+        'wallet':wallet
+    })
 
-
-
-
-#---------------------------------------------------------------
-#-------------------------safe---------------------------------
-
-    return render(request, 'users/members.html')
 # ---------------------------------------------------------------
 # -------------------------safe---------------------------------
 
@@ -256,6 +306,12 @@ def register(request):  # register
 
 
 def reportBlog(request, id):
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
     blogID = id
     if request.method == "POST":
         user = User.objects.get(pk=request.user.id)
@@ -268,12 +324,13 @@ def reportBlog(request, id):
         reason6 = request.POST.get("reason6", False)
         otherReason = request.POST.get("otherReason")
         reportBlog = ReportBlog.objects.create(reason1=reason1, reason2=reason2, reason3=reason3,
-                                               reason4=reason4, reason5=reason5, reason6=reason6, 
+                                               reason4=reason4, reason5=reason5, reason6=reason6,
                                                otherReason=otherReason, user=user,
                                                blog=blog)
-        return  HttpResponseRedirect(reverse("detail"))                                       
+        return HttpResponseRedirect(reverse("detail", args=[id]))
     return render(request, 'users/reportBlog.html', {
-        'blogID' : blogID
+        'blogID': blogID, 
+        'wallet': wallet, 
     })
 #------------------------------------------------------------
 #---------------------------fe-------------------------------
@@ -281,31 +338,47 @@ def reportBlog(request, id):
 class BlogView(ListView):
     model = Blog
     template_name = 'users/blogpageUser.html'
+    
+
+def donate(request):
+    global userID
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
+
+    if request.method == "POST":
+        userID=request.user.id
+        cookie = request.POST["cookie"]
+        transactionCode = randint(1, 100000)
+
+        history = History.objects.filter(userID=request.user.id )
+        account = History.objects.create(
+            userID=userID, cookie=cookie, transactionCode=transactionCode)
+        
+        wallet = Wallet.objects.get(user_id=request.user.id)
+        wallet.balanceCookie -= int(cookie)
+        wallet.save()
+        return HttpResponseRedirect(reverse("confirmPayment"))
+    return render(request, 'users/blogpageUser.html',{
+        'wallet' : wallet,
+        'history' : history,
+    })
 
 class DetailView(DetailView):
     model = Blog
     template_name = 'users/detail.html'
 
 def searchBar(request):
-    if request.method == 'GET':
-        query = request.GET.get('query')
-        if query:
-            blogs = Blog.objects.filter(title__icontains=query)
-            return render(request, 'users/searchfor.html', {'blogs':blogs})
+    if request.method == "GET":
+        searched = request.GET.get('searched')
+        if searched:
+            blogs = Blog.objects.filter(title__contains=searched)
+            return render(request, 'users/searchfor.html', {'blogs': blogs})
         else:
             print("No information to show")
             return render(request, 'users/searchfor.html', {})
-
-def detail(request):
-    return render(request, 'users/detail.html')
-
-def search(request):
-    if request.method == "POST":
-        searched = request.POST['searched']
-        # title_tag = Blog.objects.filter(title_tag_icontains = searched)
-        return render(request, 'users/blogpageUser.html', {'searched':searched})
-    else:
-        return render(request, 'users/blogpageUser.html')
 
 
 
