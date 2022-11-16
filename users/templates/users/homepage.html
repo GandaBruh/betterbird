@@ -41,7 +41,7 @@
         </div> -->
 
 
-
+<div style="background-color: rgba(255, 205, 205, 0.926);">
 
 <div class="w3-top">
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal" title="Search"><i
@@ -51,7 +51,7 @@
 <br>
 
 <div class="w3-container w3-right">
-    <a class="button button2" href="{% url 'createBlog' %}" style="text-decoration: none;">+ New Blog</a>
+    <a class="button button2" href="{% url 'createBlog' %}">+ New Blog</a>
 </div>
 
 <div class="row" style="padding-top: 100px;"></div>
@@ -64,15 +64,19 @@
         </div>
         
         <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
-            <h3 class="title-text">{{ i.title }}</h3>
+           <h3 class="title-text">Title</h3> <!--  {{ i.title }} -->
             <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
             <i class="fa-solid fa-star fa-lg"></i>
         </div>
         <span class="blog-text">
-            <p class="general-text">{{i.introduction}}
-            </p>
+            <p class="general-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p><!--{{i.introduction}}-->
         </span>
-        
         
     </div>
     <span>
@@ -111,13 +115,18 @@
             </div>
             
             <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
-                <h3 class="title-text">{{ i.title }}</h3>
+                 <h3 class="title-text">Title</h3><!--{{ i.title }} -->
                 <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
                 <i class="fa-solid fa-star fa-lg"></i>
             </div>
             <span class="blog-text">
-                <p class="general-text">{{i.introduction}}
-                </p>
+                <p class="general-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                    when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+                    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
+                    and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                </p><!--{{i.introduction}}-->
             </span>
             
             
@@ -160,7 +169,7 @@
     <div class="col-2">
     </div>
     <div class="col-8">
-        <a href="#"><img src="{% static 'images/launch.jpg' %}" style="max-width: 100%;
+        <a href="{% url 'blogpage' %}"><img src="{% static 'images/launch.jpg' %}" style="max-width: 100%;
             max-height: 100vh;"></a>
     </div>
     <div class="col-2">
@@ -189,4 +198,5 @@
         }
     }
 </script>
+</div>
 {% endblock %}

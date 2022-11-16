@@ -11,9 +11,10 @@
 <!-- search -->
 
 <div class="search-for">
-    <form action="{% url 'search' %}" method=POST class="d-flex" role="search" style="padding-left: 70%; margin-top: 2rem;">
+    <form action="{% url 'search' %}" method=get class="d-flex" role="search" style="padding-left: 70%; margin-top: 2rem;">
         {% csrf_token %}
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+
+        <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search" aria-label="Search">
         <div>
             <button class="btn btn-outline-danger" type="submit">Search</button>
         </div>
@@ -33,7 +34,7 @@
     </div>
     <h5>{{ blog.introduction }}</h5>
 
-    <!-- <p class="general-text">{{ blog.detail }}</p> -->
+    <p class="general-text">{{ blog.detail }}</p>
     <p>{{ blog.tag }}</p>
     <span class="span-blog">
         <a href="{% url 'detail' blog.pk %}">Details</a>
@@ -45,4 +46,11 @@
 </div>
 <br><br>
 {% endfor %}
+<!-- <div class="donateText">
+    <form action="/" method="POST">{% csrf_token %}
+        <input type="text" name="cookie">
+        <button type="submit" class='confirm'><span>OK</span></button>
+    </form>
+</div> -->
+
 {% endblock %}

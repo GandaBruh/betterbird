@@ -4,7 +4,7 @@
 {% block body %}
 
 <form action="{% url 'createBlog' %}"method="POST">{% csrf_token %}
-<div style="margin-top: 30px;">
+<div style="margin-top: 30px;" >
     <p3><b> Create New Blog </b></p3> 
     <br>
     <br>
@@ -13,7 +13,7 @@
 <div class="row">
     <div class="col-2"></div>
     <div  class=" w3-sand" id="work">
-        <div class="Scol-6 createBlog" style="border-radius: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+        <div class="Scol-6 createBlog" style="padding:20px; background-color: rgba(255, 252, 238, 0.6); border-radius: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
             <label for="title">Title :</label>
             <input type="text" placeholder="title" id="blogcreate" name="title" required><br/>
             <label for="intro">Introduction :</label>
@@ -46,10 +46,10 @@
 <br>
 <center>
     
-    <a class="buttoncancle" href="{% url 'homepage' %}">Cancel </a>
+    <a class="paysucbtn" href="{% url 'homepage' %}"><span>Cancel </span></a>
 
     
-    <button class="buttoncreate" type="submit" >+ Create Blog </button>
+    <button class="paysucbtn" type="submit" ><span>+ Create Blog </span></button>
      
 </center>
 </form>

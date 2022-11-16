@@ -104,7 +104,7 @@
 
     .myDiv {
         /* border: 5px outset red; */
-        background-color: rgb(255, 240, 241);
+        background-color: rgba(255, 250, 250, 0.5);
         border-radius: 35px;
         text-align: left;
 
@@ -143,8 +143,15 @@
         font-weight: 500;
         line-height: 30px;
     }
-
-
+    .comment>p {
+        padding-left: 100px;
+    }
+    .main > p {
+        padding-left: 100px;
+    }
+    .icon {
+        padding-left: 100px;
+    }
     p1 {
         color: rgba(12, 12, 12, 0.927);
         font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
@@ -153,6 +160,7 @@
         font-variant: normal;
         font-weight: 700;
         line-height: 30px;
+        padding: 30px;
     }
 
     p2 {
@@ -163,6 +171,7 @@
         font-variant: normal;
         font-weight: 700;
         line-height: 30px;
+        padding: 30px;
     }
 
     p3 {
@@ -173,9 +182,17 @@
         font-variant: normal;
         font-weight: 700;
         line-height: 30px;
+        padding: 30px;
     }
 
-
+    .button4 {
+        width: 10%;
+        border-radius: 15px;
+        border-color: rgba(255, 165, 153, 1);
+        background-color: rgba(255, 165, 153, 1);
+        text-align: center;
+        font-weight: bold;
+    }
 
     .container1 {
         padding: 0 10%;
@@ -317,12 +334,13 @@
         border-radius: 20px;
     }
 
-
-    .buycookie {
-        background-color: rgba(255, 255, 235, 0.4);
-        border-radius: 20px;
-        margin: 5px;
+    .cookcoin {
+        background-color: rgba(209, 209, 181, 0.4);
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 10px;
     }
+   
 
     .buycookie>a {
         background-color: rgba(255, 165, 153, 1);
@@ -483,9 +501,8 @@
 
    
     .history {
-        background-color: rgba(255, 255, 235, 0.4);
+        background-color: rgba(209, 209, 181, 0.4);
         padding: 50px;
-        margin-left: 60px;
         border-radius: 20px;
         margin-top: 20px;
         margin-bottom: 50px;
@@ -516,7 +533,7 @@
         border: 100%;
     }
     
-    .paysuc>a {
+    .paysucbtn{
         background-color: rgb(233, 136, 123);
         color: aliceblue;
         padding: 10px;
@@ -533,14 +550,14 @@
         margin: 5px;
     }
     
-    .paysuc>a span {
+    .paysucbtn span {
         cursor: pointer;
         display: inline-block;
         position: relative;
         transition: 0.5s;
     }
 
-    .paysuc span:after {
+    .paysucbtn span:after {
         content: '\00bb';
         position: absolute;
         opacity: 0;
@@ -549,12 +566,12 @@
         transition: 0.5s;
     }
 
-    .paysuc:hover span {
+    .paysucbtn:hover span {
         padding-right: 25px;
         color: aliceblue;
     }
 
-    .paysuc:hover span:after {
+    .paysucbtn:hover span:after {
         opacity: 1;
         right: 0;
     }
@@ -574,6 +591,14 @@
         font-size: 26px;
         margin: 4px 2px;
         cursor: pointer;
+    }
+    .w3-right >a {
+        text-decoration: none; 
+        border-radius: 20px;
+        color: rgb(112, 111, 111);
+    }
+    .w3-right>a:hover {
+        background-color: rgba(255, 169, 169, 0.6);
     }
 
     .button3 {
@@ -597,6 +622,7 @@
     .button4 {
         width: 10%;
     }
+
 
 /*--------------thank you pop starts here-------------*/
     .thank-you-pop{
@@ -722,11 +748,11 @@
                     <div>
                         <a href="{% url 'profile' %}">
                             <img style="max-width: 100%;
-                            max-height: 100vh;" class="profileImgBar" src="{% static 'images/profile.jpg' %}" />
+                            max-height: 100vh;" class="profileImgBar" src="{% static 'images/safe2.jpg' %}" />
                         </a>
                     </div>
                     <p style="font-size: 24px;">
-                        name surname
+                        admin eiei
                     </p>
                 </div>
             </div>
@@ -737,12 +763,12 @@
                 <li style="float: right;"><a class="active" href="{% url 'logout' %}">logout</a></li>
                 <li style="float: right;"> <img style="height: 40px; margin-bottom: 10px;"
                         src="{% static 'images/Cookies.PNG' %}" /><a href="{% url 'cookieCoin'%}"
-                        style="border-left: none; padding-left: 0;" class="aparagarph">5000</a></li>
+                        style="border-left: none; padding-left: 0;" class="aparagarph">{{ wallet.balanceCookie }}</a></li>
             </div>
         </div>
 
 
-        <div style="background-color:rgb(255, 240, 241)">
+        <div style="background-color:rgba(255, 250, 250, 0.5); border-radius: 30px;">
             {% block body %}
             {% endblock %}
         </div>
