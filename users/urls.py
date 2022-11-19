@@ -21,11 +21,12 @@ urlpatterns = [
     path('members/', views.members, name='members'),
     path('createblog/', views.createblog, name='createBlog'),
     path('confirmPayment/', views.confirmPayment, name='confirmPayment'),
-    path('blogpage/', BlogView.as_view(), name='blogpage'),
-    path('detail/<int:pk>', DetailView.as_view(), name='detail'),
+    path('blogpage/', views.BlogView, name='blogpage'),
+    path('detail/<int:detail_id>', views.DetailView, name='detail'),
     path('search/', views.searchBar, name='search'),
     path('report/<int:id>', views.reportBlog, name='report'),
     path('pagedonate/', views.donate, name='pagedonate'),
+    path('likeBlog', views.likeBlog, name='likeBlog')
 ] #
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

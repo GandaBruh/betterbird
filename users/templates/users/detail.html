@@ -1,6 +1,6 @@
 {% extends 'users/layout.html' %}
 {% load static %}
-
+{% block title %} FortuneCookies | {{ blog.title }} {% endblock title %}
 <style>
 
 </style>
@@ -8,46 +8,53 @@
 {% block body %}
 
 <!-------------------- donate -------------------->
-<div>
-    <form class="input-group mb-3" action="{% url 'detail' blog.pk %}" method="get" style="padding-left: 80%; margin-top: 2rem; margin-right: 2rem;">
-        <div class="input-group-prepend">
-          <span class="input-group-text">$</span>
-        </div>
-        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
-        <div class="input-group-append">
-            <button class="btn btn-outline-danger" type="submit">donate</button>
-        </div>
-    </form>
+
+
+<div class="donate" style="padding-left: 80%; margin-top: 2rem; ">
+    <p2>Donation: {{ cookies.donate }} / {{ blog.expecctCookies }}</p2> 
 </div>
 
+<!-- <form action="{% url 'detail' blog.detail_id }" method=POST class="d-flex" style="padding-left: 80%; margin-top: 2rem;">
+    {% csrf_token %}
+    <input class="form-control mr-sm-2" type="text" name="donate" placeholder="donate" aria-label="donate">
+    <div>
+        <button class="btn btn-outline-danger" type="submit">donate</button>
+    </div>
+</form>   -->
 
 
-<!-- article -->
-<div style="padding: 5% 0%; background-color:rgba(255, 249, 249, 0.7); border-radius: 20px; margin: 10px;">
+
+<!-------------------- article ------------------->
+
+<div style="padding: 5% 0%;">
 <p3>{{ blog.title }}</p3>
-    <div class="main" >
+    <div class="main">
         <br>
         <div class="description">
+            <h5></h5><a href="#"><h5>{{ blog.user.first_name }} {{ blog.user.last_name }}</a> on {{ blog.date }} </h5> 
+            <br>
             <p1>{{ blog.introduction }}</p1>
         </div>
         <br>
         <div class="images">
-            <center><img src="{% static 'images/donate.jpeg' %}" alt="Flowers in Chania" width="500" height="300"/></center>
+            <center>
+                <img src={{ blog.image.url }} style="max-width: 500px;"/>
+            </center>
         </div>
             <br><br>
-        <p>{{ blog.detail }}</p>
+        <p>{{ blog.detail|safe }}</p>
         <div class="icon">
             <span class="span-blog">
                 <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>100k
                 <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
                     style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
                 </i>1.342k
-                <button class="button4" type="submit"><a href="{% url 'report' blog.id %}" style="text-decoration: none;">Report</a></button>
+                <button class="button4" type="submit"><a href="#">Report</a></button>
                 
             </span>
         </div>
-        <hr>
-        <div class="comment" style="background-color:rgb(255, 255, 255); border-radius: 20px; margin: 10px; padding-bottom: 60px;">
+        <br>
+        <!-- <div class="comment">
             <p2>comment</p2>
             <br><br>
             <p><b>Jhon Son - July 16, 2020, 3:36 p.m.</b></p>
@@ -55,11 +62,8 @@
             <p>comment</p>
             {% csrf_token %}
             {{ forms.as_p }}
-        </div>
+        </div> -->
         <br>
-        <center>
-        <a class="paysucbtn" href="{% url 'blogpage' %}"><span>BACK </span></a>
-    </center>
     </div>
 </div>
 
