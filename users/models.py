@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 from django.utils.timezone import now
-
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -48,15 +48,23 @@ class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=9999)
     introduction = models.CharField(max_length=9999)
-    detail = models.CharField(max_length=9999)
     tag = models.CharField(max_length=9999)
-    date1 = models.DateField()
-    image = models.ImageField(upload_to='users/static/images', default="")
+    detail = RichTextField()
+    tag1 = models.BooleanField(default=False)
+    tag2 = models.BooleanField(default=False)
+    tag3 = models.BooleanField(default=False)
+    tag4 = models.BooleanField(default=False)
+    tag5 = models.BooleanField(default=False)
+    tag6 = models.BooleanField(default=False)
+    tag7 = models.BooleanField(default=False)
+    date1 = models.DateField(auto_now_add=True)
+    image = models.ImageField(upload_to='users/static/images')
     donate = models.IntegerField(default=0)
-    blogType = models.BooleanField(default=False)
+    blogType = models.IntegerField(default=0)
     recommended = models.BooleanField(default=False)
     like = models.IntegerField(default=0)
-    expectCookies = models.IntegerField()
+    expectCookies = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
 
 
 class ReportBlog(models.Model):

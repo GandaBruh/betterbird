@@ -3,7 +3,7 @@
 
 {% block body %}
 
-<form action="{% url 'createBlog' %}"method="POST">{% csrf_token %}
+<form action="{% url 'createBlog' %}"method="POST" enctype="multipart/form-data">{% csrf_token %}
 <div style="margin-top: 30px;" >
     <p3><b> Create New Blog </b></p3> 
     <br>

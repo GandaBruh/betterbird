@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, CookieCoin, History, Wallet, AccountOrganization, ReportBlog
+from users.models import OwnedBlog, Blog, LikeBlog, AccountUser, CookieCoin, History, Wallet, AccountOrganization, ReportBlog, ViewBlog
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse  # login
-from django.http import HttpResponseRedirect 
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponseBadRequest 
 from django.contrib.auth.models import User
 from datetime import date as date_function
 from random import randint
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.generic import ListView, DetailView
+
+import json
 
 # Create your views here.
 
@@ -21,9 +22,7 @@ def index(request):
 
     if not request.user.is_authenticated:
         return loginPage(request)
-    return render(request, 'users/homepage.html', {
-        'wallet' : wallet,
-    })
+    return HttpResponseRedirect(reverse("homepage"))
 
 
 def aboutUs(request):
@@ -57,15 +56,28 @@ def profile(request):
         return loginPage(request)
     userId=1
     user = AccountUser.objects.filter(user_id=request.user.id).first()
-    blogs = Blog.objects.filter(user_id=request.user.id).all()
-    blog1 = [1,2,3]
-    print(blogs)
-    return render(request, 'users/myProfile.html',{
-        'blogs': blogs,
-        'user': user,
-        'wallet' : wallet
-    })
-
+    if user:
+        blogs = Blog.objects.filter(user_id=request.user.id).all()
+        blog1 = [1,2,3]
+        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+        print(like)
+        print(blogs)
+        return render(request, 'users/myProfile.html',{
+            'blogs': blogs,
+            'user': user,
+            'wallet' : wallet,
+            'like': like
+        })
+    else:
+        user = AccountOrganization.objects.filter(user_id=request.user.id).first()
+        blogs = Blog.objects.filter(user_id=request.user.id).all()
+        blog1 = [1,2,3]
+        print(blogs)
+        return render(request, 'users/myProfile.html',{
+            'blogs': blogs,
+            'user': user,
+            'wallet' : wallet
+        })
 
 def viewProfile(request):
     try:
@@ -87,14 +99,30 @@ def viewProfile(request):
     })
 
 def likeBlog(request):
-    id = request.POST['id']
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    if is_ajax:
+        if request.method == 'POST':
+            data = json.load(request)
+            id = data.get('blogId')
+            like = data.get('like')
+            if like:
+                blog = Blog.objects.filter(pk=id).first()
+                blog.like += 1
+                blog.save()
+                likeBlog = LikeBlog.objects.create(user=request.user, blog=blog)
+                return JsonResponse({'status': 'like'})
+            else:
+                blog = Blog.objects.filter(pk=id).first()
+                blog.like -= 1
+                blog.save()
+                likeBlog = LikeBlog.objects.filter(user=request.user, blog=blog).delete()
+                return JsonResponse({'status': 'unlike'})
 
-    blog = Blog.objects.filter(pk=id).first()
-    like = True
-    if like:
-        blog.like += 1
-        blog.save()
-        likeBlog = LikeBlog(user=request.user, blog=blog)
+        return JsonResponse({'status': 'Invalid request'}, status=400)
+    else:
+        return HttpResponseBadRequest('Invalid request')
+   
+        
 
 
 #Cookie coin - faiinarak
@@ -191,15 +219,19 @@ def confirmPayment(request):
 
 def homepage(request):
     try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
+        userId = request.user.id
+        wallet = Wallet.objects.get(user_id=userId)
     except Wallet.DoesNotExist:
-        user_id = None
+        userId = None
 
-    blog1 = [1, 2, 3, 4]
-    maxlen = len(blog1)
+    wallet = Wallet.objects.get(user_id=userId)
+    blog = Blog.objects.filter(blogType=1, recommended=True).all()
+    like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    print(like)
+    maxlen = len(blog)
     return render(request, 'users/homepage.html', {
-        'blogs': blog1,
+        'blogs': blog,
+        'like': like,
         'maxlen': maxlen,
         'wallet' : wallet,
     })
@@ -231,15 +263,15 @@ def createblog(request):
         detail = request.POST['detail']
         tag = request.POST['tag']
         date1 = request.POST['date1']
-        image = request.POST['image']
+        image = request.FILES['image']
         expectCookies = request.POST['expectCookies']
 
         blog = Blog.objects.create(user=user,title=title,
         introduction=introduction,detail=detail,
-        tag=tag,date1=date1,image=image,donate=0,blogType=False,recommended=False,
+        tag=tag,date1=date1,image=image,donate=0,blogType=0,recommended=False,
         like=0,expectCookies=expectCookies)
 
-        return profile(request)
+        return HttpResponseRedirect(reverse('profile'))
     return render(request, 'users/createBlog.html', {
         'wallet':wallet
     })
@@ -336,9 +368,7 @@ def reportBlog(request, id):
 #------------------------------------------------------------
 #---------------------------fe-------------------------------
 
-class BlogView(ListView):
-    model = Blog
-    template_name = 'users/blogpageUser.html'
+
     
 
 def donate(request):
@@ -367,9 +397,7 @@ def donate(request):
         'history' : history,
     })
 
-class DetailView(DetailView):
-    model = Blog
-    template_name = 'users/detail.html'
+
 
 def searchBar(request):
     if request.method == "GET":
@@ -383,3 +411,18 @@ def searchBar(request):
 
 
 
+def BlogView(request):
+    blogs = Blog.objects.filter(blogType = 1).all()
+    like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    print(like)
+    return render(request, 'users/blogpageUser.html', {'blogs':blogs, 'like':like})
+
+def DetailView(request, detail_id):
+    blog = Blog.objects.get(id = detail_id)
+    viewed = ViewBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    if detail_id not in viewed:
+        views = ViewBlog.objects.create(user=request.user, blog=blog)
+        blog.views += 1
+        blog.save()
+   
+    return render(request,'users/detail.html', {'blog':blog})
