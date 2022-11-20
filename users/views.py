@@ -21,7 +21,7 @@ def index(request):
         user_id = None
 
     if not request.user.is_authenticated:
-        return loginPage(request)
+        return HttpResponseRedirect(reverse("login"))
     return HttpResponseRedirect(reverse("homepage"))
 
 
@@ -46,6 +46,9 @@ def logoutFunc(request):
 
 
 def profile(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -81,6 +84,8 @@ def profile(request):
         })
 
 def viewProfile(request, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -146,6 +151,8 @@ def likeBlog(request):
 
 #Cookie coin - faiinarak
 def cookieCoin(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     global user_id
     try:
         user_id = request.user.id
@@ -162,6 +169,8 @@ def cookieCoin(request):
     })
 
 def confirmCookie(request, cookie_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     global userID
     try:
         user_id = request.user.id
@@ -194,6 +203,8 @@ def confirmCookie(request, cookie_id):
     })
 
 def confirmPayment(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -237,6 +248,8 @@ def confirmPayment(request):
 
 
 def homepage(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         userId = request.user.id
         wallet = Wallet.objects.get(user_id=userId)
@@ -257,6 +270,8 @@ def homepage(request):
 
 
 def members(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -268,6 +283,8 @@ def members(request):
     })
 
 def createblog(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     global userID
     try:
         user_id = request.user.id
@@ -344,7 +361,7 @@ def register(request):  # register
                 country = request.POST["country"]
                 address = request.POST["address"]
                 phone = request.POST["phone"]
-                image = request.POST["image"]
+                image = request.FILES["image"]
                 accountO = AccountOrganization.objects.create(
                     user=user, foundingDay=fday, phone=phone, address=address, orgName=orgName, country=country, image=image)
 
@@ -353,7 +370,7 @@ def register(request):  # register
                 country = request.POST["country"]
                 address = request.POST["address"]
                 phone = request.POST["phone"]
-                image = request.POST["image"]
+                image = request.FILES["image"]
                 accountU = AccountUser.objects.create(
                     user=user, birthday=bday, phone=phone, address=address, country=country, image=image)
 
@@ -364,6 +381,8 @@ def register(request):  # register
 
 
 def reportBlog(request, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -385,6 +404,14 @@ def reportBlog(request, id):
                                                reason4=reason4, reason5=reason5, reason6=reason6,
                                                otherReason=otherReason, user=user,
                                                blog=blog)
+
+        reportCount = ReportBlog.objects.filter(blog_id=blogID).all()
+        countReport = len(reportCount)
+        if countReport >= 5:
+            blog = Blog.objects.filter(pk=blogID).get()
+            blog.blogType = 2
+            blog.save()
+        
         return HttpResponseRedirect(reverse("detail", args=[id]))
     return render(request, 'users/reportBlog.html', {
         'blogID': blogID, 
@@ -397,6 +424,8 @@ def reportBlog(request, id):
     
 
 def donate(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     global userID
     try:
         user_id = request.user.id
@@ -425,6 +454,8 @@ def donate(request):
 
 
 def searchBar(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     if request.method == "GET":
         searched = request.GET.get('searched')
         if searched:
@@ -437,12 +468,16 @@ def searchBar(request):
 
 
 def BlogView(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     blogs = Blog.objects.filter(blogType = 1).all()
     like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
     print(like)
     return render(request, 'users/blogpageUser.html', {'blogs':blogs, 'like':like})
 
 def DetailView(request, detail_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     blog = Blog.objects.get(id = detail_id)
     viewed = ViewBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
     if detail_id not in viewed:
