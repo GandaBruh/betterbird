@@ -7,34 +7,6 @@
 
 {% block body %}
 
-<!-------------------- donate -------------------->
-<div class="donate" style="padding-left: 80%; margin-top: 2rem; ">
-    <p2>Donation: {{ blog.donate }} / {{ blog.expectCookies }}</p2> 
-</div>
-<!-------------------- donate -------------------->
-<div>
-    <form action="{% url 'donate' blog.id %}" method="POST" style="padding-left: 80%; margin-top: 2rem; margin-right: 2rem;">{% csrf_token %}
-        <div class="input-group-prepend">
-            <span class="input-group-text" style="height: 35px;">$</span>
-            <input type="text" class="form-control" name="donate" required>
-            <button class="btn btn-outline-danger" type="submit" style="height: 35px;" onclick="FbotonOn()">donate</button>
-            <p id="texto"></p>
-            <script type="text/javascript">
-                function FbotonOn() { 
-                    document.getElementById('texto').innerHTML = "Thank you";
-                }
-            </script>
-        </div>
-    </form
-</div>
-
-<!-- <form action="{% url 'detail' blog.detail_id }" method=POST class="d-flex" style="padding-left: 80%; margin-top: 2rem;">
-    {% csrf_token %}
-    <input class="form-control mr-sm-2" type="text" name="donate" placeholder="donate" aria-label="donate">
-    <div>
-        <button class="btn btn-outline-danger" type="submit">donate</button>
-    </div>
-</form>   -->
 
 
 
@@ -63,9 +35,28 @@
                 <i onclick="changeHeart({{forloop.counter}})" id="LikeHeart{{forloop.counter}}"
                     style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
                 </i>1.342k
-                <button class="button4" type="submit"><a href="#">Report</a></button>
-                
+                <br>
+                <br>
+                <i style="margin-right: 5px; margin-left: 10px; font-size: 20px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; " >REASONS OF REPORT</i>
+                <br>
+                <i style="margin-right: 5px; margin-left: 10px; " ></i>
+                <br>
+                    REASON1
+                    <br>
+                    <br>
+                    REASON2
+                <br>
+                <br>
+                <form action="{% url 'verify' blog.id %}" method="POST">{% csrf_token %}
+                <button class="admin" type="submit" ><span>VERIFY </span></button>
+                </form>
+                <form action="{% url 'reccomended' blog.id %}" method="POST">{% csrf_token %}
+                <button class="admin" type="submit" ><span>RECCOMMENDED </span></button>
+                </form>
+                <input class="w3-check" type="checkbox" checked name="report">report
             </span>
+            <br>
+            <a href="{% url 'homepageadmin' %}" class="paysucbtn" ><span>Back</span></a>
         </div>
         <br>
         <!-- <div class="comment">

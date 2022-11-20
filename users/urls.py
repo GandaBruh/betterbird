@@ -25,8 +25,12 @@ urlpatterns = [
     path('detail/<int:detail_id>', views.DetailView, name='detail'),
     path('search/', views.searchBar, name='search'),
     path('report/<int:id>', views.reportBlog, name='report'),
-    path('pagedonate/', views.donate, name='pagedonate'),
-    path('likeBlog', views.likeBlog, name='likeBlog')
+    path('donate/<int:id>', views.donate, name='donate'),
+    path('likeBlog', views.likeBlog, name='likeBlog'),
+    path('homepageadmin/', views.homepageadmin, name='homepageadmin'),
+    path('detailadmin/<int:detail_id>', views.detailadmin, name='detailadmin'),
+    path('verify/<int:id>',views.verify, name = 'verify'),
+    path('reccomended/<int:id>',views.recommended, name = 'reccomended'),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

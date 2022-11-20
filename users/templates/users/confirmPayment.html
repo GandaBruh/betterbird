@@ -2,14 +2,37 @@
 {% load static %}
 
 {% block body %}
-<div style="margin-top: 30px;">
-    <center>
-    <div class="paysuc">
+
+
+<body onload="myFunction()" style="margin:0px;">
+    <div id="loader"></div>
+    <div style="display:none; margin-top: 50px;" id="myDiv" class="animate-bottom">
+        <h2>THANK YOU!!</h2>
+        <p>Your payment has been success.</p>
+        <a href="{% url 'cookieCoin' %}" class="paysucbtn" ><span>Back</span></a>
+    </div>
+    <script>
+    var myVar;
+    function myFunction() {
+        myVar = setTimeout(showPage, 3000);
+    }
+    
+    function showPage() {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("myDiv").style.display = "block";
+    }
+    </script>
+    
+</body>
+    <center> 
+    
+    <!-- <div class="paysuc">
         <h1>Payment Success!!<h1> 
         <h2>THANK YOU!! </h2><br>
         <a href="{% url 'cookieCoin' %}" class="paysucbtn" ><span>Back</span></a>
-    </div>
+    </div> -->
     </center>
+   
 {% endblock %}
     <!-- <center>
         <form action="{% url 'cookieCoin' 9999 %}" method="POST">{% csrf_token %}

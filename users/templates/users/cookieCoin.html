@@ -53,10 +53,14 @@
 </div><br>
 <div class="history">
 <p3>History </p3><br><br>
-
     {% for hist in history %}
-        <p>#{{ hist.transactionCode }} <span style="color:rgb(66, 154, 69)">(payment complete!)</span></p>
-        <p>Date: {{ hist.date }} - {{ hist.time }} price: {{ hist.price }}$ - <span style="color:rgb(66, 154, 69)">+{{ hist.cookie }}</span><img style="height: 30px; " src="{% static 'images/Cookies1.PNG' %}"/></p>
+        {% if hist.historyType %}
+            <p>#{{ hist.transactionCode }} <span style="color:rgb(66, 154, 69)">(payment complete!)</span></p>
+            <p> {{ hist.date }} - {{ hist.time }} price: {{ hist.price }}$ <span style="color:rgb(66, 154, 69)">+{{ hist.cookie }}</span><img style="height: 30px; " src="{% static 'images/Cookies1.PNG' %}"/></p>
+        {% else %}
+            <p>#{{ hist.transactionCode }} <span style="color:rgb(66, 154, 69)">(donate complete!)</span></p>
+            <p>Title: {{ hist.title }} - {{ hist.date }} - {{ hist.time }} price: {{ hist.price }}$ <span style="color:rgb(190, 51, 51)">-{{ hist.cookie }}</span><img style="height: 30px; " src="{% static 'images/Cookies1.PNG' %}"/></p>
+        {% endif %}
     {% endfor %}
 </div>
 {% endblock %}

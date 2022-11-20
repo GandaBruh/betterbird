@@ -25,6 +25,7 @@
             <input type="time" id="time" name="time" min="00:00" max="23:00" required><br>
             <label for="cookie">Cookies: </label><input type="hidden" name="cookie" value="{{ cookieCoin.cookie }}" readonly> {{ cookieCoin.cookie }}<img style="height: 30px; margin-bottom: 5px; margin-top: 5px;" src="{% static 'images/Cookies1.PNG' %}" /><br>
             <label for="price">Price: </label><input type="hidden" style="color:transparent" name="price" value="{{ cookieCoin.price }}" readonly> {{ cookieCoin.price }} $<br>
+            <img src="{% static 'images/qrcode.jpg' %}" style="margin-left: 90px; margin-bottom: 10px;"/><br>
             <label for="transfer-slip" >Transfer slip: </label>
             <input type="file" name="slip" style="width: 250px;" required><br>
     
