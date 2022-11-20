@@ -22,8 +22,9 @@ def index(request):
         user_id = None
 
     if not request.user.is_authenticated:
-        return loginPage(request)
-    return homepage(request)
+        return HttpResponseRedirect(reverse("login"))
+    return HttpResponseRedirect(reverse("homepage"))
+
 
 def aboutUs(request):
     user_id = request.user.id
@@ -43,6 +44,9 @@ def logoutFunc(request):
 
 
 def profile(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -78,6 +82,8 @@ def profile(request):
         })
 
 def viewProfile(request, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -239,7 +245,7 @@ def confirmPayment(request):
 
 def homepage(request):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"), status=400)
+        return HttpResponseRedirect(reverse("login"))
     try:
         userId = request.user.id
         wallet = Wallet.objects.get(user_id=userId)
@@ -443,6 +449,14 @@ def reportBlog(request, id):
                                                reason4=reason4, reason5=reason5, reason6=reason6,
                                                otherReason=otherReason, user=user,
                                                blog=blog)
+
+        reportCount = ReportBlog.objects.filter(blog_id=blogID).all()
+        countReport = len(reportCount)
+        if countReport >= 5:
+            blog = Blog.objects.filter(pk=blogID).get()
+            blog.blogType = 2
+            blog.save()
+        
         return HttpResponseRedirect(reverse("detail", args=[id]))
     return render(request, 'users/reportBlog.html', {
         'blogID': blogID, 
@@ -451,7 +465,11 @@ def reportBlog(request, id):
 #------------------------------------------------------------
 #---------------------------fe-------------------------------
 
+
 def donate(request, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+    global userID
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
