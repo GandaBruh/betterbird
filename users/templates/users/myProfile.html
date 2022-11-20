@@ -65,17 +65,23 @@
     <span>
         {% if i.tag1 %}
         <p class="tag-design-1">#Environment</p>
-        {% elif i.tag2 %}
+        {% endif %}
+        {% if i.tag2 %}
         <p class="tag-design-2">#Society</p>
-        {% elif i.tag3 %}
+        {% endif %}
+        {% if i.tag3 %}
         <p class="tag-design-3">#Health</p>
-        {% elif i.tag4 %}
+        {% endif %}
+        {% if i.tag4 %}
         <p class="tag-design-4">#Economy</p>
-        {% elif i.tag5 %}
+        {% endif %}
+        {% if i.tag5 %}
         <p class="tag-design-5">#Art</p>
-        {% elif i.tag6%}
+        {% endif %}
+        {% if i.tag6 %}
         <p class="tag-design-6">#Technology</p>
-        {% elif i.tag7 %}
+        {% endif %}
+        {% if i.tag7 %}
         <p class="tag-design-7">#Other</p>
         {% endif %}
     </span>
