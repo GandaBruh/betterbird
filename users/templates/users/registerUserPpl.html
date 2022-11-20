@@ -114,7 +114,7 @@
             <img style=" width: 180px; margin-top: 40px;" src="{% static 'images/icon.PNG' %}" /><br>
             <span class="register-title">Register</span><br><br>
         </center>
-        <form method="POST" action="{% url 'register' %}">
+        <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="userType">
                 <p class="text-title">Are you?</p>

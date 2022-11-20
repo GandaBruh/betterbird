@@ -828,11 +828,11 @@
                     <div>
                         <a href="{% url 'profile' %}">
                             <img style="max-width: 100%;
-                            max-height: 100vh;" class="profileImgBar" src="{% static 'images/safe2.jpg' %}" />
+                            max-height: 100vh;" class="profileImgBar" src="{{ userlayout.image.url }}" />
                         </a>
                     </div>
                     <p style="font-size: 24px;">
-                        admin eiei
+                        {{userlayout.user.first_name}} {{userlayout.user.last_name}}
                     </p>
                 </div>
             </div>
