@@ -58,7 +58,6 @@ def profile(request):
     user = AccountUser.objects.filter(user_id=request.user.id).first()
     if user:
         blogs = Blog.objects.filter(user_id=request.user.id).all()
-        blog1 = [1,2,3]
         like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
         print(like)
         print(blogs)
@@ -73,13 +72,15 @@ def profile(request):
         blogs = Blog.objects.filter(user_id=request.user.id).all()
         blog1 = [1,2,3]
         print(blogs)
+        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
         return render(request, 'users/myProfile.html',{
             'blogs': blogs,
             'user': user,
-            'wallet' : wallet
+            'wallet' : wallet,
+            'like': like
         })
 
-def viewProfile(request):
+def viewProfile(request, id):
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -89,14 +90,32 @@ def viewProfile(request):
     userId=1
     print(request.user.id)
     
-    blogs = Blog.objects.filter(user_id=request.user.id).values_list('pk', flat=True)
-    blog1 = [1,2,3]
+    user = AccountUser.objects.filter(user_id=id).first()
+    if user:
+        blogs = Blog.objects.filter(user_id=id, blogType=1).all()
+        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+        print(like)
+        print(blogs)
+        return render(request, 'users/userProfile.html',{
+            'blogs': blogs,
+            'user': user,
+            'wallet' : wallet,
+            'like': like
+        })
+    else:
+        user = AccountOrganization.objects.filter(user_id=id).first()
+        blogs = Blog.objects.filter(user_id=id).all()
+        blog1 = [1,2,3]
+        print(blogs)
+        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+        return render(request, 'users/userProfile.html',{
+            'blogs': blogs,
+            'user': user,
+            'wallet' : wallet,
+            'like': like
+        })
+
     
- 
-    return render(request, 'users/userProfile.html',{
-        'blogs': blog1,
-        'wallet': wallet,
-    })
 
 def likeBlog(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -261,14 +280,20 @@ def createblog(request):
         title = request.POST['title']
         introduction = request.POST['introduction']
         detail = request.POST['detail']
-        tag = request.POST['tag']
+        tag1 = request.POST.get("tag1", False)
+        tag2 = request.POST.get("tag2", False)
+        tag3 = request.POST.get("tag3", False)
+        tag4 = request.POST.get("tag4", False)
+        tag5 = request.POST.get("tag5", False)
+        tag6 = request.POST.get("tag6", False)
+        tag7 = request.POST.get("tag7", False)
         date1 = request.POST['date1']
         image = request.FILES['image']
         expectCookies = request.POST['expectCookies']
 
         blog = Blog.objects.create(user=user,title=title,
         introduction=introduction,detail=detail,
-        tag=tag,date1=date1,image=image,donate=0,blogType=0,recommended=False,
+        tag1=tag1,tag2=tag2,tag3=tag3,tag4=tag4,tag5=tag5,tag6=tag6,tag7=tag7,date1=date1,image=image,donate=0,blogType=0,recommended=False,
         like=0,expectCookies=expectCookies)
 
         return HttpResponseRedirect(reverse('profile'))
