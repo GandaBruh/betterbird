@@ -118,7 +118,6 @@ def viewProfile(request, id):
     
 
 def likeBlog(request):
-    
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     if is_ajax:
         if request.method == 'POST':
@@ -345,16 +344,18 @@ def register(request):  # register
                 country = request.POST["country"]
                 address = request.POST["address"]
                 phone = request.POST["phone"]
+                image = request.POST["image"]
                 accountO = AccountOrganization.objects.create(
-                    user=user, foundingDay=fday, phone=phone, address=address, orgName=orgName, country=country)
+                    user=user, foundingDay=fday, phone=phone, address=address, orgName=orgName, country=country, image=image)
 
             elif (userType == "2"):
                 bday = request.POST["bday"]
                 country = request.POST["country"]
                 address = request.POST["address"]
                 phone = request.POST["phone"]
+                image = request.POST["image"]
                 accountU = AccountUser.objects.create(
-                    user=user, birthday=bday, phone=phone, address=address, country=country)
+                    user=user, birthday=bday, phone=phone, address=address, country=country, image=image)
 
 
             wallet = Wallet.objects.create(user=user, balanceCookie=0)

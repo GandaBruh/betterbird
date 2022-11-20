@@ -4,18 +4,21 @@ import datetime
 from django.utils.timezone import now
 from ckeditor.fields import RichTextField
 
-
 # Create your models here.
 
 class CookieCoin(models.Model):
     cookie = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
+
     def __str__(self):
         return f"{self.cookie}"
 
+
 class Wallet(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='user')
     balanceCookie = models.IntegerField(default=0)
+
     def __str__(self):
         return f"{self.user}"
 
@@ -27,12 +30,12 @@ class Wallet(models.Model):
 
 class History(models.Model):
     userID = models.IntegerField(default=0)
-    #amount = models.IntegerField(default=0) # จำนวนที่ใช้ไป relate w/ currency
+    # amount = models.IntegerField(default=0) # จำนวนที่ใช้ไป relate w/ currency
     slip = models.CharField(max_length=9999, null=True, blank=True)
     transactionCode = models.CharField(max_length=9999)
-    historyType =  models.BooleanField(default=False)
-    currency = models.BooleanField(default=False) # 0 = cash, 1 = cookie
-    date = models.DateTimeField(null=True)#auto_now_add=True
+    historyType = models.BooleanField(default=False)
+    currency = models.BooleanField(default=False)  # 0 = cash, 1 = cookie
+    date = models.DateTimeField(null=True)  # auto_now_add=True
     time = models.TimeField(default=datetime.time(16, 00))
     cookie = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
@@ -40,10 +43,12 @@ class History(models.Model):
     def __str__(self):
         return f"{self.userID}"
 
+
 class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=9999)
     introduction = models.CharField(max_length=9999)
+    tag = models.CharField(max_length=9999)
     detail = RichTextField()
     tag1 = models.BooleanField(default=False)
     tag2 = models.BooleanField(default=False)
@@ -97,6 +102,7 @@ class LikeBlog(models.Model):
 
 class AccountUser(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='users/static/images', default="")
     birthday = models.DateField()
     phone = models.CharField(max_length=256)
     address = models.CharField(max_length=9999)
@@ -107,6 +113,7 @@ class AccountUser(models.Model):
 
 class AccountOrganization(models.Model):
     orgName = models.CharField(max_length=9999, default="1")
+    image = models.ImageField(upload_to='users/static/images', default="")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     foundingDay = models.DateField()
     phone = models.CharField(max_length=9999)
@@ -121,4 +128,3 @@ class AccountAdmin(models.Model):
     role = models.CharField(max_length=9999)
     phone = models.CharField(max_length=9999)
     tag = models.CharField(max_length=9999)
-

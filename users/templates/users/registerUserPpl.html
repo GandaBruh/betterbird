@@ -89,15 +89,26 @@
     }
 
     .register-user-form-border {
-        width: 78%;
+        width: 90%;
         border-radius: 15px;
         border-color: rgb(255, 240, 241);
         background-color: rgb(255, 240, 241);
 
     }
+
+    .detail-register-form {
+        color: rgba(68, 68, 68, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 12px;
+        font-style: 0;
+        font-variant: normal;
+        font-weight: 500;
+        line-height: 30px;
+
+    }
 </style>
 
-<body style="background-color: rgba(255, 205, 205, 0.926); margin-left: 20%;padding: 2% 0%;">
+<body style="background-color: rgba(255, 205, 205, 0.926); margin-left: 10%;padding: 2% 0%;">
     <div class="register-user-form-border">
         <center>
             <img style=" width: 180px; margin-top: 40px;" src="{% static 'images/icon.PNG' %}" /><br>
@@ -159,14 +170,14 @@
                             &nbsp;
                             &nbsp;
                             &nbsp; &nbsp; &nbsp;</label></span>
-                    <input type="text" placeholder="organizaton name" id="orgName" name="orgName" required><br />
+                    <input type="text" placeholder="organization name" id="orgName" name="orgName" required><br />
                     <span class="head-inform"><label for="fday">Founding Day&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp;&nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;</label></span>
                     <input type="date" placeholder="dd/mm/yyyy" id="fday" name="fday" required><br />
                     <span class="head-inform"><label for="fname">Manager Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label></span>
-                    <input type="text" placeholder="firstname" id="fname" name="fname" required><br />
+                    <input type="text" placeholder="firstname" id="fname" name="fname" required></input><span class="detail-register-form"> &nbsp;*prefix (Mr./Prof./etc.)</span><br>
                     <span class="head-inform"><label for="lname">Manager Lastname&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
                             &nbsp;
                             &nbsp; &nbsp;
@@ -176,7 +187,7 @@
                             &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label></span>
                     <input type="text" placeholder="country" id="country" name="country" required><br />
-                    <span class="head-inform"><label for="address">Aกdress&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <span class="head-inform"><label for="address">Address&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label></span>
                     <input type="text" placeholder="address" id="address" name="address" required><br />
@@ -190,6 +201,10 @@
                             &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         </label></span>
                     <input type="text" placeholder="xxxxxxxxxx" id="phone" name="phone" required><br /><br>
+                    <span class="head-inform"><label for="image">Profile Image&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </label></span>
+                    <input type="file" placeholder="image" id="image" name="image" required><br /><br>
 
                 </div>
             </div>`
@@ -199,7 +214,7 @@
                     <span class="head-inform"><label for="fname">Name/Leader Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                             &nbsp;
                             &nbsp; &nbsp; </label></span>
-                    <input type="text" placeholder="Firstname" id="fname" name="fname" required><br />
+                    <input type="text" placeholder="Firstname" id="fname" name="fname" required></input><span class="detail-register-form"> &nbsp;*prefix (Mr./Prof./etc.)</span><br>
                     <span class="head-inform"><label for="lname">Lastname/Leader Lastname </label></span>
                     <input type="text" placeholder="Lastname" id="lname" name="lname" required><br />
                     <span class="head-inform"><label for="fname">Birthday&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -224,6 +239,11 @@
                             &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                         </label></span>
                     <input type="text" placeholder="xxxxxxxxxx" id="phone" name="phone" required><br /><br>
+                    <span class="head-inform"><label for="image">Profile Image&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            
+                        </label></span>
+                    <input type="file" placeholder="image" id="image" name="image" required><br /><br>
 
                 </div>
             </div>`

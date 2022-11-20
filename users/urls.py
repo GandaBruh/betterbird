@@ -1,7 +1,7 @@
 from django.urls import path, include
 from . import views
 from django.conf .urls.static import static
-from django.conf  import settings
+from django.conf import settings
 from .views import BlogView, DetailView
 
 
@@ -27,6 +27,6 @@ urlpatterns = [
     path('report/<int:id>', views.reportBlog, name='report'),
     path('pagedonate/', views.donate, name='pagedonate'),
     path('likeBlog', views.likeBlog, name='likeBlog')
-] #
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 
 
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
