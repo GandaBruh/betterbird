@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 from datetime import date as date_function
 from random import randint
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-
+import datetime
+import time
 import json
 
 # Create your views here.
@@ -22,15 +23,11 @@ def index(request):
 
     if not request.user.is_authenticated:
         return loginPage(request)
-    return HttpResponseRedirect(reverse("homepage"))
-
+    return homepage(request)
 
 def aboutUs(request):
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    user_id = request.user.id
+    wallet = Wallet.objects.get(user_id=user_id)
 
     return render(request, 'users/aboutUs.html', {
         'wallet' : wallet,
@@ -115,8 +112,6 @@ def viewProfile(request, id):
             'like': like
         })
 
-    
-
 def likeBlog(request):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     if is_ajax:
@@ -146,6 +141,8 @@ def likeBlog(request):
 
 #Cookie coin - faiinarak
 def cookieCoin(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     global user_id
     try:
         user_id = request.user.id
@@ -162,6 +159,8 @@ def cookieCoin(request):
     })
 
 def confirmCookie(request, cookie_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     global userID
     try:
         user_id = request.user.id
@@ -179,7 +178,7 @@ def confirmCookie(request, cookie_id):
         transactionCode = randint(1, 100000)
 
         account = History.objects.create(
-            time=time, slip=slip, date=date, userID=userID, cookie=cookie, price=price, transactionCode=transactionCode)
+            time=time, historyType=True, slip=slip, date=date, userID=userID, cookie=cookie, price=price, transactionCode=transactionCode)
         
         wallet = Wallet.objects.get(user_id=request.user.id)
         wallet.balanceCookie += int(cookie)
@@ -194,6 +193,8 @@ def confirmCookie(request, cookie_id):
     })
 
 def confirmPayment(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -237,6 +238,8 @@ def confirmPayment(request):
 
 
 def homepage(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"), status=400)
     try:
         userId = request.user.id
         wallet = Wallet.objects.get(user_id=userId)
@@ -257,6 +260,8 @@ def homepage(request):
 
 
 def members(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -268,6 +273,8 @@ def members(request):
     })
 
 def createblog(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     global userID
     try:
         user_id = request.user.id
@@ -301,9 +308,56 @@ def createblog(request):
         'wallet':wallet
     })
 
+def homepageadmin(request):
+
+    if not request.user.is_authenticated:
+        return loginPage(request)
+    userId=1
+    user = AccountUser.objects.filter(user_id=request.user.id).first()
+    if user:
+        blogs = Blog.objects.filter(user_id=request.user.id).all()
+        blog1 = [1,2,3]
+        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+        print(like)
+        print(blogs)
+        return render(request, 'users/homepageadmin.html',{
+            'blogs': blogs,
+            'user': user,
+            'like': like
+        })
+    else:
+        user = AccountOrganization.objects.filter(user_id=request.user.id).first()
+        blogs = Blog.objects.filter(user_id=request.user.id).all()
+        blog1 = [1,2,3]
+        print(blogs)
+        return render(request, 'users/homepageadmin.html',{
+            'blogs': blogs,
+            'user': user,
+        })
+
+def detailadmin(request, detail_id):
+    blog = Blog.objects.get(id = detail_id)
+    viewed = ViewBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+    if detail_id not in viewed:
+        views = ViewBlog.objects.create(user=request.user, blog=blog)
+        blog.views += 1
+        blog.save()
+   
+    return render(request,'users/detailadmin.html', {'blog':blog})
+
+def verify(request, id):
+    blog = Blog.objects.get(id = id)
+    blog.blogType = 1
+    blog.save()   
+    return HttpResponseRedirect(reverse("homepageadmin"))
+    
+def recommended(request, id):
+    blog = Blog.objects.get(id = id)
+    blog.recommended = True
+    blog.save()   
+    return HttpResponseRedirect(reverse("homepageadmin"))
 # ---------------------------------------------------------------
 # -------------------------safe---------------------------------
-
 
 
 def loginPage(request):
@@ -313,11 +367,12 @@ def loginPage(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse('homepage'))
+            return homepage(request)
+            # return HttpResponseRedirect(reverse('homepage'))
         else:
             return render(request, 'users/loginUser.html', {
                 'message': 'Invalid credentials.'
-            })
+            }, status=400)
 
     return render(request, 'users/loginUser.html')
 
@@ -344,7 +399,7 @@ def register(request):  # register
                 country = request.POST["country"]
                 address = request.POST["address"]
                 phone = request.POST["phone"]
-                image = request.POST["image"]
+                image = request.FILES["image"]
                 accountO = AccountOrganization.objects.create(
                     user=user, foundingDay=fday, phone=phone, address=address, orgName=orgName, country=country, image=image)
 
@@ -353,7 +408,7 @@ def register(request):  # register
                 country = request.POST["country"]
                 address = request.POST["address"]
                 phone = request.POST["phone"]
-                image = request.POST["image"]
+                image = request.FILES["image"]
                 accountU = AccountUser.objects.create(
                     user=user, birthday=bday, phone=phone, address=address, country=country, image=image)
 
@@ -363,7 +418,10 @@ def register(request):  # register
     return render(request, "users/registerUserPpl.html")
 
 
+
 def reportBlog(request, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -393,11 +451,7 @@ def reportBlog(request, id):
 #------------------------------------------------------------
 #---------------------------fe-------------------------------
 
-
-    
-
-def donate(request):
-    global userID
+def donate(request, id):
     try:
         user_id = request.user.id
         wallet = Wallet.objects.get(user_id=user_id)
@@ -405,26 +459,33 @@ def donate(request):
         user_id = None
 
     if request.method == "POST":
-        userID=request.user.id
-        cookie = request.POST["cookie"]
+        donate = request.POST["donate"]
         transactionCode = randint(1, 100000)
-
-        history = History.objects.filter(userID=request.user.id )
-        account = History.objects.create(
-            userID=userID, cookie=cookie, transactionCode=transactionCode)
+        blogs = Blog.objects.get(user_id=request.user.id)
         
+        account = History.objects.create(
+            title=blogs.title, historyType=False, date=datetime.date.today(), time=time.strftime("%H:%M:%S", time.localtime()), price='0', userID=request.user.id, transactionCode=transactionCode, cookie=donate)
+
         wallet = Wallet.objects.get(user_id=request.user.id)
-        wallet.balanceCookie -= int(cookie)
+        wallet.balanceCookie -= int(donate)
         wallet.save()
-        return HttpResponseRedirect(reverse("confirmPayment"))
-    return render(request, 'users/blogpageUser.html',{
+
+        blog = Blog.objects.get(user_id=request.user.id)
+        blog.donate += int(donate)
+        blog.save()
+        
+        return HttpResponseRedirect(reverse("detail", args=[id]))
+    return render(request, 'users/detail/.html',{
         'wallet' : wallet,
-        'history' : history,
+        'blog' : blog,
     })
 
-
-
 def searchBar(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+    user_id = request.user.id
+    wallet = Wallet.objects.get(user_id=user_id)
+
     if request.method == "GET":
         searched = request.GET.get('searched')
         if searched:
@@ -432,17 +493,23 @@ def searchBar(request):
             return render(request, 'users/searchfor.html', {'blogs': blogs})
         else:
             print("No information to show")
-            return render(request, 'users/searchfor.html', {})
-
-
+            return render(request, 'users/searchfor.html', {'wallet':wallet})
 
 def BlogView(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
+    wallet = Wallet.objects.get(user_id=request.user.id)
     blogs = Blog.objects.filter(blogType = 1).all()
     like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
     print(like)
-    return render(request, 'users/blogpageUser.html', {'blogs':blogs, 'like':like})
+    return render(request, 'users/blogpageUser.html', {'blogs':blogs, 'like':like, 'wallet':wallet})
 
 def DetailView(request, detail_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse("login"))
+
+    wallet = Wallet.objects.get(user_id=request.user.id)
     blog = Blog.objects.get(id = detail_id)
     viewed = ViewBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
     if detail_id not in viewed:
@@ -450,4 +517,4 @@ def DetailView(request, detail_id):
         blog.views += 1
         blog.save()
    
-    return render(request,'users/detail.html', {'blog':blog})
+    return render(request,'users/detail.html', {'blog':blog, 'wallet':wallet})

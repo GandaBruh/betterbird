@@ -633,6 +633,53 @@
         right: 0;
     }
 
+    #loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 120px;
+        height: 120px;
+        margin: -76px 0 0 -76px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+    }
+
+    @-webkit-keyframes animatebottom {
+        from { bottom:-100px; opacity:0 } 
+        to { bottom:0px; opacity:1 }
+    }
+
+    @keyframes animatebottom { 
+        from{ bottom:-100px; opacity:0 } 
+        to{ bottom:0; opacity:1 }
+    }
+
+    #myDiv {
+        display: none;
+        text-align: center;
+    }
 
     /*------------------------------------------------------------------------------------------*/
 
@@ -682,6 +729,48 @@
         width: 10%;
     }
 
+    .admin{
+        background-color: rgb(193, 181, 218);
+        color: aliceblue;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: aliceblue;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+    
+    .admin span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .admin span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .admin:hover span {
+        padding-right: 25px;
+        color: aliceblue;
+    }
+
+    .admin:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
 
     /*--------------thank you pop starts here-------------*/
     .thank-you-pop {
@@ -832,7 +921,7 @@
                         </a>
                     </div>
                     <p style="font-size: 24px;">
-                        admin eiei
+                        {{user.user.username}}
                     </p>
                 </div>
             </div>

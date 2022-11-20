@@ -32,6 +32,7 @@ class History(models.Model):
     userID = models.IntegerField(default=0)
     # amount = models.IntegerField(default=0) # จำนวนที่ใช้ไป relate w/ currency
     slip = models.CharField(max_length=9999, null=True, blank=True)
+    title = models.CharField(max_length=9999, default='')
     transactionCode = models.CharField(max_length=9999)
     historyType = models.BooleanField(default=False)
     currency = models.BooleanField(default=False)  # 0 = cash, 1 = cookie
