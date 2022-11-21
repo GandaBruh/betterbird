@@ -9,12 +9,11 @@
 <!-- search -->
 
 <div class="search-for">
-    <form action="{% url 'search' %}" method=get class="d-flex" role="search"
-        style="padding-left: 70%; padding-top: 2rem;">
+    <form action="{% url 'search' %}" method=get class="d-flex" role="search" style="padding-left: 70%; padding-top: 2rem; padding-right: 2rem;">
         {% csrf_token %}
         <input class="form-control mr-sm-2" type="search" name="searched" placeholder="Search" aria-label="Search">
         <div>
-            <button class="btn btn-outline-danger" type="submit">Search</button>
+            <button class="btn btn-danger" type="submit">Search</button>
         </div>
     </form>
 </div>
@@ -30,8 +29,7 @@
         <div class="blog-img">
             <img src="{{i.image.url}}">
         </div>
-
-        <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
+        <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center; padding-top: 1rem;">
             <div>
                 <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
             </div>
@@ -43,36 +41,37 @@
             <i class="fa-regular fa-star fa-lg"></i>
             {% endif %}
         </div>
-        <span class="blog-text">
+        <span class="blog-text" style="padding-top: 1rem;>
             <p class="general-text">{{i.introduction}}
             </p>
         </span>
-
-
     </div>
-    <span>
-        {% if i.tag1 %}
-        <p class="tag-design-1">#Environment</p>
-        {% endif %}
-        {% if i.tag2 %}
-        <p class="tag-design-2">#Society</p>
-        {% endif %}
-        {% if i.tag3 %}
-        <p class="tag-design-3">#Health</p>
-        {% endif %}
-        {% if i.tag4 %}
-        <p class="tag-design-4">#Economy</p>
-        {% endif %}
-        {% if i.tag5 %}
-        <p class="tag-design-5">#Art</p>
-        {% endif %}
-        {% if i.tag6 %}
-        <p class="tag-design-6">#Technology</p>
-        {% endif %}
-        {% if i.tag7 %}
-        <p class="tag-design-7">#Other</p>
-        {% endif %}
-    </span>
+    <div class="tag-design" >
+        <span>
+            {% if i.tag1 %}
+            <p>#Environment</p>
+            {% endif %}
+            {% if i.tag2 %}
+            <p>#Society</p>
+            {% endif %}
+            {% if i.tag3 %}
+            <p>#Health</p>
+            {% endif %}
+            {% if i.tag4 %}
+            <p>#Economy</p>
+            {% endif %}
+            {% if i.tag5 %}
+            <p>#Art</p>
+            {% endif %}
+            {% if i.tag6%}
+            <p>#Technology</p>
+            {% endif %}
+            {% if i.tag7 %}
+            <p >#Other</p>
+            {% endif %}
+        </span>
+    </div>
+
     <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
 
         <span class="span-blog" style="float: left">
@@ -120,12 +119,10 @@
                 <img src="{{i.image.url}}">
             </div>
 
-            <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
+            <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center; padding-top: 1rem;">
                 <div>
                     <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
-                    
                 </div>
-
                 <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
                 {% if i.recommended %}
                 <i class="fa-solid fa-star fa-lg"></i>
@@ -133,36 +130,36 @@
                 <i class="fa-regular fa-star fa-lg"></i>
                 {% endif %}
             </div>
-            <span class="blog-text">
+            <span class="blog-text" style="padding-top: 1rem;">
                 <p class="general-text">{{i.introduction}}
                 </p>
             </span>
-
-
         </div>
-        <span>
-            {% if i.tag1 %}
-            <p class="tag-design-1">#Environment</p>
-            {% endif %}
-            {% if i.tag2 %}
-            <p class="tag-design-2">#Society</p>
-            {% endif %}
-            {% if i.tag3 %}
-            <p class="tag-design-3">#Health</p>
-            {% endif %}
-            {% if i.tag4 %}
-            <p class="tag-design-4">#Economy</p>
-            {% endif %}
-            {% if i.tag5 %}
-            <p class="tag-design-5">#Art</p>
-            {% endif %}
-            {% if i.tag6 %}
-            <p class="tag-design-6">#Technology</p>
-            {% endif %}
-            {% if i.tag7 %}
-            <p class="tag-design-7">#Other</p>
-            {% endif %}
-        </span>
+        <div class="tag-design">
+            <span>
+                {% if i.tag1 %}
+                <p>#Environment</p>
+                {% endif %}
+                {% if i.tag2 %}
+                <p>#Society</p>
+                {% endif %}
+                {% if i.tag3 %}
+                <p>#Health</p>
+                {% endif %}
+                {% if i.tag4 %}
+                <p>#Economy</p>
+                {% endif %}
+                {% if i.tag5 %}
+                <p>#Art</p>
+                {% endif %}
+                {% if i.tag6%}
+                <p>#Technology</p>
+                {% endif %}
+                {% if i.tag7 %}
+                <p >#Other</p>
+                {% endif %}
+            </span>
+        </div>
         <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
 
             <span class="span-blog" style="float: left">

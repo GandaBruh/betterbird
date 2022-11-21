@@ -31,6 +31,8 @@ urlpatterns = [
     path('detailadmin/<int:detail_id>', views.detailadmin, name='detailadmin'),
     path('verify/<int:id>',views.verify, name = 'verify'),
     path('reccomended/<int:id>',views.recommended, name = 'reccomended'),
+    path('reportPageAdmin/', views.reportPageAdmin, name='reportPageAdmin'),
+    path('notVerifiedPageAdmin/', views.notVerifiedPageAdmin,name='notVerifiedPageAdmin'),
 ] 
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
