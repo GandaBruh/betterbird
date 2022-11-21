@@ -480,18 +480,18 @@ def donate(request, id):
         donate = request.POST["donate"]
         transactionCode = randint(1, 100000)
         blogs = Blog.objects.get(pk=id)
-        
-        account = History.objects.create(
-            title=blogs.title, historyType=False, date=datetime.date.today(), time=time.strftime("%H:%M:%S", time.localtime()), price='0', userID=request.user.id, transactionCode=transactionCode, cookie=donate)
-        
-        # if wallet.balanceCookie >= int(donate):
-        wallet = Wallet.objects.get(user_id=request.user.id)
-        wallet.balanceCookie -= int(donate)
-        wallet.save()
+        if wallet.balanceCookie >= int(donate):
+            account = History.objects.create(
+                title=blogs.title, historyType=False, date=datetime.date.today(), time=time.strftime("%H:%M:%S", time.localtime()), price='0', userID=request.user.id, transactionCode=transactionCode, cookie=donate)
+            
+            # if wallet.balanceCookie >= int(donate):
+            wallet = Wallet.objects.get(user_id=request.user.id)
+            wallet.balanceCookie -= int(donate)
+            wallet.save()
 
-        blog = Blog.objects.get(pk=id)
-        blog.donate += int(donate)
-        blog.save()
+            blog = Blog.objects.get(pk=id)
+            blog.donate += int(donate)
+            blog.save()
         
         return HttpResponseRedirect(reverse("detail", args=[id]))
     return render(request, 'users/detail/.html',{
