@@ -46,40 +46,43 @@ def logoutFunc(request):
 def profile(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
+    if not request.user.is_superuser:
+        
+        try:
+            user_id = request.user.id
+            wallet = Wallet.objects.get(user_id=user_id)
+        except Wallet.DoesNotExist:
+            user_id = None
 
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
-
-    if not request.user.is_authenticated:
-        return loginPage(request)
-    userId=1
-    user = AccountUser.objects.filter(user_id=request.user.id).first()
-    if user:
-        blogs = Blog.objects.filter(user_id=request.user.id).all()
-        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
-        print(like)
-        print(blogs)
-        return render(request, 'users/myProfile.html',{
-            'blogs': blogs,
-            'user': user,
-            'wallet' : wallet,
-            'like': like
-        })
-    else:
-        user = AccountOrganization.objects.filter(user_id=request.user.id).first()
-        blogs = Blog.objects.filter(user_id=request.user.id).all()
-        blog1 = [1,2,3]
-        print(blogs)
-        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
-        return render(request, 'users/myProfile.html',{
-            'blogs': blogs,
-            'user': user,
-            'wallet' : wallet,
-            'like': like
-        })
+        if not request.user.is_authenticated:
+            return loginPage(request)
+        userId=1
+        user = AccountUser.objects.filter(user_id=request.user.id).first()
+        if user:
+            blogs = Blog.objects.filter(user_id=request.user.id).all()
+            like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+            print(like)
+            print(blogs)
+            return render(request, 'users/myProfile.html',{
+                'blogs': blogs,
+                'user': user,
+                'wallet' : wallet,
+                'like': like
+            })
+        else:
+            user = AccountOrganization.objects.filter(user_id=request.user.id).first()
+            blogs = Blog.objects.filter(user_id=request.user.id).all()
+            blog1 = [1,2,3]
+            print(blogs)
+            like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+            return render(request, 'users/myProfile.html',{
+                'blogs': blogs,
+                'user': user,
+                'wallet' : wallet,
+                'like': like
+            })
+    return HttpResponseRedirect(reverse('homepageadmin'))
+    
 
 def viewProfile(request, id):
     if not request.user.is_authenticated:
@@ -244,25 +247,28 @@ def confirmPayment(request):
 
 
 def homepage(request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-    try:
-        userId = request.user.id
-        wallet = Wallet.objects.get(user_id=userId)
-    except Wallet.DoesNotExist:
-        userId = None
+    if not request.user.is_superuser:
+        if not request.user.is_authenticated:
+            return HttpResponseRedirect(reverse("login"))
+        try:
+            userId = request.user.id
+            wallet = Wallet.objects.get(user_id=userId)
+        except Wallet.DoesNotExist:
+            userId = None
 
-    wallet = Wallet.objects.get(user_id=userId)
-    blog = Blog.objects.filter(blogType=1, recommended=True).all()
-    like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
-    print(like)
-    maxlen = len(blog)
-    return render(request, 'users/homepage.html', {
-        'blogs': blog,
-        'like': like,
-        'maxlen': maxlen,
-        'wallet' : wallet,
-    })
+        wallet = Wallet.objects.get(user_id=userId)
+        blog = Blog.objects.filter(blogType=1, recommended=True).all()
+        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
+        print(like)
+        maxlen = len(blog)
+        return render(request, 'users/homepage.html', {
+            'blogs': blog,
+            'like': like,
+            'maxlen': maxlen,
+            'wallet' : wallet,
+        })
+    else:
+        return HttpResponseRedirect(reverse('homepageadmin'))
 
 
 def members(request):
@@ -315,31 +321,21 @@ def createblog(request):
     })
 
 def homepageadmin(request):
+    try:
+        user_id = request.user.id
+        wallet = Wallet.objects.get(user_id=user_id)
+    except Wallet.DoesNotExist:
+        user_id = None
 
-    if not request.user.is_authenticated:
+    if not request.user.is_superuser:
         return loginPage(request)
     userId=1
-    user = AccountUser.objects.filter(user_id=request.user.id).first()
-    if user:
-        blogs = Blog.objects.filter(user_id=request.user.id).all()
-        blog1 = [1,2,3]
-        like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
-        print(like)
-        print(blogs)
-        return render(request, 'users/homepageadmin.html',{
-            'blogs': blogs,
-            'user': user,
-            'like': like
-        })
-    else:
-        user = AccountOrganization.objects.filter(user_id=request.user.id).first()
-        blogs = Blog.objects.filter(user_id=request.user.id).all()
-        blog1 = [1,2,3]
-        print(blogs)
-        return render(request, 'users/homepageadmin.html',{
-            'blogs': blogs,
-            'user': user,
-        })
+    blogs = Blog.objects.filter().all()
+    blog1 = [1,2,3]
+    print(blogs)
+    return render(request, 'users/homepageadmin.html',{
+        'blogs': blogs,
+    })
 
 def detailadmin(request, detail_id):
     blog = Blog.objects.get(id = detail_id)
@@ -371,10 +367,14 @@ def loginPage(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
+        
         if user is not None:
             login(request, user)
-            return homepage(request)
-            # return HttpResponseRedirect(reverse('homepage'))
+            if request.user.is_superuser:
+                return HttpResponseRedirect(reverse('homepageadmin'))
+            else:
+                return homepage(request)
+                #return HttpResponseRedirect(reverse('homepage'))
         else:
             return render(request, 'users/loginUser.html', {
                 'message': 'Invalid credentials.'
@@ -479,16 +479,17 @@ def donate(request, id):
     if request.method == "POST":
         donate = request.POST["donate"]
         transactionCode = randint(1, 100000)
-        blogs = Blog.objects.get(user_id=request.user.id)
+        blogs = Blog.objects.get(pk=id)
         
         account = History.objects.create(
             title=blogs.title, historyType=False, date=datetime.date.today(), time=time.strftime("%H:%M:%S", time.localtime()), price='0', userID=request.user.id, transactionCode=transactionCode, cookie=donate)
-
+        
+        # if wallet.balanceCookie >= int(donate):
         wallet = Wallet.objects.get(user_id=request.user.id)
         wallet.balanceCookie -= int(donate)
         wallet.save()
 
-        blog = Blog.objects.get(user_id=request.user.id)
+        blog = Blog.objects.get(pk=id)
         blog.donate += int(donate)
         blog.save()
         
@@ -536,3 +537,35 @@ def DetailView(request, detail_id):
         blog.save()
    
     return render(request,'users/detail.html', {'blog':blog, 'wallet':wallet})
+
+def notVerifiedPageAdmin(request):
+
+    if not request.user.is_superuser:
+        return loginPage(request)
+    if request.user.is_superuser:
+        blogs = Blog.objects.filter(blogType=0).all()
+        blog1 = [1, 2, 3]
+        like = LikeBlog.objects.filter(
+            user_id=request.user.id).values_list('blog_id', flat=True)
+        print(like)
+        print(blogs)
+        return render(request, 'users/notVerifiedPageAdmin.html', {
+            'blogs': blogs,
+            'like': like
+        })
+
+def reportPageAdmin(request):
+
+    if not request.user.is_superuser:
+        return loginPage(request)
+    if request.user.is_superuser:
+        blogs = Blog.objects.filter(blogType=2).all()
+        blog1 = [1, 2, 3]
+        like = LikeBlog.objects.filter(
+            user_id=request.user.id).values_list('blog_id', flat=True)
+        print(like)
+        print(blogs)
+        return render(request, 'users/reportPageAdmin.html', {
+            'blogs': blogs,
+            'like': like
+        })

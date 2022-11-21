@@ -11,21 +11,17 @@
 
 
 <div style="padding-top: 50px; padding-left: 30px; margin-bottom: 25px;">
-    <i style="font-size: 35px;"> BLOG STATUS </i>
-        <div class="spinner-grow text-danger" role="status">
+    <i style="font-size: 35px;"> NOT VERIFIED BLOG </i>
+    <div class="spinner-grow text-danger" role="status">
         <span class="sr-only">Loading...</span>
-      </div>
-      <div class="spinner-grow text-warning" role="status">
+    </div>
+    <div class="spinner-grow text-warning" role="status">
         <span class="sr-only">Loading...</span>
-      </div>
-      <div class="spinner-grow text-info" role="status">
+    </div>
+    <div class="spinner-grow text-info" role="status">
         <span class="sr-only">Loading...</span>
-      </div>
-    
-</div>
-<div style="padding-left: 60%;">
-    <a href="{% url 'notVerifiedPageAdmin' %}" class="paysucbtn"><span>not verify blog</span></a>
-    <a href="{% url 'reportPageAdmin' %}" class="paysucbtn"><span>reported blog</span></a>
+    </div>
+
 </div>
 {% for i in blogs %}
 {% if forloop.counter|divisibleby:2 %}
@@ -34,32 +30,32 @@
         <div class="blog-img">
             <img src="{{i.image.url}}">
         </div>
-        
+
         <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
             <div>
                 <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
                 {% if i.blogType == 0 %}
-                <i style="color:orange"class="fa-solid fa-spinner"> waiting for verify</i>
+                <i style="color:orange" class="fa-solid fa-spinner"> waiting for verify</i>
                 {% elif i.blogType == 1 %}
-                <i style="color: rgb(49, 236, 49)"class="fa-solid fa-circle-check"> verified</i>
+                <i style="color: rgb(49, 236, 49)" class="fa-solid fa-circle-check"> verified</i>
                 {% elif i.blogType == 2 %}
-                <i style="color: red;"class="fa-solid fa-circle-exclamation"> reported</i>
+                <i style="color: red;" class="fa-solid fa-circle-exclamation"> reported</i>
                 {% endif %}
             </div>
-            
+
             <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
-                {% if i.recommended %}
-                <i class="fa-solid fa-star fa-lg"></i>
-                {% else %}
-                <i class="fa-regular fa-star fa-lg"></i>
-                {% endif %}
+            {% if i.recommended %}
+            <i class="fa-solid fa-star fa-lg"></i>
+            {% else %}
+            <i class="fa-regular fa-star fa-lg"></i>
+            {% endif %}
         </div>
         <span class="blog-text">
             <p class="general-text">{{i.introduction}}
             </p>
         </span>
-        
-        
+
+
     </div>
     <span>
         {% if i.tag1 %}
@@ -79,38 +75,40 @@
         {% endif %}
     </span>
     <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
-        
-        <span  class="span-blog" style="float: left">
-            <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;" >Readmore <i class="fa-solid fa-arrow-right"></i></a>
-            
-        <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
-        {% if i.expectCookies > 1000 %}
-        {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
-        {% else %}
-        {{i.expectCookies}}
-        {% endif %}
-        
-        <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
-        {% if i.views > 1000 %}
-        <p style="display: inline;">{% widthratio i.views|add:"-500" 1000 1 %}k</p>
-        {% else %}
-        <p style="display: inline;" >{{i.views}}</p>
-        {% endif %}
-        {% if i.id in like %}
-        <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
-            style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
-        </i>
-        {% else %}
-        <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
-            style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
-        </i>
-        {% endif %}
-        {% if i.like > 1000 %}
-        <p style="display: inline;">{% widthratio i.like|add:"-500" 1000 1 %}k</p>
-       
-        {% else %}
-        <p style="display: inline;" id="like{{i.id}}">{{i.like}}</p>
-        {% endif %}</span>
+
+        <span class="span-blog" style="float: left">
+            <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;">Readmore <i
+                    class="fa-solid fa-arrow-right"></i></a>
+
+            <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i>
+            {% if i.expectCookies > 1000 %}
+            {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
+            {% else %}
+            {{i.expectCookies}}
+            {% endif %}
+
+            <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
+            {% if i.views > 1000 %}
+            <p style="display: inline;">{% widthratio i.views|add:"-500" 1000 1 %}k</p>
+            {% else %}
+            <p style="display: inline;">{{i.views}}</p>
+            {% endif %}
+            {% if i.id in like %}
+            <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
+            </i>
+            {% else %}
+            <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+            </i>
+            {% endif %}
+            {% if i.like > 1000 %}
+            <p style="display: inline;">{% widthratio i.like|add:"-500" 1000 1 %}k</p>
+
+            {% else %}
+            <p style="display: inline;" id="like{{i.id}}">{{i.like}}</p>
+            {% endif %}
+        </span>
     </div>
 </div>
 
@@ -124,32 +122,32 @@
             <div class="blog-img">
                 <img src="{{i.image.url}}">
             </div>
-            
+
             <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
                 <div>
                     <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
                     {% if i.blogType == 0 %}
-                    <i style="color:orange"class="fa-solid fa-spinner"> waiting for verify</i>
+                    <i style="color:orange" class="fa-solid fa-spinner"> waiting for verify</i>
                     {% elif i.blogType == 1 %}
-                    <i style="color: rgb(49, 236, 49)"class="fa-solid fa-circle-check"> verified</i>
+                    <i style="color: rgb(49, 236, 49)" class="fa-solid fa-circle-check"> verified</i>
                     {% elif i.blogType == 2 %}
-                    <i style="color: red;"class="fa-solid fa-circle-exclamation"> reported</i>
+                    <i style="color: red;" class="fa-solid fa-circle-exclamation"> reported</i>
                     {% endif %}
                 </div>
-                
+
                 <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
-                    {% if i.recommended %}
-                    <i class="fa-solid fa-star fa-lg"></i>
-                    {% else %}
-                    <i class="fa-regular fa-star fa-lg"></i>
-                    {% endif %}
+                {% if i.recommended %}
+                <i class="fa-solid fa-star fa-lg"></i>
+                {% else %}
+                <i class="fa-regular fa-star fa-lg"></i>
+                {% endif %}
             </div>
             <span class="blog-text">
                 <p class="general-text">{{i.introduction}}
                 </p>
             </span>
-            
-            
+
+
         </div>
         <span>
             {% if i.tag1 %}
@@ -169,37 +167,39 @@
             {% endif %}
         </span>
         <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
-            
-            <span  class="span-blog" style="float: left">
-            <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;" >Readmore <i class="fa-solid fa-arrow-right"></i></a>
-            <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
-            {% if i.expectCookies > 1000 %}
-            {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
-            {% else %}
-            {{i.expectCookies}}
-            {% endif %}
-            
-            <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
-            {% if i.views > 1000 %}
-            <p style="display: inline;">{% widthratio i.views|add:"-500" 1000 1 %}k</p>
-            {% else %}
-            <p style="display: inline;" >{{i.views}}</p>
-            {% endif %}
-            {% if i.id in like %}
-            <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
-                style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
-            </i>
-            {% else %}
-            <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
-                style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
-            </i>
-            {% endif %}
-            {% if i.like > 1000 %}
-            <p style="display: inline;">{% widthratio i.like|add:"-500" 1000 1 %}k</p>
-           
-            {% else %}
-            <p style="display: inline;" id="like{{i.id}}">{{i.like}}</p>
-            {% endif %}</span>
+
+            <span class="span-blog" style="float: left">
+                <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;">Readmore <i
+                        class="fa-solid fa-arrow-right"></i></a>
+                <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i>
+                {% if i.expectCookies > 1000 %}
+                {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
+                {% else %}
+                {{i.expectCookies}}
+                {% endif %}
+
+                <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
+                {% if i.views > 1000 %}
+                <p style="display: inline;">{% widthratio i.views|add:"-500" 1000 1 %}k</p>
+                {% else %}
+                <p style="display: inline;">{{i.views}}</p>
+                {% endif %}
+                {% if i.id in like %}
+                <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
+                </i>
+                {% else %}
+                <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+                </i>
+                {% endif %}
+                {% if i.like > 1000 %}
+                <p style="display: inline;">{% widthratio i.like|add:"-500" 1000 1 %}k</p>
+
+                {% else %}
+                <p style="display: inline;" id="like{{i.id}}">{{i.like}}</p>
+                {% endif %}
+            </span>
         </div>
     </div>
 
@@ -222,7 +222,7 @@
                     type: "POST",
                     dataType: "json",
                     data: JSON.stringify({
-                        'like': false, 
+                        'like': false,
                         'blogId': num
                     }),
                     headers: {
@@ -236,9 +236,9 @@
                     error: (error) => {
                         console.log(error);
                     }
-                    });
+                });
                 document.getElementById(likeId).innerHTML = parseInt(like) - 1
-                
+
             } else {
                 document.getElementById(id).classList.add('fa-solid');
                 document.getElementById(id).classList.remove('fa-regular');
@@ -247,7 +247,7 @@
                     type: "POST",
                     dataType: "json",
                     data: JSON.stringify({
-                        'like': true, 
+                        'like': true,
                         'blogId': num
                     }),
                     headers: {
@@ -261,9 +261,9 @@
                     error: (error) => {
                         console.log(error);
                     }
-                    });
-                    document.getElementById(likeId).innerHTML = parseInt(like) + 1
-                
+                });
+                document.getElementById(likeId).innerHTML = parseInt(like) + 1
+
             }
         }
 
@@ -272,15 +272,15 @@
             if (document.cookie && document.cookie !== "") {
                 const cookies = document.cookie.split(";");
                 for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + "=")) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
                 }
             }
             return cookieValue;
-            }
+        }
     </script>
-{% endblock %}
+    {% endblock %}

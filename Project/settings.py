@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'login',
     'crispy_forms',
     'users',
+    'ckeditor',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
