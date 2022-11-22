@@ -183,8 +183,14 @@
         {% endif %}
     {% endfor %}
 {% else %}
-    <p2>No information to show</p2>
+    <div style="text-align: center; padding-top: 2rem;">
+        <p2>No information to show</p2>
+    </div>
 {% endif %}
+<br><br>
+<div style="width: 100%; text-align: center;">
+    <a href="{% url 'blogpage' %}" class="paysucbtn"><span>Back</span></a>
+</div>
 <br><br>
     <script>
         function changeHeart(num) {

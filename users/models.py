@@ -49,7 +49,6 @@ class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=9999)
     introduction = models.CharField(max_length=9999)
-    tag = models.CharField(max_length=9999)
     detail = RichTextField()
     tag1 = models.BooleanField(default=False)
     tag2 = models.BooleanField(default=False)
