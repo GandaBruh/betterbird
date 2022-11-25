@@ -8,25 +8,29 @@
 </style>
 
 {% block body %}
-<div class="row" style="padding-top: 25px;">
+<br>
+<div class="row" style="padding-top: 25px; box-sizing: border-box;">
     <div class="col-1"></div>
     <div style="" class="col-4">
         <img style="object-fit: fill;  max-height: 100vh; max-width: 100%; border-radius: 5px;" src="{{user.image.url}}" />
     </div>
     <div class="col-1"></div>
-    <div class="col-4" style="font-size: 18px;">
-        <p> username : {{user.user.username}}<br>
-            fullname : {{user.user.first_name}} {{user.user.last_name}}<br>
-            phone : {{user.phone}}<br>
-            email : {{user.user.email}}<br>
-        </p>
+    <div class="col-4">
+        <div class="general-text" style="font-size: 24px; background-color: #FFBFC5; 
+        border-radius: 20px; padding: 2rem;">
+            <p> username : {{user.user.username}}<br><br>
+                fullname : {{user.user.first_name}} {{user.user.last_name}}<br><br>
+                phone : {{user.phone}}<br><br>
+                email : {{user.user.email}}<br>
+            </p>
+        </div>
     </div>
 
 </div>
 
-<div style="margin-top: 50px; padding-left: 30px; margin-bottom: 25px;">
-    <p style="display: inline; margin-right: 30px; font-size: 35px;">My blog</p>
-    <a href="{% url 'createBlog' %}"><button style="display: inline;" class="btn btn-info"> + new blog </button></a>
+<div style="margin-top: 50px; padding-left: 8rem; margin-bottom: 25px;">
+    <h3 style="display: inline; padding-right: 5px; font-size: 40px;" class="title-text">My blog</h3>
+    <a class="button button2" style="border-radius: 20px;" href="{% url 'createBlog' %}">+ New Blog</a>
 </div>
 {% for i in blogs %}
 {% if forloop.counter|divisibleby:2 %}
@@ -218,6 +222,7 @@
 
     {% endif %}
     {% endfor %}
+    <br><br>
 
     <script>
         function changeHeart(num) {

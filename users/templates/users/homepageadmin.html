@@ -61,23 +61,31 @@
         
         
     </div>
-    <span>
-        {% if i.tag1 %}
-        <p class="tag-design-1">#Environment</p>
-        {% elif i.tag2 %}
-        <p class="tag-design-2">#Society</p>
-        {% elif i.tag3 %}
-        <p class="tag-design-3">#Health</p>
-        {% elif i.tag4 %}
-        <p class="tag-design-4">#Economy</p>
-        {% elif i.tag5 %}
-        <p class="tag-design-5">#Art</p>
-        {% elif i.tag6%}
-        <p class="tag-design-6">#Technology</p>
-        {% elif i.tag7 %}
-        <p class="tag-design-7">#Other</p>
-        {% endif %}
-    </span>
+    <div class="tag-design" >
+        <span>
+            {% if i.tag1 %}
+            <p>#Environment</p>
+            {% endif %}
+            {% if i.tag2 %}
+            <p>#Society</p>
+            {% endif %}
+            {% if i.tag3 %}
+            <p>#Health</p>
+            {% endif %}
+            {% if i.tag4 %}
+            <p>#Economy</p>
+            {% endif %}
+            {% if i.tag5 %}
+            <p>#Art</p>
+            {% endif %}
+            {% if i.tag6%}
+            <p>#Technology</p>
+            {% endif %}
+            {% if i.tag7 %}
+            <p >#Other</p>
+            {% endif %}
+        </span>
+    </div>
     <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
         
         <span  class="span-blog" style="float: left">
@@ -151,23 +159,31 @@
             
             
         </div>
-        <span>
-            {% if i.tag1 %}
-            <p class="tag-design-1">#Environment</p>
-            {% elif i.tag2 %}
-            <p class="tag-design-2">#Society</p>
-            {% elif i.tag3 %}
-            <p class="tag-design-3">#Health</p>
-            {% elif i.tag4 %}
-            <p class="tag-design-4">#Economy</p>
-            {% elif i.tag5 %}
-            <p class="tag-design-5">#Art</p>
-            {% elif i.tag6%}
-            <p class="tag-design-6">#Technology</p>
-            {% elif i.tag7 %}
-            <p class="tag-design-7">#Other</p>
-            {% endif %}
-        </span>
+        <div class="tag-design" >
+            <span>
+                {% if i.tag1 %}
+                <p>#Environment</p>
+                {% endif %}
+                {% if i.tag2 %}
+                <p>#Society</p>
+                {% endif %}
+                {% if i.tag3 %}
+                <p>#Health</p>
+                {% endif %}
+                {% if i.tag4 %}
+                <p>#Economy</p>
+                {% endif %}
+                {% if i.tag5 %}
+                <p>#Art</p>
+                {% endif %}
+                {% if i.tag6%}
+                <p>#Technology</p>
+                {% endif %}
+                {% if i.tag7 %}
+                <p >#Other</p>
+                {% endif %}
+            </span>
+        </div>
         <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
             
             <span  class="span-blog" style="float: left">
@@ -205,6 +221,7 @@
 
     {% endif %}
     {% endfor %}
+    <br><br>
 
     <script>
         function changeHeart(num) {
