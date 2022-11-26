@@ -48,14 +48,7 @@ def profile(request):
         return HttpResponseRedirect(reverse("login"))
     if not request.user.is_superuser:
         
-        try:
-            user_id = request.user.id
-            wallet = Wallet.objects.get(user_id=user_id)
-        except Wallet.DoesNotExist:
-            user_id = None
-
-        if not request.user.is_authenticated:
-            return loginPage(request)
+        wallet = Wallet.objects.get(user_id=request.user.id)
         userId=1
         user = AccountUser.objects.filter(user_id=request.user.id).first()
         if user:
@@ -87,11 +80,7 @@ def profile(request):
 def viewProfile(request, id):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    wallet = Wallet.objects.get(user_id=request.user.id)
 
     userId=1
     print(request.user.id)
@@ -152,12 +141,7 @@ def likeBlog(request):
 def cookieCoin(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-    global user_id
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    wallet = Wallet.objects.get(user_id=request.user.id)
 
     history = History.objects.filter(userID=request.user.id )
     cookieCoin = CookieCoin.objects.all()
@@ -171,11 +155,7 @@ def confirmCookie(request, cookie_id):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
     global userID
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    wallet = Wallet.objects.get(user_id=request.user.id)
 
     if request.method == "POST":
         userID=request.user.id
@@ -204,11 +184,7 @@ def confirmCookie(request, cookie_id):
 def confirmPayment(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    wallet = Wallet.objects.get(user_id=request.user.id)
 
     return render(request, 'users/confirmPayment.html',{
         'wallet': wallet
@@ -250,13 +226,8 @@ def homepage(request):
     if not request.user.is_superuser:
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse("login"))
-        try:
-            userId = request.user.id
-            wallet = Wallet.objects.get(user_id=userId)
-        except Wallet.DoesNotExist:
-            userId = None
-
-        wallet = Wallet.objects.get(user_id=userId)
+    
+        wallet = Wallet.objects.get(user_id=request.user.id)
         blog = Blog.objects.filter(blogType=1, recommended=True).all()
         like = LikeBlog.objects.filter(user_id=request.user.id).values_list('blog_id', flat=True)
         print(like)
@@ -274,11 +245,7 @@ def homepage(request):
 def members(request):
     if not request.user.is_authenticated:
         return HttpResponseRedirect(reverse("login"))
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    wallet = Wallet.objects.get(user_id=request.user.id)
 
     return render(request,'users/members.html' , {
         'wallet':wallet
@@ -321,11 +288,7 @@ def createblog(request):
     })
 
 def homepageadmin(request):
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    wallet = Wallet.objects.get(user_id=request.user.id)
 
     if not request.user.is_superuser:
         return loginPage(request)
@@ -468,18 +431,14 @@ def reportBlog(request, id):
 
 def donate(request, id):
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
+        return HttpResponseRedirect(reverse("login"), status=400)
     global userID
-    try:
-        user_id = request.user.id
-        wallet = Wallet.objects.get(user_id=user_id)
-    except Wallet.DoesNotExist:
-        user_id = None
+    wallet = Wallet.objects.get(user_id=request.user.id)
 
+    blogs = Blog.objects.get(pk=id)
     if request.method == "POST":
         donate = request.POST["donate"]
         transactionCode = randint(1, 100000)
-        blogs = Blog.objects.get(pk=id)
         if wallet.balanceCookie >= int(donate):
             account = History.objects.create(
                 title=blogs.title, historyType=False, date=datetime.date.today(), time=time.strftime("%H:%M:%S", time.localtime()), price='0', userID=request.user.id, transactionCode=transactionCode, cookie=donate)
@@ -494,9 +453,9 @@ def donate(request, id):
             blog.save()
         
         return HttpResponseRedirect(reverse("detail", args=[id]))
-    return render(request, 'users/detail/.html',{
+    return render(request, 'users/detail.html',{
         'wallet' : wallet,
-        'blog' : blog,
+        'blog' : blogs,
     })
 
 def searchBar(request):

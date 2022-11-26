@@ -6,6 +6,7 @@ from users.views import index, aboutUs, logoutFunc,profile, viewProfile,likeBlog
 from users.models import Wallet, History, Blog, ReportBlog, CookieCoin, CommentBlog, LikeBlog, ViewBlog, OwnedBlog, AccountUser,AccountOrganization,AccountAdmin
 from django.contrib.auth.models import User
 import json
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 # Create your tests here.
 
@@ -41,10 +42,6 @@ class TestUrls(SimpleTestCase):
         url = reverse('profile')
         self.assertEquals(resolve(url).func, profile)
 
-    def test_likeBlog_url_resolved(self):
-        url = reverse('viewProfile1')
-        self.assertEquals(resolve(url).func, likeBlog)
-
     def test_cookieCoin_url_resolved(self):
         url = reverse('cookieCoin')
         self.assertEquals(resolve(url).func, cookieCoin)
@@ -73,7 +70,7 @@ class TestUrls(SimpleTestCase):
         url = reverse('blogpage')
         self.assertEquals(resolve(url).func, BlogView)
     
-    def test_confirmPayment_url_resolved(self):
+    def test_detail_url_resolved(self):
         url = reverse('detail', args=[0])
         self.assertEquals(resolve(url).func, DetailView)
 
@@ -102,10 +99,10 @@ class TestUrls(SimpleTestCase):
         self.assertEquals(resolve(url).func, verify)
 
     def test_recommended_url_resolved(self):
-        url = reverse('reccomended',args=[0])
+        url = reverse('recommended',args=[0])
         self.assertEquals(resolve(url).func, recommended)
     
-    def test_homepageadmin_url_resolved(self):
+    def test_reportpageadmin_url_resolved(self):
         url = reverse('reportPageAdmin')
         self.assertEquals(resolve(url).func, reportPageAdmin)
 
@@ -130,7 +127,20 @@ class TestViews(TestCase):
             'last_name': self.lname}
         self.user = User.objects.create_user(**self.credentials)
 
-        # self.cookie = 
+        self.img = SimpleUploadedFile(name='tee_image.jpg', content=open('users/static/images/tee.jpg', 'rb').read(), content_type='image/jpeg')
+        self.blog = Blog.objects.create(
+            title='title', 
+            blogType=1, 
+            user=self.user,
+            introduction= 'introduction', 
+            detail='example test detail',
+            tag='example tag', 
+            date1='2022-11-11', 
+            image=self.img,
+            expectCookies= 0)
+
+        #with open('users/static/images/tee.jpg','rb') as img:
+            
 
         self.index_url = reverse('index')
         self.aboutUs_url = reverse('aboutUs')
@@ -152,7 +162,11 @@ class TestViews(TestCase):
         self.report_url = reverse('report', args=[0])
         self.likeBlog_url = reverse('likeBlog')
         self.homepageadmin_url = reverse('homepageadmin')
-        self.verify_url = reverse('verify', args=[0])
+        self.recommended_url = reverse('recommended', args=[self.blog.id])
+        self.detailadmin_url = reverse('detailadmin', args=[self.blog.id])
+        self.verify_url = reverse('verify', args=[self.blog.id])
+
+        
 
         #self.donate_url = reverse('donate',arg=[0])
         #self.detailadmin_url = reverse('detailadmin', arg=[0])
@@ -167,16 +181,9 @@ class TestViews(TestCase):
     def test_index_GET(self):
         self.client.login(username=self.username, password=self.password)
         Wallet.objects.create(user=self.user, balanceCookie=0)
-        response = self.client.get(self.homepage_url)
+        response = self.client.get(self.index_url)
 
-        self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'users/homepage.html')
-
-    def test_index_POST(self):
-        response = self.client.post(self.homepage_url)
         self.assertEquals(response.status_code, 302)
-        response = self.client.post(self.homepage_url, self.credentials, follow=True)
-        self.assertTemplateUsed(response, 'users/loginUser.html')
     
 # --------------------------------aboutus--------------------------------#
     
@@ -198,37 +205,77 @@ class TestViews(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/loginUser.html')
 
-# --------------------------------profile--------------------------------#
+# # --------------------------------profile--------------------------------#
 
     def test_profile_GET(self):
         user = User.objects.create_user(username="CCC", password="111")
         login = self.client.login(username="CCC", password="111")
-        response = self.client.get(reverse('login'))
+        wallet = Wallet.objects.create(user=user, balanceCookie=0)
+        response = self.client.get(reverse('profile'))
 
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'users/loginUser.html')
+        self.assertTemplateUsed(response, 'users/myProfile.html')
 
-    def test_profile_POST(self):
-        response = self.client.post(self.profile_url)
+    def test_profile_GET_User(self):
+        with open('users/static/images/tee.jpg','rb') as img:
+            response = self.client.post(reverse('register'), {
+                'username': 'AAA', 'password': '123456AAA', 'cpassword': '123456AAA', 'userType': '2', 
+                'fname': "AAAA", 'lname': 'BBBBb', 'email': 'sec@example.com', 
+                'bday': '2022-01-20', 'country':'country test', 'address': 'address 66/7', 'phone': '0547877979',
+                'image': img})
+        login = self.client.login(username="AAA", password="123456AAA")
+        wallet = Wallet.objects.create(user=self.user, balanceCookie=0)
+        response = self.client.get(reverse('profile'))
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/myProfile.html')
+
+    def test_profile_GET_admin(self):
+        user = User.objects.create_user(username="CCC", password="111", is_superuser = True)
+        login = self.client.login(username="CCC", password="111")
+        wallet = Wallet.objects.create(user=user, balanceCookie=0)
+        response = self.client.get(reverse('profile'))
         self.assertEquals(response.status_code, 302)
-        response = self.client.post(self.profile_url, self.credentials, follow=True)
-        self.assertTemplateUsed(response, 'users/loginUser.html')
+       
 
-# ---------------------------------viewprofile---------------------------------#
-
-    # def test_viewProfile_GET(self):
-    #     user = User.objects.create_user(username="CCC", password="111")
-    #     login = self.client.login(username="CCC", password="111")
-    #     response = self.client.get(reverse('viewProfile'))
-
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'users/viewProfile.html')
-
-    def test_viewProfile_POST(self):
-        response = self.client.post(self.profile_url)
+    def test_profile_GET_not_login(self):
+        response = self.client.get(reverse('profile'))
         self.assertEquals(response.status_code, 302)
-        response = self.client.post(self.viewProfile_url, self.credentials, follow=True)
-        self.assertTemplateUsed(response, 'users/loginUser.html')
+
+# # ---------------------------------viewprofile---------------------------------#
+
+    def test_viewProfile_GET(self):
+        with open('users/static/images/tee.jpg','rb') as img:
+            response = self.client.post(reverse('register'), {
+                'username': 'AAA', 'password': '123456AAA', 'cpassword': '123456AAA', 'userType': '2', 
+                'fname': "AAAA", 'lname': 'BBBBb', 'email': 'sec@example.com', 
+                'bday': '2022-01-20', 'country':'country test', 'address': 'address 66/7', 'phone': '0547877979',
+                'image': img})
+        user = User.objects.create_user(username="CCC", password="111")
+        wallet = Wallet.objects.create(user=user, balanceCookie=0)
+        login = self.client.login(username="CCC", password="111")
+        response = self.client.get(reverse('viewProfile', args=[2]))
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/userProfile.html')
+
+    def test_viewProfile_Org(self):
+        with open('users/static/images/tee.jpg','rb') as img:
+            response = self.client.post(reverse('register'), {
+            'username': 'AAA', 'password': '123456AAA', 'cpassword': '123456AAA', 'userType': '1', 
+            'fname': "AAAA", 'lname': 'BBBBb', 'email': 'sec@example.com', 'orgName':'Fondations',
+            'fday': '2022-01-20', 'country':'country test', 'address': 'address 66/7', 'phone': '0547877979',
+            'image': img})
+        user = User.objects.create_user(username="CCC", password="111")
+        wallet = Wallet.objects.create(user=user, balanceCookie=0)
+        login = self.client.login(username="CCC", password="111")
+        self.assertEquals(response.status_code, 302)
+        response = self.client.get(reverse('viewProfile', args=[2]))
+        self.assertTemplateUsed(response, 'users/userProfile.html')
+
+    def test_viewProfile_no_login(self):
+        response = self.client.get(reverse('viewProfile', args=[2]))
+        self.assertEquals(response.status_code, 302)
 
 # ------------------------------------likeblog--------------------------#
 
@@ -277,7 +324,16 @@ class TestViews(TestCase):
                                                                 
         self.assertEqual(response.status_code, 302)
 
-    def test_cookies_GET(self):
+    def test_cookies_coin(self):
+        self.client.login(username=self.username, password=self.password)
+        wallet = Wallet.objects.create(user=self.user, balanceCookie=0)
+        cookie = CookieCoin.objects.create(cookie=10, price=10)
+        # hist = History.objects.create()
+        response = self.client.get(self.cookieCoin_url)
+                                                                
+        self.assertEqual(response.status_code, 200)
+
+    def test_cookiescon_GET(self):
         user = User.objects.create_user(username="CCC", password="111")
         cookie = CookieCoin.objects.create(cookie=10, price=10)
         login = self.client.login(username="CCC", password="111")
@@ -289,6 +345,12 @@ class TestViews(TestCase):
         response = self.client.post(self.confirmCookie_url)
         self.assertEquals(response.status_code, 302)
         response = self.client.post(self.confirmCookie_url, self.credentials, follow=True)
+        self.assertTemplateUsed(response, 'users/loginUser.html')
+    
+    def test_cookies_POST_notLogin(self):
+        response = self.client.post(self.cookieCoin_url)
+        self.assertEquals(response.status_code, 302)
+        response = self.client.post(self.cookieCoin_url, self.credentials, follow=True)
         self.assertTemplateUsed(response, 'users/loginUser.html')
 
 # ------------------------------comfirmpayment--------------------------#
@@ -323,6 +385,12 @@ class TestViews(TestCase):
         response = self.client.post(self.homepage_url, self.credentials, follow=True)
         self.assertTemplateUsed(response, 'users/loginUser.html')
 
+    def test_homepage_GET_loginsuperuser(self):
+        user = User.objects.create_superuser(username='admin', password='adminadmin')
+        self.client.login(username='admin', password='adminadmin')
+        response = self.client.get(reverse('homepage'))    
+        self.assertEquals(response.status_code, 302)
+
 # --------------------------------members-------------------------------#
 
     def test_members_GET(self):
@@ -340,6 +408,13 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'users/loginUser.html')
 
 # ----------------------------createblog------------------------------#
+    def test_create_blog_GET(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=0)
+        response = self.client.get(self.createBlog_url)
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/createBlog.html')
 
     def test_create_blog_POST(self):
         user = User.objects.create_user(username="CCC", password="111")
@@ -347,7 +422,11 @@ class TestViews(TestCase):
         with open('users/static/images/tee.jpg','rb') as img:
             response = self.client.post(reverse('createBlog'), {'title':'title', 'introduction': 'introduction', 'detail':'example test detail', 'tag':'example tag', 'date1':'2022-11-11', 'image':img, 'expectCookies': 0})
         self.assertEqual(response.status_code, 302)
-
+    
+    def test_create_blog_GET_notlogin(self):
+        response = self.client.get(self.createBlog_url)
+        self.assertEquals(response.status_code, 302)
+        
 # ---------------------------homepageadmin------------------------------#
 
     def test_homepageadmin_GET(self):
@@ -357,42 +436,45 @@ class TestViews(TestCase):
 
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/loginUser.html')
+    
+    def test_homepageadmin_GET_admin(self):
+        user = User.objects.create_superuser(username='admin', password='adminadmin')
+        self.client.login(username='admin', password='adminadmin')
+        Wallet.objects.create(user=user, balanceCookie=0)
+        response = self.client.get(reverse('homepageadmin'))    
+        self.assertEquals(response.status_code, 200)
 
 # ---------------------------detailadmin-------------------------------#
 
-# def test_detailadmin_GET(self):
-    #     self.client.login(username=self.username, password=self.password)
-    #     Wallet.objects.create(user=self.user, balanceCookie=0)
-    #     response = self.client.get(self.detailadmin_url)
+    def test_detailadmin_GET(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.get(self.detailadmin_url, args=[1])
 
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'users/detailadmin.html')
-    
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/detailadmin.html')
+        
     # def test_detailadmin_POST(self):
     #     response = self.client.post(self.detailadmin_url)
     #     self.assertEquals(response.status_code, 302)
     #     response = self.client.post(self.detailadmin_url, self.credentials, follow=True)
     #     self.assertTemplateUsed(response, 'users/loginUser.html')
 
-# ---------------------------------verify-------------------------------#
-    # def test_verify_GET(self):
-    #     self.client.login(username=self.username, password=self.password)
-    #     Wallet.objects.create(user=self.user, balanceCookie=0)
-    #     response = self.client.get(self.verify_url)
+#---------------------------------verify-------------------------------#
+    def test_verify_GET(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.get(self.verify_url, args=[1])
 
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'users/verify.html')
-    
-    # def test_members_POST(self):
-    #     response = self.client.post(self.verify_url)
-    #     self.assertEquals(response.status_code, 302)
-    #     response = self.client.post(self.verify_url, self.credentials, follow=True)
-    #     self.assertTemplateUsed(response, 'users/loginUser.html')
-
+        self.assertEquals(response.status_code, 302)
+        
 
 # ---------------------------------recommended-------------------------------#
 
+    def test_recommended_GET(self):
+        self.client.login(username=self.username, password=self.password)
+        response = self.client.get(self.recommended_url, args=[1])
 
+        self.assertEquals(response.status_code, 302)
+        
 
 # ---------------------------------loginPage-------------------------------#
     def test_login_GET(self):
@@ -432,6 +514,13 @@ class TestViews(TestCase):
 
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/homepage.html')
+    
+    def test_login_GET_loginsuperuser(self):
+        user = User.objects.create_superuser(username='admin', password='adminadmin')
+        self.client.login(username='admin', password='adminadmin')
+        response = self.client.post(reverse('login'), {'username':'admin', 'password':'adminadmin'})    
+        self.assertEquals(response.status_code, 302)
+
 
 # --------------------------register-------------------------------# 
    
@@ -464,7 +553,7 @@ class TestViews(TestCase):
         for i in range(5):
             report = ReportBlog.objects.create(blog=blog, user=user)
         login = self.client.login(username="CCC", password="111")
-        response = self.client.post(reverse('report',args=[1] ), {'reason1':True, 'reason2':True, 'reason3':True,
+        response = self.client.post(reverse('report',args=[2] ), {'reason1':True, 'reason2':True, 'reason3':True,
                                                'reason4':True, 'reason5':True, 'reason6':True,
                                                'otherReason':''})
         self.assertEqual(response.status_code, 302)
@@ -482,37 +571,60 @@ class TestViews(TestCase):
         response = self.client.get(reverse('report',args=[1] ))
         self.assertEqual(response.status_code, 200)
   
-# ----------------------------------------Donate------------------------#
-    # def test_donate_GET(self):
-    #     self.client.login(username=self.username, password=self.password)
-    #     Wallet.objects.create(user=self.user, balanceCookie=0)
-    #     response = self.client.get(self.donate_url)
+# ----------------------------------------Donate-------------------------------------- #
+    def test_donate_GET(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=500)
 
-    #     self.assertEquals(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'users/donate.html')
+        response = self.client.get(reverse('donate', args=[self.blog.id] ))
+        self.assertEqual(response.status_code, 200)
     
-    # def test_donate_POST(self):
-    #     response = self.client.post(self.donate_url)
-    #     self.assertEquals(response.status_code, 302)
-    #     response = self.client.post(self.donate_url, self.credentials, follow=True)
-    #     self.assertTemplateUsed(response, 'users/loginUser.html')
+    def test_donate_blog_POST_success(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=200)
+        with open('users/static/images/cat.jpg','rb') as img:
+            response = self.client.post(reverse('createBlog'), {'title':'title', 'introduction': 'introduction', 'detail':'example test detail', 'tag':'example tag', 'date1':'2022-11-11', 'image':img, 'expectCookies': 20})
+        response = self.client.post(reverse('donate',args=[1] ), {'donate':200})            
+
+        self.assertEqual(response.status_code, 302)
+    
+    def test_donate_blog_POST_unsuccess(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=0)
+        with open('users/static/images/cat.jpg','rb') as img:
+            response = self.client.post(reverse('createBlog'), {'title':'title', 'introduction': 'introduction', 'detail':'example test detail', 'tag':'example tag', 'date1':'2022-11-11', 'image':img, 'expectCookies': 20})
+        response = self.client.post(reverse('donate',args=[1] ), {'donate':200})            
+        hist=History.objects.all()
+        self.assertEqual(len(hist), 0)
+
+    def test_donate_not_login(self):
+        with open('users/static/images/cat.jpg','rb') as img:
+            response = self.client.post(reverse('createBlog'), {'title':'title', 'introduction': 'introduction', 'detail':'example test detail', 'tag':'example tag', 'date1':'2022-11-11', 'image':img, 'expectCookies': 0})
+        response = self.client.post(reverse('donate',args=[1] ), {'donate':200})
+        self.assertEqual(response.status_code, 400)
 
 # -----------------------------------searchbar------------------------#
 
-    def test_searchBar_GET(self):
+    def test_searchBar_GET_else(self):
         self.client.login(username=self.username, password=self.password)
         Wallet.objects.create(user=self.user, balanceCookie=0)
         response = self.client.get(self.search_url)
 
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'users/searchfor.html')
-    
-    def test_searchBar_POST(self):
-        response = self.client.post(self.search_url)
-        self.assertEquals(response.status_code, 302)
-        response = self.client.post(self.search_url, self.credentials, follow=True)
-        self.assertTemplateUsed(response, 'users/loginUser.html')
 
+    def test_searchBar_GET_IF(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=0)
+        response = self.client.get(self.search_url, {'searched': 'gg'})
+
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'users/searchfor.html')
+    
+    def test_searchBar_GET_notlogin(self):
+        response = self.client.get(self.search_url)
+        self.assertEquals(response.status_code, 302)
+        
 
 # ----------------------------------blogview------------------------#
     
@@ -531,11 +643,47 @@ class TestViews(TestCase):
         self.assertTemplateUsed(response, 'users/loginUser.html')
     
 # --------------------------------Detailview------------------------#   
+    def test_detail_GET_login(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=0)
+        with open('users/static/images/fe.jpg','rb') as img:
+            response = self.client.post(reverse('createBlog'), {'title':'title', 'introduction': 'introduction', 'detail':'example test detail', 'tag':'example tag', 'date1':'2022-11-11', 'image':img, 'expectCookies': 0})
+        response = self.client.get(reverse('detail', args=[1]))
+
+    def test_detail_GET_not_login(self):
+        with open('users/static/images/fe.jpg','rb') as img:
+            response = self.client.post(reverse('createBlog'), {'title':'title', 'introduction': 'introduction', 'detail':'example test detail', 'tag':'example tag', 'date1':'2022-11-11', 'image':img, 'expectCookies': 0})
+        response = self.client.get(reverse('detail', args=[1]))
     
     
     
+# -------------------------------------reportadmin----------------------------------------#       
+    def test_report_page_admin(self):
+        user = User.objects.create_superuser(username='admin', password='adminadmin')
+        self.client.login(username='admin', password='adminadmin')
+        response = self.client.get(reverse('reportPageAdmin'))    
+        self.assertEquals(response.status_code, 200)
+
     
-# ---------------------------------------------------------------------------------------------#       
+    def test_report_page_user(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=0)
+        response = self.client.get(reverse('reportPageAdmin'))    
+        self.assertEquals(response.status_code, 200)
+
+# -------------------------------------not verify----------------------------------------#       
+    def test_not_verify_page_admin(self):
+        user = User.objects.create_superuser(username='admin', password='adminadmin')
+        self.client.login(username='admin', password='adminadmin')
+        response = self.client.get(reverse('notVerifiedPageAdmin'))    
+        self.assertEquals(response.status_code, 200)
+
+    
+    def test_not_verify_page_user(self):
+        self.client.login(username=self.username, password=self.password)
+        Wallet.objects.create(user=self.user, balanceCookie=0)
+        response = self.client.get(reverse('notVerifiedPageAdmin'))    
+        self.assertEquals(response.status_code, 200)
     
     
     

@@ -30,7 +30,7 @@ urlpatterns = [
     path('homepageadmin/', views.homepageadmin, name='homepageadmin'),
     path('detailadmin/<int:detail_id>', views.detailadmin, name='detailadmin'),
     path('verify/<int:id>',views.verify, name = 'verify'),
-    path('reccomended/<int:id>',views.recommended, name = 'reccomended'),
+     path('recommended/<int:id>',views.recommended, name = 'recommended'),
     path('reportPageAdmin/', views.reportPageAdmin, name='reportPageAdmin'),
     path('notVerifiedPageAdmin/', views.notVerifiedPageAdmin,name='notVerifiedPageAdmin'),
 ] 

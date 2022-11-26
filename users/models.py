@@ -10,8 +10,8 @@ class CookieCoin(models.Model):
     cookie = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f"{self.cookie}"
+    # def __str__(self):
+    #     return f"{self.cookie}"
 
 
 class Wallet(models.Model):
@@ -19,8 +19,8 @@ class Wallet(models.Model):
         User, on_delete=models.CASCADE, related_name='user')
     balanceCookie = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f"{self.user}"
+    # def __str__(self):
+    #     return f"{self.user}"
 
     # def userWallet():
     #     hist_cookie = History.objects.all()
@@ -41,14 +41,15 @@ class History(models.Model):
     cookie = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f"{self.userID}"
+    # def __str__(self):
+    #     return f"{self.userID}"
 
 
 class Blog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=9999)
     introduction = models.CharField(max_length=9999)
+    tag = models.CharField(max_length=9999)
     detail = RichTextField()
     tag1 = models.BooleanField(default=False)
     tag2 = models.BooleanField(default=False)
