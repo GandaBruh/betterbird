@@ -108,7 +108,7 @@
                     <form action="{% url 'verify' blog.id %}" method="POST">{% csrf_token %}
                         <button class="verifybutton" type="submit" ><span>VERIFY </span></button>
                     </form>
-                    <form action="{% url 'reccomended' blog.id %}" method="POST">{% csrf_token %}
+                    <form action="{% url 'recommended' blog.id %}" method="POST">{% csrf_token %}
                         <button class="recommendbutton" type="submit"><span>RECOMMENDED </span></button>
                     </form>
                     <form action="{% url 'verify' blog.id %}" method="POST">{% csrf_token %}
