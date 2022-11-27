@@ -10,32 +10,31 @@
 <!-------------------- donate -------------------->
 
 <div class="donate" style="padding-left: 75%; margin-top: 2rem; margin-right: 1rem; padding-top: 1rem;">
-    <p2>Donation: {{ blog.donate }} / {{ blog.expectCookies }}</p2> 
-    <form action="{% url 'donate' blog.id %}" method="POST" class="d-flex" style="padding-top: 1rem;">
+    <p2>Donation: {{ blog.donate }} / {{ blog.expectCookies }}</p2>
+    <form action="{% url 'detail' blog.id %}" method=POST class="d-flex" style="padding-top: 1rem;">
         {% csrf_token %}
-        <span class="input-group-text" style="height: 35px;"><img style="height: 35px; margin-bottom: 2px;" src="{% static 'images/Cookies1.PNG' %}"/></span>
         <input class="form-control mr-sm-2" type="text" name="donate" placeholder="donate" aria-label="donate">
         <div>
-            <button class="btn btn-danger" type="submit">donate</button>
+            <button class="btn btn-danger"" type=" submit">donate</button>
         </div>
-    </form> 
+    </form>
 </div>
 
 <!-------------------- article ------------------->
 
 <div style="padding: 5% 0%;">
-<div style="text-align: center;">
-    <p3>{{ blog.title }}</p3>
-</div>
+    <div style="text-align: center;">
+        <p3>{{ blog.title }}</p3>
+    </div>
     <div class="main">
         <div class="description" style="text-align: center;">
-            <h51><a href="{% url 'profile' %}">By {{ blog.user.first_name }} {{ blog.user.last_name }}</a></h5> 
-            <br>
+            <h51><a href="{% url 'profile' %}">By {{ blog.user.first_name }} {{ blog.user.last_name }}</a></h5>
+                <br>
         </div>
-        <br><br><br>
+        <br>
         <div class="images">
             <center>
-                <img src={{ blog.image.url }} style="max-width: 600px;"/>
+                <img src={{ blog.image.url }} style="max-width: 600px;" />
             </center>
         </div><br><br>
         <div style="text-align: 0%; padding-left: 5rem; padding-right: 5rem;">
@@ -65,52 +64,68 @@
                 <p>#Technology</p>
                 {% endif %}
                 {% if blog.tag7 %}
-                <p >#Other</p>
+                <p>#Other</p>
                 {% endif %}
             </span>
         </div>
-            <br>
-            <div style="position:absolut; bottom: 0; padding-bottom: 3px;">
-                <span class="span-blog" style="padding-left: 5rem;">
-                    <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i>
-                    {% if blog.expectCookies > 1000 %}
-                    {% widthratio blog.expectCookies|add:"-500" 1000 1 %}k
-                    {% else %}
-                    {{blog.expectCookies}}
-                    {% endif %}
-        
-                    <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
-                    {% if blog.views > 1000 %}
-                    <p style="display: inline;">{% widthratio blog.views|add:"-500" 1000 1 %}k</p>
-                    {% else %}
-                    <p style="display: inline;">{{blog.views}}</p>
-                    {% endif %}
-                    {% if blog.id in like %}
-                    <i onclick="changeHeart({{blog.id}})" id="LikeHeart{{i.id}}"
-                        style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
-                    </i>
-                    {% else %}
-                    <i onclick="changeHeart({{blog.id}})" id="LikeHeart{{blog.id}}"
-                        style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
-                    </i>
-                    {% endif %}
-                    {% if blog.like > 1000 %}
-                    <p style="display: inline;">{% widthratio blog.like|add:"-500" 1000 1 %}k</p>
-        
-                    {% else %}
-                    <p style="display: inline;" id="like{{blog.id}}">{{blog.like}}</p>
-                    {% endif %}
-                </span>
-                <button class="button4" type="submit"><a href="{% url 'report' blog.id %}">Report</a></button>
+        <br>
+        <div style="position:absolut; bottom: 0; padding-bottom: 3px;">
+            <span class="span-blog" style="padding-left: 5rem;">
+                <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i>
+                {% if blog.expectCookies > 1000 %}
+                {% widthratio blog.expectCookies|add:"-500" 1000 1 %}k
+                {% else %}
+                {{blog.expectCookies}}
+                {% endif %}
+
+                <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
+                {% if blog.views > 1000 %}
+                <p style="display: inline;">{% widthratio blog.views|add:"-500" 1000 1 %}k</p>
+                {% else %}
+                <p style="display: inline;">{{blog.views}}</p>
+                {% endif %}
+                {% if blog.id in like %}
+                <i onclick="changeHeart({{blog.id}})" id="LikeHeart{{i.id}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
+                </i>
+                {% else %}
+                <i onclick="changeHeart({{blog.id}})" id="LikeHeart{{blog.id}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+                </i>
+                {% endif %}
+                {% if blog.like > 1000 %}
+                <p style="display: inline;">{% widthratio blog.like|add:"-500" 1000 1 %}k</p>
+
+                {% else %}
+                <p style="display: inline;" id="like{{blog.id}}">{{blog.like}}</p>
+                {% endif %}
+            </span>
+            <span class="span-blog">
+                <br>
+                <br>
+                <br>
+                <div style="padding-left: 42%;">
+                    <form action="{% url 'verify' blog.id %}" method="POST">{% csrf_token %}
+                        <button class="verifybutton" type="submit" ><span>VERIFY </span></button>
+                    </form>
+                    <form action="{% url 'recommended' blog.id %}" method="POST">{% csrf_token %}
+                        <button class="recommendbutton" type="submit"><span>RECOMMENDED </span></button>
+                    </form>
+                    <form action="{% url 'verify' blog.id %}" method="POST">{% csrf_token %}
+                        <button class="verifybutton" type="submit" ><span>UNREPORTED </span></button>
+                    </form>
+                </div><br>
+            </span>
+            <br><br><br><br>
+            <div style="padding-left: 5%;">
+                <a href="{% url 'homepageadmin' %}" class="paysucbtn"><span>Back</span></a>
             </div>
         </div>
     </div>
 </div>
-<br><br>
-<div style="width: 100%; text-align: center;">
-    <a href="{% url 'blogpage' %}" class="paysucbtn"><span>Back</span></a>
 </div>
-<br><br>
+
+
 <script>
     function changeHeart(num) {
         id = "LikeHeart" + num;
@@ -188,7 +203,5 @@
         return cookieValue;
     }
 </script>
-
-
 
 {% endblock %}

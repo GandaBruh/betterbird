@@ -1,0 +1,307 @@
+{% extends 'users/layout.html' %}
+{% load static %}
+
+<style>
+
+
+
+</style>
+
+{% block body %}
+
+
+<div style="padding-top: 50px; padding-left: 30px; margin-bottom: 25px;">
+    <i style="font-size: 35px;"> REPORTED BLOG </i>
+    <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <br><br><br>
+
+</div>
+{% for i in blogs %}
+{% if forloop.counter|divisibleby:2 %}
+<div class="col-4 blog-format">
+    <div class="'blog-body">
+        <div class="blog-img">
+            <img src="{{i.image.url}}">
+        </div>
+
+        <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
+                {% if i.blogType == 0 %}
+                <i style="color:orange" class="fa-solid fa-spinner"> waiting for verify</i>
+                {% elif i.blogType == 1 %}
+                <i style="color: rgb(49, 236, 49)" class="fa-solid fa-circle-check"> verified</i>
+                {% elif i.blogType == 2 %}
+                <i style="color: red;" class="fa-solid fa-circle-exclamation"> reported</i>
+                {% endif %}
+            </div>
+
+            <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
+            {% if i.recommended %}
+            <i class="fa-solid fa-star fa-lg"></i>
+            {% else %}
+            <i class="fa-regular fa-star fa-lg"></i>
+            {% endif %}
+        </div>
+        <span class="blog-text">
+            <p class="general-text">{{i.introduction}}
+            </p>
+        </span>
+
+
+    </div>
+    <div class="tag-design" >
+        <span>
+            {% if i.tag1 %}
+            <p>#Environment</p>
+            {% endif %}
+            {% if i.tag2 %}
+            <p>#Society</p>
+            {% endif %}
+            {% if i.tag3 %}
+            <p>#Health</p>
+            {% endif %}
+            {% if i.tag4 %}
+            <p>#Economy</p>
+            {% endif %}
+            {% if i.tag5 %}
+            <p>#Art</p>
+            {% endif %}
+            {% if i.tag6%}
+            <p>#Technology</p>
+            {% endif %}
+            {% if i.tag7 %}
+            <p >#Other</p>
+            {% endif %}
+        </span>
+    </div>
+    <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
+
+        <span class="span-blog" style="float: left">
+            <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;">Readmore <i
+                    class="fa-solid fa-arrow-right"></i></a>
+
+            <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i>
+            {% if i.expectCookies > 1000 %}
+            {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
+            {% else %}
+            {{i.expectCookies}}
+            {% endif %}
+
+            <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
+            {% if i.views > 1000 %}
+            <p style="display: inline;">{% widthratio i.views|add:"-500" 1000 1 %}k</p>
+            {% else %}
+            <p style="display: inline;">{{i.views}}</p>
+            {% endif %}
+            {% if i.id in like %}
+            <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
+            </i>
+            {% else %}
+            <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+            </i>
+            {% endif %}
+            {% if i.like > 1000 %}
+            <p style="display: inline;">{% widthratio i.like|add:"-500" 1000 1 %}k</p>
+
+            {% else %}
+            <p style="display: inline;" id="like{{i.id}}">{{i.like}}</p>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+<div class="col-2"></div>
+</div>
+{% else %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-4 blog-format">
+        <div class="'blog-body">
+            <div class="blog-img">
+                <img src="{{i.image.url}}">
+            </div>
+
+            <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
+                    {% if i.blogType == 0 %}
+                    <i style="color:orange" class="fa-solid fa-spinner"> waiting for verify</i>
+                    {% elif i.blogType == 1 %}
+                    <i style="color: rgb(49, 236, 49)" class="fa-solid fa-circle-check"> verified</i>
+                    {% elif i.blogType == 2 %}
+                    <i style="color: red;" class="fa-solid fa-circle-exclamation"> reported</i>
+                    {% endif %}
+                </div>
+
+                <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
+                {% if i.recommended %}
+                <i class="fa-solid fa-star fa-lg"></i>
+                {% else %}
+                <i class="fa-regular fa-star fa-lg"></i>
+                {% endif %}
+            </div>
+            <span class="blog-text">
+                <p class="general-text">{{i.introduction}}
+                </p>
+            </span>
+
+
+        </div>
+        <div class="tag-design" >
+            <span>
+                {% if i.tag1 %}
+                <p>#Environment</p>
+                {% endif %}
+                {% if i.tag2 %}
+                <p>#Society</p>
+                {% endif %}
+                {% if i.tag3 %}
+                <p>#Health</p>
+                {% endif %}
+                {% if i.tag4 %}
+                <p>#Economy</p>
+                {% endif %}
+                {% if i.tag5 %}
+                <p>#Art</p>
+                {% endif %}
+                {% if i.tag6%}
+                <p>#Technology</p>
+                {% endif %}
+                {% if i.tag7 %}
+                <p >#Other</p>
+                {% endif %}
+            </span>
+        </div>
+        <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
+
+            <span class="span-blog" style="float: left">
+                <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;">Readmore <i
+                        class="fa-solid fa-arrow-right"></i></a>
+                <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i>
+                {% if i.expectCookies > 1000 %}
+                {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
+                {% else %}
+                {{i.expectCookies}}
+                {% endif %}
+
+                <i style="margin-right: 5px; margin-left: 10px " class="fa-regular fa-eye"></i>
+                {% if i.views > 1000 %}
+                <p style="display: inline;">{% widthratio i.views|add:"-500" 1000 1 %}k</p>
+                {% else %}
+                <p style="display: inline;">{{i.views}}</p>
+                {% endif %}
+                {% if i.id in like %}
+                <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-solid fa-heart ">
+                </i>
+                {% else %}
+                <i onclick="changeHeart({{i.id}})" id="LikeHeart{{i.id}}"
+                    style="margin-left: 10px; margin-right: 5px; cursor: pointer;" class="fa-regular fa-heart ">
+                </i>
+                {% endif %}
+                {% if i.like > 1000 %}
+                <p style="display: inline;">{% widthratio i.like|add:"-500" 1000 1 %}k</p>
+
+                {% else %}
+                <p style="display: inline;" id="like{{i.id}}">{{i.like}}</p>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+
+    {% endif %}
+    {% endfor %}
+    <div style="width: 100%; text-align: center;">
+        <a href="{% url 'homepageadmin' %}" class="paysucbtn"><span>Back</span></a>
+    </div>
+    <br><br>
+
+    <script>
+        function changeHeart(num) {
+            id = "LikeHeart" + num;
+            likeId = "like" + num;
+            let value = document.getElementById(id).className.split(" ");
+            like = document.getElementById(likeId).innerHTML;
+            console.log(value);
+            console.log(id);
+            if (value.includes("fa-solid")) {
+                document.getElementById(id).classList.add('fa-regular');
+                document.getElementById(id).classList.remove('fa-solid');
+                $.ajax({
+                    url: "/likeBlog",
+                    type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        'like': false, 
+                        'blogId': num
+                    }),
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": getCookie("csrftoken"),  // don't forget to include the 'getCookie' function
+                    },
+                    contentType: "application/json",
+                    success: (data) => {
+                        console.log(data);
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                    });
+                document.getElementById(likeId).innerHTML = parseInt(like) - 1
+                
+            } else {
+                document.getElementById(id).classList.add('fa-solid');
+                document.getElementById(id).classList.remove('fa-regular');
+                $.ajax({
+                    url: "/likeBlog",
+                    type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        'like': true, 
+                        'blogId': num
+                    }),
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": getCookie("csrftoken"),  // don't forget to include the 'getCookie' function
+                    },
+                    contentType: "application/json",
+                    success: (data) => {
+                        console.log(data);
+                    },
+                    error: (error) => {
+                        console.log(error);
+                    }
+                    });
+                    document.getElementById(likeId).innerHTML = parseInt(like) + 1
+                
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== "") {
+                const cookies = document.cookie.split(";");
+                for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+                }
+            }
+            return cookieValue;
+            }
+    </script>
+    {% endblock %}

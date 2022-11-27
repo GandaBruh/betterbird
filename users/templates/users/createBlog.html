@@ -1,0 +1,72 @@
+{% extends 'users/layout.html' %}
+{% load static %}
+
+{% block body %}
+
+<form action="{% url 'createBlog' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div style="padding-top: 30px;">
+        <p3><b> Create New Blog </b></p3>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class=" w3-sand" id="work">
+            <div class="Scol-6 createBlog"
+                style="padding:20px; background-color: rgba(255, 252, 238, 0.6); border-radius: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+                <label for="title">Title :</label>
+                <input type="text" placeholder="title" id="blogcreate" name="title" required><br />
+                <label for="intro">Introduction :</label>
+                <input type="text" placeholder="introduction" id="blogcreate" name="introduction" required><br />
+                <label for="detail">Detail :</label>
+                <textarea placeholder="detail" class="detailblog" name="detail" required></textarea><br />
+                <br>
+                <label for="tag">Tag :</label>
+                <!----------------------------------------------TAG------------------------------------------------------->
+                <input type="checkbox" id="tag1" name="tag1" value="True">
+                <label for="tag1"> Environment&nbsp; &nbsp;&nbsp; &nbsp;</label>
+                <input type="checkbox" id="tag2" name="tag2" value="True">
+                <label for="tag2"> Society&nbsp; &nbsp;&nbsp; &nbsp;</label>
+                <input type="checkbox" id="tagn3" name="tag3" value="True">
+                <label for="tag3"> Health&nbsp; &nbsp;</label>
+                <input type="checkbox" id="tag4" name="tag4" value="True">
+                <label for="tag4"> Economy&nbsp; &nbsp;</label>
+                <input type="checkbox" id="tag5" name="tag5" value="True">
+                <label for="tag5"> Art&nbsp; &nbsp;</label>
+                <input type="checkbox" id="tag6" name="tag6" value="True">
+                <label for="tag6"> Technology&nbsp; &nbsp;</label>
+                <input type="checkbox" id="tag7" name="tag7" value="True">
+                <label for="tag7"> Other&nbsp; &nbsp;</label>
+                <br>
+                <br>
+                <label for="date1">Date :</label>
+                <input type="date" placeholder="date" id="blogcreate" name="date1" required><br />
+                <label for="image">Image : </label>
+                <input type="file" style="width: 350px;" name="image"><br>
+                <label for="title">ExpectCookies:</label>
+                <input type="number" placeholder="ExpectCookies" id="blogcreate" name="expectCookies" required><br />
+            </div>
+            <div class="col-3"></div>
+        </div>
+    </div>
+
+    <br>
+    <br>
+    <center>
+
+        <a class="paysucbtn" href="{% url 'homepage' %}"><span>Cancel </span></a>
+
+
+        <button class="paysucbtn" type="submit"><span>+ Create Blog </span></button>
+
+    </center>
+</form>
+
+
+
+
+
+
+{% endblock %}

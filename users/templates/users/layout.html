@@ -24,8 +24,6 @@
 
     body {
         background-color: rgba(255, 205, 205, 0.926);
-
-
     }
 
     .navbarCookie>li {
@@ -104,7 +102,7 @@
 
     .myDiv {
         /* border: 5px outset red; */
-        background-color: rgb(255, 240, 241);
+        background-color: rgba(255, 250, 250, 0.5);
         border-radius: 35px;
         text-align: left;
 
@@ -144,6 +142,18 @@
         line-height: 30px;
     }
 
+    .comment>p {
+        padding-left: 100px;
+    }
+
+    .main>p {
+        padding-left: 100px;
+    }
+
+    .icon {
+        padding-left: 100px;
+    }
+
     p1 {
         color: rgba(12, 12, 12, 0.927);
         font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
@@ -152,6 +162,7 @@
         font-variant: normal;
         font-weight: 700;
         line-height: 30px;
+        padding: 30px;
     }
 
     p2 {
@@ -162,6 +173,7 @@
         font-variant: normal;
         font-weight: 700;
         line-height: 30px;
+        padding: 30px;
     }
 
     p3 {
@@ -172,6 +184,26 @@
         font-variant: normal;
         font-weight: 700;
         line-height: 30px;
+        padding: 30px;
+    }
+
+    p4 {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+        font-size: 30px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 30px;
+    }
+
+    .button4 {
+        width: 10%;
+        border-radius: 15px;
+        border-color: rgba(255, 165, 153, 1);
+        background-color: rgba(255, 165, 153, 1);
+        text-align: center;
+        font-weight: bold;
     }
 
     .container1 {
@@ -182,25 +214,148 @@
 
     /*---------------------------------------------------------------------*/
     /*Profile*/
-    .blog-format {
-        background-color: antiquewhite;
-        border-radius: 5px;
-        margin: 1%;
-        border: 1px solid black;
+    .tag-design-1 {
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
     }
+
+    .tag-design-2{
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
+    }
+    .tag-design-3{
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
+    }
+    .tag-design-4{
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
+    }
+    .tag-design-5{
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
+    }
+    .tag-design-6{
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
+    }
+    .tag-design-7{
+        display: inline;
+        border-radius: 15px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
+    }
+
+    .blog-img {
+
+        width: 100%;
+        height: 300px;
+    }
+
+    .blog-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 20px;
+    }
+
+    @media (max-width: 2000px) {
+        .blog-text {
+            display: block;
+            color: rgba(0, 0, 0, 0.927);
+            font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+            font-size: 14px;
+            font-style: normal;
+            font-variant: normal;
+            height: 124px;
+            font-weight: 600;
+            line-height: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+
+        .blog-format {
+            background-color: antiquewhite;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 1%;
+            height: 90vh;
+            height: 580px;
+            box-shadow: 0 15px 15px rgba(0, 0, 0, 0.15);
+        }
+    }
+
+    @media (max-width: 1300px) {
+        .blog-format {
+            background-color: antiquewhite;
+            border-radius: 20px;
+            margin: 1%;
+            height: 90vh;
+            height: 600px;
+            box-shadow: 0 15px 15px rgba(0, 0, 0, 0.15);
+        }
+
+    }
+
+    @media (max-width: 1000px) {
+        .blog-text {
+            color: rgba(0, 0, 0, 0.927);
+            font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+            font-size: 5px;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: 500;
+            line-height: 20px;
+        }
+    }
+
+    .blog-body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+
+
+
 
     .fa-heart {
         color: rgb(247, 61, 61)
     }
 
     .fa-star {
-        color: rgb(255, 227, 17);
+        color: rgb(255, 196, 0);
 
     }
 
-    .span-blog> {
-        margin-left: 10px;
-    }
+    .span-blog> {}
 
     .container-star {
         display: grid;
@@ -241,12 +396,13 @@
         border-radius: 20px;
     }
 
-
-    .buycookie {
-        background-color: rgba(255, 255, 235, 0.4);
-        border-radius: 20px;
-        margin: 5px;
+    .cookcoin {
+        background-color: rgba(209, 209, 181, 0.4);
+        border-radius: 10px;
+        padding: 30px;
+        margin-top: 10px;
     }
+
 
     .buycookie>a {
         background-color: rgba(255, 165, 153, 1);
@@ -278,15 +434,9 @@
     .confirmBox>label,
     input {
         margin-bottom: 20px;
-    }
-
-    .confirmBox>input {
-        margin-left: 15px;
-        background-color: rgba(255, 255, 255, 0.4);
         border: none;
-        padding: 7px;
         border-radius: 10px;
-        text-align: center;
+        padding: 5px;
     }
 
     .cancel {
@@ -412,31 +562,131 @@
         right: 0;
     }
 
+
     .history {
-        background-color: rgba(255, 255, 235, 0.4);
-        padding: 80px;
-        margin-left: 60px;
+        background-color: rgba(209, 209, 181, 0.4);
+        padding: 50px;
         border-radius: 20px;
         margin-top: 20px;
         margin-bottom: 50px;
     }
 
     .history>p {
-        color: rgba(80, 80, 74, 0.3);
-        font-size: 200%;
-        text-align: center;
+        color: rgb(22, 27, 21);
     }
 
     .buycookieblog {
         background-color: rgba(255, 255, 255, 0.3);
         border-radius: 20px;
         width: max-content;
-
         margin-top: 10px;
     }
 
     .changeA:hover {
         background-color: aliceblue;
+    }
+
+    .paysuc {
+        background-color: rgba(255, 241, 213, 0.5);
+        border-radius: 10px;
+    }
+
+    .paysuc>h1,
+    h2 {
+        font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+        color: rgb(51, 94, 40);
+        border: 100%;
+    }
+
+    .paysucbtn {
+        background-color: rgb(233, 136, 123);
+        color: aliceblue;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: aliceblue;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    .paysucbtn span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .paysucbtn span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .paysucbtn:hover span {
+        padding-right: 25px;
+        color: aliceblue;
+    }
+
+    .paysucbtn:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
+    #loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 120px;
+        height: 120px;
+        margin: -76px 0 0 -76px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+    }
+
+    @-webkit-keyframes animatebottom {
+        from { bottom:-100px; opacity:0 } 
+        to { bottom:0px; opacity:1 }
+    }
+
+    @keyframes animatebottom { 
+        from{ bottom:-100px; opacity:0 } 
+        to{ bottom:0; opacity:1 }
+    }
+
+    #myDiv {
+        display: none;
+        text-align: center;
     }
 
     /*------------------------------------------------------------------------------------------*/
@@ -453,6 +703,16 @@
         font-size: 26px;
         margin: 4px 2px;
         cursor: pointer;
+    }
+
+    .w3-right>a {
+        text-decoration: none;
+        border-radius: 20px;
+        color: rgb(112, 111, 111);
+    }
+
+    .w3-right>a:hover {
+        background-color: rgba(255, 169, 169, 0.6);
     }
 
     .button3 {
@@ -472,6 +732,180 @@
     .button2 {
         background-color: rgba(255, 165, 153, 1);
     }
+
+    .button4 {
+        width: 10%;
+    }
+
+    .admin{
+        background-color: rgb(193, 181, 218);
+        color: aliceblue;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: aliceblue;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+    
+    .admin span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+    }
+
+    .admin span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+    }
+
+    .admin:hover span {
+        padding-right: 25px;
+        color: aliceblue;
+    }
+
+    .admin:hover span:after {
+        opacity: 1;
+        right: 0;
+    }
+
+    /* ----------------------------------add to dev-------------------------------- */
+    .report-check {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 22px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 20px;
+    }
+
+    .report-check-1 {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 20px;
+    }
+
+    .button-report {
+        width: 12%;
+        height: 10%;
+        border-radius: 15px;
+        border-color: rgba(255, 165, 153, 1);
+        background-color: rgba(255, 165, 153, 1);
+        text-align: center;
+        font-weight: bold;
+
+    }
+
+    .button10 {}
+
+    .other-report>input {
+        margin-left: 5px;
+        background-color: rgb(255, 255, 255);
+        border: none;
+        padding: 7px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .tag-design p {
+        display: inline-block;
+        border-radius: 20px;
+        padding: 3px 10px;
+        color: white;
+        background-color: rgb(0, 0, 0);
+        width: fit-content;
+    }
+
+    .main>p {
+        text-align: 0%;
+        padding-left: 5rem;
+        padding-right: 5rem;
+    }
+
+    #p4 {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+        font-size: 30px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 30px;
+    }
+
+    .p4 {
+        color: salmon;
+        font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+        font-size: 25px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 30px;
+    }
+
+    .verifybutton {
+        background-color: salmon;
+        color: aliceblue;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: aliceblue;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    .recommendbutton {
+        background-color: salmon;
+        color: aliceblue;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: aliceblue;
+        padding: 10px;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+
+
+    /* ----------------------------------add to dev 1-------------------------------- */
+
+    .detail-register-form {
+        color: rgba(0, 0, 0, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 20px;
+        font-style: bold;
+        font-variant: normal;
+        font-weight: 500;
+        line-height: 30px;
+
+    }
 </style>
 
 <body>
@@ -481,7 +915,8 @@
                 <div class="col-3"></div>
                 <div class="col-6">
 
-                    <center><img style=" width: 450px; margin-top: 40px;" src="{% static 'images/Black.PNG' %}" />
+                    <center><img style=" max-width: 100%; max-height: 100vh; width: 450px; margin-top: 40px;"
+                            src="{% static 'images/Black.PNG' %}" />
                     </center>
                     <center>
                         <b>
@@ -494,11 +929,12 @@
                 <div class="col-3 profile">
                     <div>
                         <a href="{% url 'profile' %}">
-                            <img class="profileImgBar" src="{% static 'images/profile.jpg' %}" />
+                            <img style="max-width: 100%;
+                            max-height: 100vh;" class="profileImgBar" src="{{ userlayout.image.url }}" />
                         </a>
                     </div>
                     <p style="font-size: 24px;">
-                        name surname
+                        {{userlayout.user.first_name}} {{userlayout.user.last_name}}
                     </p>
                 </div>
             </div>
@@ -508,15 +944,17 @@
                 <li><a href="{% url 'members' %}" style="border-right: 1px solid whitesmoke;;">Member</a></li>
                 <li style="float: right;"><a class="active" href="{% url 'logout' %}">logout</a></li>
                 <li style="float: right;"> <img style="height: 40px; margin-bottom: 10px;"
-                        src="{% static 'images/Cookies.PNG' %}" /><a href="{% url 'cookieCoin'%}"style="border-left: none; padding-left: 0;"
-                        class="aparagarph">5000</a></li>
+                        src="{% static 'images/Cookies.PNG' %}" /><a href="{% url 'cookieCoin'%}"
+                        style="border-left: none; padding-left: 0;" class="aparagarph">{{ wallet.balanceCookie }}</a>
+                </li>
             </div>
         </div>
 
+        <div style="background-color:rgba(255, 250, 250, 0.5); border-radius: 30px;">
+            {% block body %}
+            {% endblock %}
+        </div>
 
-
-        {% block body %}
-        {% endblock %}
     </div>
 </body>
 

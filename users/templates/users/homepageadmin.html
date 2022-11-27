@@ -1,25 +1,32 @@
 {% extends 'users/layout.html' %}
 {% load static %}
+
+<style>
+
+
+
+</style>
+
 {% block body %}
-<div class="row" style="padding-top: 25px;">
-    <div class="col-1"></div>
-    <div style="height:250px;" class="col-4">
-        <img style="object-fit: fill; max-width: 100%; max-height: 100vh; border-radius: 5px;" src="{{ user.image.url}}" />
-    </div>
-    <div class="col-1"></div>
-    <div class="col-4" style="font-size: 20px;">
-        <p>fullname : {{user.user.first_name}} {{user.user.last_name}}<br>
-            phone : {{user.phone}}<br>
-            email : {{user.user.email}}</p>
 
 
-    </div>
-
+<div style="padding-top: 50px; padding-left: 30px; margin-bottom: 25px;">
+    <i style="font-size: 35px;"> BLOG STATUS </i>
+        <div class="spinner-grow text-danger" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div class="spinner-grow text-info" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    
 </div>
-<div style="margin-top: 50px; margin-left: 150px; font-size: 35px;">
-    Blog
+<div style="padding-left: 60%;">
+    <a href="{% url 'notVerifiedPageAdmin' %}" class="paysucbtn"><span>not verify blog</span></a>
+    <a href="{% url 'reportPageAdmin' %}" class="paysucbtn"><span>reported blog</span></a>
 </div>
-
 {% for i in blogs %}
 {% if forloop.counter|divisibleby:2 %}
 <div class="col-4 blog-format">
@@ -31,7 +38,13 @@
         <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
             <div>
                 <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
-                
+                {% if i.blogType == 0 %}
+                <i style="color:orange"class="fa-solid fa-spinner"> waiting for verify</i>
+                {% elif i.blogType == 1 %}
+                <i style="color: rgb(49, 236, 49)"class="fa-solid fa-circle-check"> verified</i>
+                {% elif i.blogType == 2 %}
+                <i style="color: red;"class="fa-solid fa-circle-exclamation"> reported</i>
+                {% endif %}
             </div>
             
             <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
@@ -48,33 +61,35 @@
         
         
     </div>
-    <span>
-        {% if i.tag1 %}
-        <p class="tag-design-1">#Environment</p>
-        {% endif %}
-        {% if i.tag2 %}
-        <p class="tag-design-2">#Society</p>
-        {% endif %}
-        {% if i.tag3 %}
-        <p class="tag-design-3">#Health</p>
-        {% endif %}
-        {% if i.tag4 %}
-        <p class="tag-design-4">#Economy</p>
-        {% endif %}
-        {% if i.tag5 %}
-        <p class="tag-design-5">#Art</p>
-        {% endif %}
-        {% if i.tag6 %}
-        <p class="tag-design-6">#Technology</p>
-        {% endif %}
-        {% if i.tag7 %}
-        <p class="tag-design-7">#Other</p>
-        {% endif %}
-    </span>
+    <div class="tag-design" >
+        <span>
+            {% if i.tag1 %}
+            <p>#Environment</p>
+            {% endif %}
+            {% if i.tag2 %}
+            <p>#Society</p>
+            {% endif %}
+            {% if i.tag3 %}
+            <p>#Health</p>
+            {% endif %}
+            {% if i.tag4 %}
+            <p>#Economy</p>
+            {% endif %}
+            {% if i.tag5 %}
+            <p>#Art</p>
+            {% endif %}
+            {% if i.tag6%}
+            <p>#Technology</p>
+            {% endif %}
+            {% if i.tag7 %}
+            <p >#Other</p>
+            {% endif %}
+        </span>
+    </div>
     <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
         
         <span  class="span-blog" style="float: left">
-            <a href="{% url 'detail' i.id %}" style="font-weight: 1000; text-decoration: none;" >Readmore <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;" >Readmore <i class="fa-solid fa-arrow-right"></i></a>
             
         <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
         {% if i.expectCookies > 1000 %}
@@ -121,7 +136,13 @@
             <div class="blog-title" style="display:flex; justify-content: space-between; align-items: center;">
                 <div>
                     <h3 style="display: inline; padding-right: 5px;" class="title-text">{{ i.title }}</h3>
-                    
+                    {% if i.blogType == 0 %}
+                    <i style="color:orange"class="fa-solid fa-spinner"> waiting for verify</i>
+                    {% elif i.blogType == 1 %}
+                    <i style="color: rgb(49, 236, 49)"class="fa-solid fa-circle-check"> verified</i>
+                    {% elif i.blogType == 2 %}
+                    <i style="color: red;"class="fa-solid fa-circle-exclamation"> reported</i>
+                    {% endif %}
                 </div>
                 
                 <!--<span><i style="color: black; "class="fa-solid fa-star fa-xl"></i>-->
@@ -138,33 +159,35 @@
             
             
         </div>
-        <span>
-            {% if i.tag1 %}
-            <p class="tag-design-1">#Environment</p>
-            {% endif %}
-            {% if i.tag2 %}
-            <p class="tag-design-2">#Society</p>
-            {% endif %}
-            {% if i.tag3 %}
-            <p class="tag-design-3">#Health</p>
-            {% endif %}
-            {% if i.tag4 %}
-            <p class="tag-design-4">#Economy</p>
-            {% endif %}
-            {% if i.tag5 %}
-            <p class="tag-design-5">#Art</p>
-            {% endif %}
-            {% if i.tag6 %}
-            <p class="tag-design-6">#Technology</p>
-            {% endif %}
-            {% if i.tag7 %}
-            <p class="tag-design-7">#Other</p>
-            {% endif %}
-        </span>
+        <div class="tag-design" >
+            <span>
+                {% if i.tag1 %}
+                <p>#Environment</p>
+                {% endif %}
+                {% if i.tag2 %}
+                <p>#Society</p>
+                {% endif %}
+                {% if i.tag3 %}
+                <p>#Health</p>
+                {% endif %}
+                {% if i.tag4 %}
+                <p>#Economy</p>
+                {% endif %}
+                {% if i.tag5 %}
+                <p>#Art</p>
+                {% endif %}
+                {% if i.tag6%}
+                <p>#Technology</p>
+                {% endif %}
+                {% if i.tag7 %}
+                <p >#Other</p>
+                {% endif %}
+            </span>
+        </div>
         <div style="position:absolute; bottom: 0; padding-bottom: 3px;">
             
             <span  class="span-blog" style="float: left">
-            <a href="{% url 'detail' i.id %}" style="font-weight: 1000; text-decoration: none;" >Readmore <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="{% url 'detailadmin' i.id %}" style="font-weight: 1000; text-decoration: none;" >Readmore <i class="fa-solid fa-arrow-right"></i></a>
             <i style="color: #a96232; margin-right: 5px; margin-left: 10px;" class="fa-solid fa-cookie-bite"></i> 
             {% if i.expectCookies > 1000 %}
             {% widthratio i.expectCookies|add:"-500" 1000 1 %}k
@@ -198,6 +221,7 @@
 
     {% endif %}
     {% endfor %}
+    <br><br>
 
     <script>
         function changeHeart(num) {
@@ -276,4 +300,4 @@
             return cookieValue;
             }
     </script>
-    {% endblock %}
+{% endblock %}
