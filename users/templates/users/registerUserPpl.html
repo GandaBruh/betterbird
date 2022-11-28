@@ -1,5 +1,4 @@
-{% block content %}
-{% load crispy_forms_tags %}
+{% load static %}
 
 <head></head>
 
@@ -13,6 +12,7 @@
         font-variant: normal;
         font-weight: 700;
         line-height: 26.4px;
+        text-align: center;
     }
 
     .btn-success {
@@ -20,6 +20,8 @@
         border-radius: 15px;
         border-color: rgba(255, 165, 153, 1);
         background-color: rgba(255, 165, 153, 1);
+        height: 35px;
+        width: 95px;
         text-align: center;
         font-weight: bold;
 
@@ -35,18 +37,218 @@
         line-height: 20px;
 
     }
+
+    .head-inform {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 20px;
+    }
+
+    .text {
+        color: rgba(12, 12, 12, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: bold;
+        line-height: 20px;
+    }
+
+    .confirmBox>label,
+    input {
+        margin-bottom: 20px;
+
+    }
+
+    .confirmBox>input {
+        margin-left: 15px;
+        background-color: rgb(255, 255, 255);
+        border: none;
+        padding: 7px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .text-title {
+        color: rgba(12, 12, 12, 0.793);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 30px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 26.4px;
+    }
+
+    .userType {
+        padding: 0% 28%;
+
+    }
+
+    .register-user-form-border {
+        width: 90%;
+        border-radius: 15px;
+        border-color: rgb(255, 240, 241);
+        background-color: rgb(255, 240, 241);
+
+    }
+
+    .detail-register-form {
+        color: rgba(68, 68, 68, 0.927);
+        font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+        font-size: 12px;
+        font-style: 0;
+        font-variant: normal;
+        font-weight: 500;
+        line-height: 30px;
+
+    }
 </style>
 
-<body style="background-color: rgba(255, 205, 205, 0.926); padding:5% 0%;">
-    <p class="register-title">what is fortunecookies ?</p1>
+<body style="background-color: rgba(255, 205, 205, 0.926); margin-left: 10%;padding: 2% 0%;">
+    <div class="register-user-form-border">
+        <center>
+            <img style=" width: 180px; margin-top: 40px;" src="{% static 'images/icon.png' %}" /><br>
+            <span class="register-title">Register</span><br><br>
+        </center>
+        <form method="POST" action="{% url 'register' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="userType">
+                <p class="text-title">Are you?</p>
+                <input type="radio" id="ognCheck" onclick="javascript:userTypeCheck();" name="userType" value="1">
+                <label for="vehicle1"> Organization</label>
+                <input type="radio" id="pplCheck" onclick="javascript:userTypeCheck();" name="userType" value="2">
+                <label for="vehicle2"> Person/Group of people</label><br>
+            </div>
+
+            <div class="form-register" style="padding: 0% 28%;">
+                <div id="form-register">
+
+                </div>
+
+                <div class="create-user-form-border"
+                    style="background-color:rgba(255, 205, 205, 0.926);border-color:rgba(255, 205, 205, 0.926);;border-radius: 2.5%;border-width: 5%; padding: 5% 10%;">
+                    <div class="col-6 confirmBox">
+                        <span class="head-inform"><label for="username">Username&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp; &nbsp;
+                                &nbsp;</label></span>
+                        <input type="text" placeholder="username" id="username" name="username" required><br />
+                        <span class="head-inform"><label for="email">Password&nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+                                &nbsp;
+                                &nbsp;
+                                &nbsp;</label></span>
+                        <input type="password" placeholder="password" id="password" name="password" required><br />
+                        <span class="head-inform"><label for="email">Confirm Password</label></span>
+                        <input type="password" placeholder="confirm password" id="cpassword" name="cpassword"
+                            required><br />
+                    </div>
+                </div><br><br>
+                <center>
+                    <button type="submit" class="btn btn-success" style="padding-left: 10px;">register</button>
+
+                </center>
+            </div>
+        </form>
+        <center>
+            <a href="{% url 'login' %}"><button type="submit" style="background-color:  rgba(255, 165, 153, 1);"
+                    class="btn btn-success" style="padding-left: 1 0px;">cancel</button></a><br><br><br><br>
+        </center>
+    </div>
 </body>
-<div class="register-forms">
-    <form method="POST" class="form-qroup">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <br><br>
-        <button type="submit" class="btn btn-success">Register</button>
-    </form>
-    <a href="{% url 'login' %}"><button type="submit" style="background-color: red;" class="btn btn-success">cancel</button></a>
-</div>
-{% endblock %}
+
+<script type="text/javascript">
+
+    function userTypeCheck() {
+        const div = document.getElementById('form-register');
+        if (document.getElementById('ognCheck').checked) {
+            div.innerHTML = ` <div id="org-div" >
+                <div class="col-6 confirmBox">
+                    <span class="head-inform"><label for="orgName">Name &nbsp; &nbsp; &nbsp                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;
+                            &nbsp;
+                            &nbsp; &nbsp; &nbsp;</label></span>
+                    <input type="text" placeholder="organization name" id="orgName" name="orgName" required><br />
+                    <span class="head-inform"><label for="fday">Founding Day&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;&nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp;</label></span>
+                    <input type="date" placeholder="dd/mm/yyyy" id="fday" name="fday" required><br />
+                    <span class="head-inform"><label for="fname">Manager Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label></span>
+                    <input type="text" placeholder="firstname" id="fname" name="fname" required></input><span class="detail-register-form"> &nbsp;*prefix (Mr./Prof./etc.)</span><br>
+                    <span class="head-inform"><label for="lname">Manager Lastname&nbsp; &nbsp;&nbsp; &nbsp; &nbsp;
+                            &nbsp;
+                            &nbsp; &nbsp;
+                            &nbsp; </label></span>
+                    <input type="text" placeholder="lastname" id="lname" name="lname" required><br />
+                    <span class="head-inform"><label for="country">Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label></span>
+                    <input type="text" placeholder="country" id="country" name="country" required><br />
+                    <span class="head-inform"><label for="address">Address&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label></span>
+                    <input type="text" placeholder="address" id="address" name="address" required><br />
+                    <span class="head-inform"><label for="email">Email&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp;
+                        </label></span>
+                    <input type="email" placeholder="email" id="email" name="email" required><br />
+                    <span class="head-inform"><label for="phone">Phone&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </label></span>
+                    <input type="text" placeholder="xxxxxxxxxx" id="phone" name="phone" required><br /><br>
+                    <span class="head-inform"><label for="image">Profile Image&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </label></span>
+                    <input type="file" placeholder="image" id="image" name="image" required><br /><br>
+
+                </div>
+            </div>`
+        } else {
+            div.innerHTML = ` <div id="per-div" >
+                <div class="col-6 confirmBox">
+                    <span class="head-inform"><label for="fname">Name/Leader Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;
+                            &nbsp; &nbsp; </label></span>
+                    <input type="text" placeholder="Firstname" id="fname" name="fname" required></input><span class="detail-register-form"> &nbsp;*prefix (Mr./Prof./etc.)</span><br>
+                    <span class="head-inform"><label for="lname">Lastname/Leader Lastname </label></span>
+                    <input type="text" placeholder="Lastname" id="lname" name="lname" required><br />
+                    <span class="head-inform"><label for="fname">Birthday&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label></span>
+                    <input type="date" placeholder="dd/mm/yyyy" id="bday" name="bday" required><br />
+                    <span class="head-inform"><label for="country">Country &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label></span>
+                    <input type="text" placeholder="country" id="country" name="country" required><br />
+                    <span class="head-inform"><label for="address">Address&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label></span>
+                    <input type="text" placeholder="address" id="adress" name="address" required><br />
+                    <span class="head-inform"><label for="email">Email&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </label></span>
+                    <input type="email" placeholder="email" id="email" name="email" required><br />
+                    <span class="head-inform"><label for="phone">Phone&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        </label></span>
+                    <input type="text" placeholder="xxxxxxxxxx" id="phone" name="phone" required><br /><br>
+                    <span class="head-inform"><label for="image">Profile Image&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            
+                        </label></span>
+                    <input type="file" placeholder="image" id="image" name="image" required><br /><br>
+
+                </div>
+            </div>`
+
+        }
+    }
+
+</script>
